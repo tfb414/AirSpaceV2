@@ -58,7 +58,7 @@ In this iteration, we're working to further develop for use by teachers and stud
           - Add options - return id
           - Add linking table
           
-Scratch Query Examples
+#### Scratch Query Examples
 
 ``` javascript
 createSurvey(sq_id) => {
@@ -127,4 +127,34 @@ insert into guest_question_response(guest_id, question_id, response)
       returning guest_id, question_id, response
 ```
 
+Grabbing all questions and all responses:
+``` SQL
+select * from sq_question_option
+      where sq_id = '12'
+```
+
 ### 4. Challenges and Successes
+
+Challenge:
+      - With the following query, duplicate key values are inserted into the table at `Key (option_id)=(11)`:
+      
+``` SQL
+insert into sq_question_option(sq_id, question_id, option_id)
+      values('12', '5', '11')
+      returning sq_id, question_id, option_id
+```
+      
+      - Solution: Make option_id unique because that's the only thing that will be different all the time..
+
+Success:
+Creates linking table between `question` and `option`
+```SQL
+select q.question, o.option,
+      sq_question_option
+      inner join option o
+      on o.option_id = sqqo.option_id
+      inner join question q
+      on q.question_id = sqqo.question_id
+      where sq_id = '12'
+```
+      
