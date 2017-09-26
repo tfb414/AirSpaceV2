@@ -100,6 +100,31 @@ The thing about a RESTful API, is you identify what code to run with HTTP verb a
 
 ### 3. Database Architecture
 
-To be fully implemented!
+#### Running Through Our Queries with Dummy Data
+
+``` SQL
+insert into question(question)
+      values('yarp?')
+      returning question_id
+```
+
+``` SQL
+insert into sq_question_option(sq_id, question_id, option_id)
+      value('${sq_id}', '${question_id}', '${option_id}')
+      returning sq_id
+```
+
+For adding a guest to the database:
+``` SQL
+insert into host(host_id, email, first_name, last_name)
+      values('${guest_id}, '${email}', '${first_name}', '${last_name}')
+      returning guest_id, email, first_name, last_name;
+```
+
+``` SQL
+insert into guest_question_response(guest_id, question_id, response)
+      values('123abc', '2', 'Dog')
+      returning guest_id, question_id, response
+```
 
 ### 4. Challenges and Successes
