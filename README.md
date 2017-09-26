@@ -133,6 +133,12 @@ select * from sq_question_option
       where sq_id = '12'
 ```
 
+``` SQL
+insert into guest_question_response(guest_id, question_id, response)
+      from ('123abc', '4', 'pickle rick')
+      returning guest_id, question_id, response
+```
+
 ### 4. Challenges and Successes
 
 Challenge:
@@ -147,7 +153,9 @@ insert into sq_question_option(sq_id, question_id, option_id)
       - Solution: Make option_id unique because that's the only thing that will be different all the time..
 
 Success:
-Creates linking table between `question` and `option`
+Creates linking table between `question` and `option`:
+Whenever a guest receives a survey, it generates the survey for them. So this is pulling all questions, all options to display on page.
+
 ```SQL
 select q.question, o.option,
       sq_question_option
@@ -155,6 +163,5 @@ select q.question, o.option,
       on o.option_id = sqqo.option_id
       inner join question q
       on q.question_id = sqqo.question_id
-      where sq_id = '12'
+      where sqqo.sq_id = '${sq_id}'
 ```
-      
