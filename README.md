@@ -139,9 +139,44 @@ insert into guest_question_response(guest_id, question_id, response)
       returning guest_id, question_id, response
 ```
 
+Trying to pull response and optionValue (whether their answer is true or false).
+Want just one person's questions, answers, and making sure it comes from the same survey.
+``` SQL
+select r.response, o.option_value
+      from guest_question_respone gqr
+      inner join sq_question_option sqqo
+      on sqqo.question_id = gqr.question_id
+      inner join option o
+      on sqqo.gqr
+```
+
+#### Figuring out system to check 'correctness' of multiple choice answer
+
+Guest table.
+Tim - Dog - Rick
+
+We have an options table.
+1 - dog - true
+2 - cat - false
+
+We also have a linking table.
+`sq_id` - `q_id` - `o_id`
+12 - 1 - 2
+
+Another linking table.
+`guest_id` - `q_id` - `response`
+1 - 1- cat
+
+g_id = 1
+s_id = 12
+
+^ we interlink this to question id. these, and the guest id's match up. So now using the question_id, and then for the option_id's, we link this into option id.
+
+Response is only survey questions. Otherwise null.
+
 ### 4. Challenges and Successes
 
-Challenge:
+Challenge 1:
       - With the following query, duplicate key values are inserted into the table at `Key (option_id)=(11)`:
       
 ``` SQL
@@ -165,3 +200,8 @@ select q.question, o.option,
       on q.question_id = sqqo.question_id
       where sqqo.sq_id = '${sq_id}'
 ```
+
+Challenge 2:
+
+(Trying to match up option value with response value-- wouldn't work out because not the same text.
+"What if for example, we have to look at q number too, because if a teacher wanted to make multiple options-- 1, 2, 3, but same option value for each one..." Need to add another `option_id` column to response table.)
