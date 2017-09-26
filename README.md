@@ -58,7 +58,7 @@ In this iteration, we're working to further develop for use by teachers and stud
           - Add options - return id
           - Add linking table
           
-Scratch Query Examples
+#### Scratch Query Examples
 
 ``` javascript
 createSurvey(sq_id) => {
@@ -100,6 +100,108 @@ The thing about a RESTful API, is you identify what code to run with HTTP verb a
 
 ### 3. Database Architecture
 
-To be fully implemented!
+#### Running Through Our Queries with Dummy Data
+
+``` SQL
+insert into question(question)
+      values('yarp?')
+      returning question_id
+```
+
+``` SQL
+insert into sq_question_option(sq_id, question_id, option_id)
+      value('${sq_id}', '${question_id}', '${option_id}')
+      returning sq_id
+```
+
+For adding a guest to the database:
+``` SQL
+insert into host(host_id, email, first_name, last_name)
+      values('${guest_id}, '${email}', '${first_name}', '${last_name}')
+      returning guest_id, email, first_name, last_name;
+```
+
+``` SQL
+insert into guest_question_response(guest_id, question_id, response)
+      values('123abc', '2', 'Dog')
+      returning guest_id, question_id, response
+```
+
+Grabbing all questions and all responses:
+``` SQL
+select * from sq_question_option
+      where sq_id = '12'
+```
+
+``` SQL
+insert into guest_question_response(guest_id, question_id, response)
+      from ('123abc', '4', 'pickle rick')
+      returning guest_id, question_id, response
+```
+
+Trying to pull response and optionValue (whether their answer is true or false).
+Want just one person's questions, answers, and making sure it comes from the same survey.
+``` SQL
+select r.response, o.option_value
+      from guest_question_respone gqr
+      inner join sq_question_option sqqo
+      on sqqo.question_id = gqr.question_id
+      inner join option o
+      on sqqo.gqr
+```
+
+#### Figuring out system to check 'correctness' of multiple choice answer
+
+Guest table.
+Tim - Dog - Rick
+
+We have an options table.
+1 - dog - true
+2 - cat - false
+
+We also have a linking table.
+`sq_id` - `q_id` - `o_id`
+12 - 1 - 2
+
+Another linking table.
+`guest_id` - `q_id` - `response`
+1 - 1- cat
+
+g_id = 1
+s_id = 12
+
+^ we interlink this to question id. these, and the guest id's match up. So now using the question_id, and then for the option_id's, we link this into option id.
+
+Response is only survey questions. Otherwise null.
 
 ### 4. Challenges and Successes
+
+Challenge 1:
+      - With the following query, duplicate key values are inserted into the table at `Key (option_id)=(11)`:
+      
+``` SQL
+insert into sq_question_option(sq_id, question_id, option_id)
+      values('12', '5', '11')
+      returning sq_id, question_id, option_id
+```
+      
+      - Solution: Make option_id unique because that's the only thing that will be different all the time..
+
+Success:
+Creates linking table between `question` and `option`:
+Whenever a guest receives a survey, it generates the survey for them. So this is pulling all questions, all options to display on page.
+
+```SQL
+select q.question, o.option,
+      sq_question_option
+      inner join option o
+      on o.option_id = sqqo.option_id
+      inner join question q
+      on q.question_id = sqqo.question_id
+      where sqqo.sq_id = '${sq_id}'
+```
+
+Challenge 2:
+
+(Trying to match up option value with response value-- wouldn't work out because not the same text.
+"What if for example, we have to look at q number too, because if a teacher wanted to make multiple options-- 1, 2, 3, but same option value for each one..." Need to add another `option_id` column to response table.)
