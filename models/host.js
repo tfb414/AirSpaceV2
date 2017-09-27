@@ -1,25 +1,24 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const sequelize = require('../sequelize.js');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('host', {
+const host = sequelize.define('host', {
     host_id: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       primaryKey: true
     },
     email: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false
     },
     first_name: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: true
     },
     last_name: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: true
     }
   }, {
     tableName: 'host'
-  });
-};
+});
