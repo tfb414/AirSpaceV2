@@ -5,34 +5,11 @@ const host = require('../models/host.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	// Comment out this line:
-  //res.send('respond with a resource');
-  sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  }); 
 
-//   sequelize.query("SELECT * from host", {type: sequelize.QueryTypes.SELECT})
-//     .then(hosts => {
-//         console.log(hosts)
-//     });
-
-    // host.findAll().then(hosts => {
-    //     console.log(hosts);
-    // });
-
-  // And insert something like this instead:
-  res.json([{
-  	id: 1,
-  	username: "samsepi0l"
-  }, {
-  	id: 2,
-  	username: "D0loresH4ze"
-  }]);
+    host.findAll().then(hosts => {
+        res.json(hosts)
+    });
+  
 });
 
 module.exports = router;
