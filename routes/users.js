@@ -9,6 +9,9 @@ router.get('/', function(req, res, next) {
         .then(host => {
             res.json(host);
         })
+    
+    // queries.addOption('Vanilla Rick', 'TRUE');
+    // queries.addSQQuestionOption(1, 1, 1);
 
 });
 

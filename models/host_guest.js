@@ -17,6 +17,12 @@ const host_guest = sequelize.define('host_guest', {
         model: 'guest',
         key: 'guest_id'
       }
+    },
+    host_guest_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
     }
   }, {
         tableName: 'host_guest'

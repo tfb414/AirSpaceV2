@@ -34,8 +34,47 @@ function addGuest(guest_id, email, first_name, last_name) {
     })
 }
 
-// function getGuestsForHost(host_id) {
+function addHostGuest(guest_id, host_id) {
+    host_guest.create({
+        guest_id,
+        host_id
+    })
+}
 
+function addSQ(sq_name) {
+    sq.create({
+        sq_name
+    })
+}
+
+function addQuestion(question_text, question_number) {
+    question.create({
+        question: question_text,
+        question_number
+    })
+}
+
+function addOption(option_text, option_value) {
+    option.create({
+        option: option_text,
+        option_value
+    })
+}
+
+function addSQQuestionOption(sq_id, question_id, option_id) {
+    sq_question_option.create({
+        option_id,
+        question_id,
+        sq_id
+    })
+}
+
+// function getGuestsForHost(host_id) {
+//     host_guest.findAll({
+//         include: [{
+//             model: 
+//         }]
+//     })
 // }
 
 // function addHostToDatabase(host_id, email, first_name, last_name){
@@ -149,7 +188,15 @@ function addGuest(guest_id, email, first_name, last_name) {
 //     }).catch(console.log);
 // }
 
-module.exports = {getHostById, addHost, addGuest};
+module.exports = {
+    getHostById, 
+    addHost, 
+    addGuest, 
+    addSQ, 
+    addQuestion, 
+    addOption, 
+    addSQQuestionOption
+};
 
 
 
