@@ -1,9 +1,9 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const sequelize = require('../sequelize.js');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('host_guest', {
+const host_guest = sequelize.define('host_guest', {
     host_id: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: true,
       references: {
         model: 'host',
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     guest_id: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: true,
       references: {
         model: 'guest',
@@ -20,5 +20,6 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     tableName: 'host_guest'
-  });
-};
+});
+
+module.exports = host_guest;

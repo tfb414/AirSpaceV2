@@ -1,9 +1,9 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const sequelize = require('../sequelize.js');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('sq_question_option', {
+sq_question_option = sequelize.define('sq_question_option', {
     sq_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'sq',
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     option_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'option',
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: true
     },
     question_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'question',
@@ -29,5 +29,6 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     tableName: 'sq_question_option'
-  });
-};
+});
+
+module.exports = sq_question_option;

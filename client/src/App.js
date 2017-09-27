@@ -15,7 +15,7 @@ class App extends Component {
       <div className="App">
         <h1>Hosts</h1>
         {this.state.hosts.map(host =>
-          <div key={host.host_id}>{host.email}</div>
+          <div key={host.host_id}>{host.first_name} {host.last_name} {host.email}</div>
         )}
       </div>
     );

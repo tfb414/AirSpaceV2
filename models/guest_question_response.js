@@ -1,9 +1,9 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const sequelize = require('../sequelize.js');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('guest_question_response', {
+const guest_question_response = sequelize.define('guest_question_response', {
     guest_id: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: true,
       references: {
         model: 'guest',
@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     question_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'question',
@@ -19,11 +19,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     response: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: true
     },
     option_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true,
       references: {
         model: 'option',
@@ -32,5 +32,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     tableName: 'guest_question_response'
-  });
-};
+});
+
+
+module.exports = guest_question_response;

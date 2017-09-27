@@ -1,22 +1,23 @@
-/* jshint indent: 2 */
+const Sequelize = require('sequelize');
+const sequelize = require('../sequelize.js');
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('question', {
+const question = sequelize.define('question', {
     question: {
-      type: DataTypes.TEXT,
+      type: Sequelize.TEXT,
       allowNull: true
     },
     question_id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
     question_number: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: true
     }
   }, {
     tableName: 'question'
-  });
-};
+});
+
+module.exports = question;

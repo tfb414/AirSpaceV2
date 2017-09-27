@@ -23,8 +23,4 @@ const host = sequelize.define('host', {
     tableName: 'host'
 });
 
-// host.sync().then(() => {
-//     console.log("SYNNCEED");
-// })
-
 module.exports = host;
