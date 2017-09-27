@@ -19,7 +19,7 @@ const host_guest = sequelize.define('host_guest', {
       }
     }
   }, {
-    tableName: 'host_guest'
+        tableName: 'host_guest'
 });
 
 module.exports = host_guest;

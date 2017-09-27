@@ -20,7 +20,7 @@ const guest = sequelize.define('guest', {
       allowNull: true
     }
   }, {
-    tableName: 'guest'
+        tableName: 'guest'
 });
 
 module.exports = guest;

@@ -9,7 +9,6 @@ router.get('/', function(req, res, next) {
         .then(host => {
             res.json(host);
         })
-    queries.addGuest('3737', 'bestnum@37.org', 'say-rah', 'lou');
 
 });
 
