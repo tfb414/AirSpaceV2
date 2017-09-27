@@ -1,16 +1,14 @@
 var express = require('express');
 var router = express.Router();
-const sequelize = require('../sequelize.js');
-const host = require('../models/host.js');
+const queries = require('../queries.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    host.findAll().then(hosts => {
-        let response = hosts.map(host => {
+    queries.retrieveAllHosts().then(hosts => {
+        res.json(hosts.map(host => {
             return host.dataValues
-        })
-        res.json(response);
+        }))
     });
   
 });
