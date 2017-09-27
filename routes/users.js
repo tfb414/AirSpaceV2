@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const sequelize = require('../sequelize.js');
+const host = require('../models/host.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,7 +14,16 @@ router.get('/', function(req, res, next) {
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);
-  });
+  }); 
+
+//   sequelize.query("SELECT * from host", {type: sequelize.QueryTypes.SELECT})
+//     .then(hosts => {
+//         console.log(hosts)
+//     });
+
+    // host.findAll().then(hosts => {
+    //     console.log(hosts);
+    // });
 
   // And insert something like this instead:
   res.json([{
