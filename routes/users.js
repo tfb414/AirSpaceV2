@@ -4,13 +4,17 @@ const queries = require('../queries.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+    
+    queries.retrieveHostById('578')
+        .then(host => {
+            res.json(host);
+        })
 
-    queries.retrieveAllHosts().then(hosts => {
-        res.json(hosts.map(host => {
-            return host.dataValues
-        }))
-    });
-  
 });
 
 module.exports = router;
+
+// .then(hosts => {
+//         res.json(hosts.map(host => {
+//             return host.dataValues
+//         }))

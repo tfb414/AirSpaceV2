@@ -12,6 +12,10 @@ function retrieveAllHosts() {
     return host.findAll();
 }
 
+function retrieveHostById(host_id) {
+    return host.findById(host_id);
+}
+
 // function addHostToDatabase(host_id, email, first_name, last_name){
 //   return db.one(`
 //     insert into host(host_id, email, first_name, last_name)
@@ -123,7 +127,7 @@ function retrieveAllHosts() {
 //     }).catch(console.log);
 // }
 
-module.exports = {retrieveAllHosts};
+module.exports = {retrieveHostById};
 
 
 
