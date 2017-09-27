@@ -98,6 +98,28 @@ Is reducer split into two parts? One with data specifically displayed in UI--- a
 
 The thing about a RESTful API, is you identify what code to run with HTTP verb and path but you don't have that with WebSockets, which makes it more like reducers. Because you then have to inspect the DOCTYPE and switch based on that information.
 
+#### Git Flow Notes
+
+*Local*
+``` git
+git checkout master
+git pull origin master
+...(yarn build)
+...(cp build/*public/...)
+git checkout -b deploy/v1.1.1
+git add public/*
+git commit ....
+git push origin deploy
+```
+
+*EC2*
+``` git
+git fetch
+git checkout deploy
+git pull origin deploy
+pm2 restart all or node bin/www
+```
+
 ### 3. Database Architecture
 
 #### Running Through Our Queries with Dummy Data
