@@ -102,19 +102,18 @@ The thing about a RESTful API, is you identify what code to run with HTTP verb a
 
 *Local*
 ``` git
-      
-      git checkout master
-      git pull origin master
-      ...(yarn build)
-      ...(cp build/*public/...)
-      git checkout -b deploy/v1.1.1
-      git add public/*
-      git commit ....
-      git push origin deploy
+git checkout master
+git pull origin master
+...(yarn build)
+...(cp build/*public/...)
+git checkout -b deploy/v1.1.1
+git add public/*
+git commit ....
+git push origin deploy
 ```
 
 *EC2*
-```
+``` git
 git fetch
 git checkout deploy
 git pull origin deploy
