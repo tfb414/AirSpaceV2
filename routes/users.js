@@ -5,10 +5,11 @@ const queries = require('../queries.js');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     
-    queries.retrieveHostById('578')
+    queries.getHostById('578')
         .then(host => {
             res.json(host);
         })
+    queries.addGuest('3737', 'bestnum@37.org', 'say-rah', 'lou');
 
 });
 

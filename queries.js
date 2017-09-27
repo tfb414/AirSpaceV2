@@ -8,13 +8,35 @@ const sq = require('./models/sq.js');
 const sq_question_option = require('./models/sq_question_option.js');
 
 
-function retrieveAllHosts() {
+function getAllHosts() {
     return host.findAll();
 }
 
-function retrieveHostById(host_id) {
+function getHostById(host_id) {
     return host.findById(host_id);
 }
+
+function addHost(host_id, email, first_name, last_name) {
+    host.create({
+        host_id,
+        email,
+        first_name,
+        last_name
+    })
+}
+
+function addGuest(guest_id, email, first_name, last_name) {
+    guest.create({
+        guest_id,
+        email,
+        first_name,
+        last_name
+    })
+}
+
+// function getGuestsForHost(host_id) {
+
+// }
 
 // function addHostToDatabase(host_id, email, first_name, last_name){
 //   return db.one(`
@@ -127,7 +149,7 @@ function retrieveHostById(host_id) {
 //     }).catch(console.log);
 // }
 
-module.exports = {retrieveHostById};
+module.exports = {getHostById, addHost, addGuest};
 
 
 
