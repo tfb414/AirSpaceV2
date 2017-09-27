@@ -7,7 +7,10 @@ const host = require('../models/host.js');
 router.get('/', function(req, res, next) {
 
     host.findAll().then(hosts => {
-        res.json(hosts)
+        let response = hosts.map(host => {
+            return host.dataValues
+        })
+        res.json(response);
     });
   
 });
