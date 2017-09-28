@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
+import LandingPage from './components/LandingPage'
 
 class App extends Component {
   state = {
-      hosts: [],
-      host: {}
-}
+    hosts: [],
+    host: {}
+  }
 
   componentWillMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(host => this.setState({ host }));
+    // fetch('/users')
+    //   .then(res => res.json())
+    //   .then(host => this.setState({ host }));
   }
 
   render() {
     return (
       <div className="App">
         <h1>Host</h1>
-        <div key={this.state.host.host_id}>{this.state.host.first_name} {this.state.host.last_name} {this.state.host.email}</div>
+        <LandingPage />
       </div>
     );
   }
