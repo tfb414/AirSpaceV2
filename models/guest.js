@@ -1,25 +1,25 @@
-/* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('guest', {
-    guest_id: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    first_name: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    last_name: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    }
-  }, {
-    tableName: 'guest'
-  });
-};
+module.exports = (sequelize, Sequelize) => {
+    const guest = sequelize.define('guest', {
+        guest_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        primaryKey: true
+        },
+        email: {
+        type: Sequelize.STRING,
+        allowNull: false
+        },
+        first_name: {
+        type: Sequelize.TEXT,
+        allowNull: true
+        },
+        last_name: {
+        type: Sequelize.TEXT,
+        allowNull: true
+        }
+    }, {
+            tableName: 'guest'
+    });
+    return guest;
+}

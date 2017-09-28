@@ -1,38 +1,26 @@
 var express = require('express');
 var router = express.Router();
-const sequelize = require('../sequelize.js');
-const host = require('../models/host.js');
+const queries = require('../queries.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	// Comment out this line:
-  //res.send('respond with a resource');
-  sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  }); 
+    
+    queries.getHostById('578')
+        .then(host => {
+            res.json(host);
+        })
+    
+    // queries.addOption('Vanilla Rick', 'TRUE');
+    // queries.addSQQuestionOption(1, 1, 1);
+    // queries.addHostGuest(578, 8585)
+    // queries.addHostGuest(578, 3737)
+    // queries.addHostGuest(578, 4949)
 
-//   sequelize.query("SELECT * from host", {type: sequelize.QueryTypes.SELECT})
-//     .then(hosts => {
-//         console.log(hosts)
-//     });
-
-    // host.findAll().then(hosts => {
-    //     console.log(hosts);
-    // });
-
-  // And insert something like this instead:
-  res.json([{
-  	id: 1,
-  	username: "samsepi0l"
-  }, {
-  	id: 2,
-  	username: "D0loresH4ze"
-  }]);
 });
 
 module.exports = router;
+
+// .then(hosts => {
+//         res.json(hosts.map(host => {
+//             return host.dataValues
+//         }))

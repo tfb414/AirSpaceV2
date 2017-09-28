@@ -1,18 +1,18 @@
-/* jshint indent: 2 */
 
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('sq', {
-    sq_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    sq_name: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    }
-  }, {
-    tableName: 'sq'
-  });
-};
+module.exports = (sequelize, Sequelize) => {
+    const sq = sequelize.define('sq', {
+        sq_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+        },
+        sq_name: {
+        type: Sequelize.TEXT,
+        allowNull: true
+        }
+    }, {
+        tableName: 'sq'
+    });
+    return sq;
+}
