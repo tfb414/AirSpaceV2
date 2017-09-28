@@ -1,23 +1,15 @@
-const host = require('./models/host.js');
-const guest = require('./models/guest.js');
-const guest_question_response = require('./models/guest_question_response.js');
-const host_guest = require('./models/host_guest.js');
-const option = require('./models/option.js');
-const question = require('./models/question.js');
-const sq = require('./models/sq.js');
-const sq_question_option = require('./models/sq_question_option.js');
-
+const db = require('./sequelize.js');
 
 function getAllHosts() {
-    return host.findAll();
+    return db.host.findAll();
 }
 
 function getHostById(host_id) {
-    return host.findById(host_id);
+    return db.host.findById(host_id);
 }
 
 function addHost(host_id, email, first_name, last_name) {
-    host.create({
+    db.host.create({
         host_id,
         email,
         first_name,
@@ -26,7 +18,7 @@ function addHost(host_id, email, first_name, last_name) {
 }
 
 function addGuest(guest_id, email, first_name, last_name) {
-    guest.create({
+    db.guest.create({
         guest_id,
         email,
         first_name,
@@ -34,46 +26,46 @@ function addGuest(guest_id, email, first_name, last_name) {
     })
 }
 
-function addHostGuest(guest_id, host_id) {
-    host_guest.create({
+function addHostGuest(host_id, guest_id) {
+    db.host_guest.create({
         guest_id,
         host_id
     })
 }
 
-function findGuestsByHostId(host_id) {
+function findGuestsByHostId(id) {
     host_guest.findAll({
         include: [{
             model: guest,
             required: true,
             where: {guest_id: Sequelize.col('host_guest.guest_id')}
         }],
-        where: {host_id: host_id}
+        where: {host_id: id}
     })
 }
 
 function addSQ(sq_name) {
-    sq.create({
+    db.sq.create({
         sq_name
     })
 }
 
 function addQuestion(question_text, question_number) {
-    question.create({
+    db.question.create({
         question: question_text,
         question_number
     })
 }
 
 function addOption(option_text, option_value) {
-    option.create({
+    db.option.create({
         option: option_text,
         option_value
     })
 }
 
 function addSQQuestionOption(sq_id, question_id, option_id) {
-    sq_question_option.create({
+    db.sq_question_option.create({
         option_id,
         question_id,
         sq_id
@@ -207,7 +199,8 @@ module.exports = {
     addQuestion, 
     addOption, 
     addSQQuestionOption,
-    addHostGuest
+    addHostGuest,
+    findGuestsByHostId
 };
 
 
