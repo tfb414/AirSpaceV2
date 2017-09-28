@@ -1,23 +1,33 @@
 import React, { Component } from 'react';
 import './App.css';
+import LandingPage from './components/LandingPage'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import HostDashboard from "./components/HostDashboard"
 
 class App extends Component {
   state = {
-      hosts: [],
-      host: {}
-}
+    hosts: [],
+    host: {}
+  }
 
   componentWillMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(host => this.setState({ host }));
+    // fetch('/users')
+    //   .then(res => res.json())
+    //   .then(host => this.setState({ host }));
   }
 
   render() {
     return (
-      <div className="App">
-        <h1>Host</h1>
-        <div key={this.state.host.host_id}>{this.state.host.first_name} {this.state.host.last_name} {this.state.host.email}</div>
+      <div className='App'>
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <Route exact path="/" component={() => (<LandingPage />)} />
+              <Route exact path="/host" component={(match) => (<HostDashboard match={match} />)} />
+            </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
