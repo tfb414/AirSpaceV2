@@ -52,9 +52,9 @@ passport.use(new GoogleStrategy({
     function(accessToken, refreshToken, profile, done) {
         var firstname = profile.name.givenName;
         firstname = firstname.replace("'", "''");
-        var surname = profile.name.familyName;
-        surname = surname.replace("'", "''");
-        queries.addOrUpdateHost(profile.emails[0].value, firstname, surname)
+        var lastname = profile.name.familyName;
+        lastname = lastname.replace("'", "''");
+        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname)
         .then((result) => {
             done(null, profile.emails[0].value);
         })
@@ -70,9 +70,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', index);
-app.use('/users', users);
-
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
 
@@ -81,6 +78,9 @@ app.get('/auth/google/callback',
         successRedirect: '/host',
         failureRedirect: '/',
         failureFlash: true }));
+        
+app.use('/', index);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
