@@ -41,6 +41,17 @@ function addHostGuest(guest_id, host_id) {
     })
 }
 
+function findGuestsByHostId(host_id) {
+    host_guest.findAll({
+        include: [{
+            model: guest,
+            required: true,
+            where: {guest_id: Sequelize.col('host_guest.guest_id')}
+        }],
+        where: {host_id: host_id}
+    })
+}
+
 function addSQ(sq_name) {
     sq.create({
         sq_name
@@ -195,7 +206,8 @@ module.exports = {
     addSQ, 
     addQuestion, 
     addOption, 
-    addSQQuestionOption
+    addSQQuestionOption,
+    addHostGuest
 };
 
 

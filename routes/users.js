@@ -12,6 +12,9 @@ router.get('/', function(req, res, next) {
     
     // queries.addOption('Vanilla Rick', 'TRUE');
     // queries.addSQQuestionOption(1, 1, 1);
+    queries.addHostGuest(578, 8585)
+    queries.addHostGuest(578, 3737)
+    queries.addHostGuest(578, 4949)
 
 });
 
