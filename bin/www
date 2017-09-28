@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('airspacev2:server');
 var http = require('http');
+var webSocket = require('../websocket');
+webSocket.init();
 
 /**
  * Get port from environment and store in Express.
