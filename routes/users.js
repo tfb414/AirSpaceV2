@@ -15,7 +15,6 @@ router.get('/', function(req, res, next) {
     // queries.addHostGuest(578, 8585)
     // queries.addHostGuest(578, 3737)
     // queries.addHostGuest(578, 4949)
-    queries.findGuestsByHostId(578);
 
 });
 

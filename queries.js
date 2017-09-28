@@ -33,16 +33,17 @@ function addHostGuest(host_id, guest_id) {
     })
 }
 
-function findGuestsByHostId(id) {
-    db.host_guest.findAll({
-        include: [{
-            model: db.guest,
-            required: true,
-            where: {guest_id: Sequelize.col(db.host_guest.guest_id)}
-        }],
-        where: {host_id: id}
-    })
-}
+// function findGuestsByHostId() {
+//     db.host_guest.findAll({
+//         attributes: [],
+//         include: [{
+
+//             model: db.guest,
+//             required: true,
+//             where: {guest_id: Sequelize.col('db.host_guest.guest_id')}
+//         }]
+//     })
+// }
 
 function addSQ(sq_name) {
     db.sq.create({
