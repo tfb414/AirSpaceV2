@@ -1,4 +1,4 @@
-// const db = require('./sequelize.js');
+const db = require('./sequelize.js');
 
 // function getAllHosts() {
 //     return db.host.findAll();
@@ -8,14 +8,20 @@
 //     return db.host.findById(host_id);
 // }
 
-// function addHost(host_id, email, first_name, last_name) {
-//     db.host.create({
-//         host_id,
-//         email,
-//         first_name,
-//         last_name
-//     })
-// }
+function addOrUpdateHost(email, first_name, last_name) {
+    db.host.findOne({
+        attributes:['host_id'],
+        where: {email: email}
+    }).then((resp) => {
+        console.log(resp)
+    })
+    // db.host.upsert({
+    //     host_id,
+    //     email,
+    //     first_name,
+    //     last_name
+    // })
+}
 
 // function addGuest(guest_id, email, first_name, last_name) {
 //     db.guest.create({
@@ -203,6 +209,8 @@
 //     addHostGuest,
 //     findGuestsByHostId
 // };
+
+module.exports = {addOrUpdateHost};
 
 
 
