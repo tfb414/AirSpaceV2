@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import LandingPage from './components/LandingPage'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import HostDashboard from "./components/HostDashboard"
 
 class App extends Component {
   state = {
@@ -16,9 +19,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <h1>Host</h1>
-        <LandingPage />
+      <div className='App'>
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <Route exact path="/" component={() => (<LandingPage />)} />
+              <Route exact path="/host" component={(match) => (<HostDashboard match={match} />)} />
+            </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
