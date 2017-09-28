@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const queries = require('./queries');
+const session = require('express-session');
 require('dotenv').config();
 
 var index = require('./routes/index');
@@ -57,17 +58,6 @@ passport.use(new GoogleStrategy({
         .then((result) => {
             done(null, profile.emails[0].value);
         })
-    //     db.one(`
-    //     insert into users (email, firstname, surname)
-    //     values ('${profile.emails[0].value}', '${firstname}', '${surname}')
-    //     on conflict (email)
-    //     do update set (firstname, surname) = ('${firstname}', '${surname}')
-    //     where users.email = '${profile.emails[0].value}';
-    //     select * from users where email = '${profile.emails[0].value}';
-    //   `)
-    //         .then((result) => {
-    //             done(null, profile.emails[0].value);
-    //         })
 }))
     
 
