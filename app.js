@@ -69,6 +69,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+        
+app.use('/', index);
+app.use('/users', users);
 
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -78,9 +81,6 @@ app.get('/auth/google/callback',
         successRedirect: '/host',
         failureRedirect: '/',
         failureFlash: true }));
-        
-app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
