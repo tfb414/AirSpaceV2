@@ -34,11 +34,11 @@ function addHostGuest(host_id, guest_id) {
 }
 
 function findGuestsByHostId(id) {
-    host_guest.findAll({
+    db.host_guest.findAll({
         include: [{
-            model: guest,
+            model: db.guest,
             required: true,
-            where: {guest_id: Sequelize.col('host_guest.guest_id')}
+            where: {guest_id: Sequelize.col(db.host_guest.guest_id)}
         }],
         where: {host_id: id}
     })
