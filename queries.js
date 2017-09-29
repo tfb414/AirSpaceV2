@@ -9,25 +9,11 @@ const guid = require('guid');
 //     return db.host.findById(host_id);
 // }
 
-function addOrUpdateHost(email, first_name, last_name) {
-     db.host.findOne({
-        attributes:['host_id'],
-        where: {email: email}
-    }).then((resp) => {
-        let host_id;
-        if (resp === null) {
-            host_id = guid.raw();
-            return host_id;
-        } else {
-            host_id = resp.dataValues.host_id;
-            return host_id;
-        }
-    }).then((host_id) => {
-        db.host.upsert({
+function upsertHost(host_id, first_name, last_name) {
+    db.host.upsert({
             host_id,
-            email,
             first_name,
-            last_name})
+            last_name
     }).catch((err) => {
         console.log(err);
     })
@@ -37,14 +23,15 @@ function addOrUpdateHost(email, first_name, last_name) {
 // function hostUpsert(host_id, email, first_name, last_name) {
     
 // }
-// function addGuest(guest_id, email, first_name, last_name) {
-//     db.guest.create({
-//         guest_id,
-//         email,
-//         first_name,
-//         last_name
-//     })
-// }
+function upsertGuest(guest_id, first_name, last_name) {
+    db.guest.upsert({
+        guest_id,
+        first_name,
+        last_name
+    }).catch((err) => {
+        console.log(err);
+    })
+}
 
 // function addHostGuest(host_id, guest_id) {
 //     db.host_guest.create({
@@ -224,7 +211,10 @@ function addOrUpdateHost(email, first_name, last_name) {
 //     findGuestsByHostId
 // };
 
-module.exports = {addOrUpdateHost};
+module.exports = {
+    upsertHost,
+    upsertGuest
+};
 
 
 

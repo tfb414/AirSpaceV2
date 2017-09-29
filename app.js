@@ -12,6 +12,7 @@ require('dotenv').config();
 
 var index = require('./routes/index');
 var host = require('./routes/host');
+var guest = require('./routes/guest');
 
 var app = express();
 
@@ -44,20 +45,35 @@ passport.deserializeUser(function(email, done) {
 });
 
 
-passport.use(new GoogleStrategy({
+passport.use('host', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK_HOST
   },
     function(accessToken, refreshToken, profile, done) {
-        var firstname = profile.name.givenName;
+        let firstname = profile.name.givenName;
         firstname = firstname.replace("'", "''");
-        var lastname = profile.name.familyName;
+        let lastname = profile.name.familyName;
         lastname = lastname.replace("'", "''");
-        var email = profile.emails[0].value;
-        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname)
+        let email = profile.emails[0].value;
+        queries.upsertHost(email, firstname, lastname);
         done(null, email);
-}))    
+})) 
+
+passport.use('guest', new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK_GUEST
+  },
+    function(accessToken, refreshToken, profile, done) {
+        let firstname = profile.name.givenName;
+        firstname = firstname.replace("'", "''");
+        let lastname = profile.name.familyName;
+        lastname = lastname.replace("'", "''");
+        let email = profile.emails[0].value;
+        queries.upsertGuest(email, firstname, lastname);
+        done(null, email);
+}))   
 
 // Express and Passport Session
 app.use(session({
@@ -70,13 +86,23 @@ app.use(passport.session());
         
 app.use('/', index);
 app.use('/host', host);
+app.use('/guest', guest);
 
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/host/auth/google',
+    passport.authenticate('host', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback', 
-    passport.authenticate('google', {
+app.get('/host/auth/google/callback', 
+    passport.authenticate('host', {
         successRedirect: '/host',
+        failureRedirect: '/',
+        failureFlash: true }));
+
+app.get('/guest/auth/google',
+    passport.authenticate('guest', { scope: ['profile', 'email'] }));
+
+app.get('/guest/auth/google/callback', 
+    passport.authenticate('guest', {
+        successRedirect: '/guest',
         failureRedirect: '/',
         failureFlash: true }));
 
