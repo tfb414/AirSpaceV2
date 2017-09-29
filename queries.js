@@ -28,16 +28,15 @@ function addOrUpdateHost(email, first_name, last_name) {
             email,
             first_name,
             last_name})
-    }).then(res => {
-        console.log(res);
-        return res;
+    }).catch((err) => {
+        console.log(err);
     })
 }
+
 
 // function hostUpsert(host_id, email, first_name, last_name) {
     
 // }
-
 // function addGuest(guest_id, email, first_name, last_name) {
 //     db.guest.create({
 //         guest_id,

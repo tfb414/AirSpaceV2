@@ -11,7 +11,7 @@ const session = require('express-session');
 require('dotenv').config();
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var host = require('./routes/host');
 
 var app = express();
 
@@ -54,12 +54,10 @@ passport.use(new GoogleStrategy({
         firstname = firstname.replace("'", "''");
         var lastname = profile.name.familyName;
         lastname = lastname.replace("'", "''");
-        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname).then((result) => {
-            console.log(profile);
-            done(null, profile.emails[0].value);
-        })
-}))
-    
+        var email = profile.emails[0].value;
+        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname)
+        done(null, email);
+}))    
 
 // Express and Passport Session
 app.use(session({
@@ -71,7 +69,7 @@ app.use(passport.initialize());
 app.use(passport.session());
         
 app.use('/', index);
-app.use('/users', users);
+app.use('/host', host);
 
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] }));
