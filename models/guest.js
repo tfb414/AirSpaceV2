@@ -4,11 +4,8 @@ module.exports = (sequelize, Sequelize) => {
         guest_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
-        },
-        email: {
-        type: Sequelize.STRING,
-        allowNull: false
+        primaryKey: true,
+        unique: true
         },
         first_name: {
         type: Sequelize.TEXT,

@@ -3,14 +3,19 @@ import Button from './Button';
 
 const handleHostClick = () => {
     console.log('fhqwhgads');
-    window.location.assign('/auth/google');
+    window.location.assign('/host/auth/google');
+}
+
+const handleGuestClick = () => {
+    console.log('noooo');
+    window.location.assign('/guest/auth/google');
 }
 
 const LandingButtonContainer = () => {
     return (
         <div>
             <Button text="Host" onClick={handleHostClick}/>
-            <Button text="Guest" onClick={()=> console.log('yaaah')}/>
+            <Button text="Guest" onClick={handleGuestClick}/>
         </div>
     )
 }
