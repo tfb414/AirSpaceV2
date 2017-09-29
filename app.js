@@ -54,8 +54,8 @@ passport.use(new GoogleStrategy({
         firstname = firstname.replace("'", "''");
         var lastname = profile.name.familyName;
         lastname = lastname.replace("'", "''");
-        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname)
-        .then((result) => {
+        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname).then((result) => {
+            console.log(profile);
             done(null, profile.emails[0].value);
         })
 }))
