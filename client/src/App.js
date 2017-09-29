@@ -12,14 +12,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hosts: [],
-      host: {},
-      messages: []
+      messages: ['hey'],
+      host_id: 'tfb414@gmail.com'
+
     }
   }
 
 
   componentDidMount() {
+    console.log('derp')
     // this is an "echo" websocket service for testing pusposes
     this.connection = new WebSocket('ws://localhost:8080');
     // listen to onmessage event
@@ -47,7 +48,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route exact path="/host" component={(match) => (<HostDashboard match={match} />)} />
+              <Route exact path="/host" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} />)} />
             </Switch>
           </div>
         </BrowserRouter>

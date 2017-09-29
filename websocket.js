@@ -26,7 +26,7 @@ function init() {
             console.log('derp back to you')
             // Broadcast to everyone else.
             // sendToWebSocket("hey!")
-            console.log(data + 'it has not sent yet')
+            console.log(data);
 
 
 
