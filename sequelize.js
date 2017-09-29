@@ -36,4 +36,9 @@ db.sq_question_option = require('./models/sq_question_option.js')(sequelize, Seq
 // db.host.hasMany(db.guest);
 // db.guest.belongsTo
 
+//Syncs tables to DB
+// db.host.sync({force: true});
+// db.guest.sync({force: true});
+// db.host_guest.sync({force: true});
+
 module.exports = db;

@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
     const host_guest = sequelize.define('host_guest', {
         host_id: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: 'host',
             key: 'host_id'
@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         guest_id: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: 'guest',
             key: 'guest_id'

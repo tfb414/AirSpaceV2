@@ -50,12 +50,12 @@ passport.use(new GoogleStrategy({
     callbackURL: process.env.GOOGLE_CALLBACK
   },
     function(accessToken, refreshToken, profile, done) {
-        var firstname = profile.name.givenName;
+        let firstname = profile.name.givenName;
         firstname = firstname.replace("'", "''");
-        var lastname = profile.name.familyName;
+        let lastname = profile.name.familyName;
         lastname = lastname.replace("'", "''");
-        var email = profile.emails[0].value;
-        queries.addOrUpdateHost(profile.emails[0].value, firstname, lastname)
+        let email = profile.emails[0].value;
+        queries.addOrUpdateHost(email, firstname, lastname)
         done(null, email);
 }))    
 
