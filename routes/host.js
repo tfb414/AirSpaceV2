@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
+const ensureAuthenticated = require('../utils').ensureAuthenticated;
 // const queries = require('../queries.js');
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    console.log('whaaaat');
-    res.render('host')
+router.get('/', ensureAuthenticated, function(req, res, next) {
+    // res.redirect('/host/')
     // queries.getHostById('578')
     //     .then(host => {
     //         res.json(host);
