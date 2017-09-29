@@ -36,6 +36,4 @@ db.sq_question_option = require('./models/sq_question_option.js')(sequelize, Seq
 // db.host.hasMany(db.guest);
 // db.guest.belongsTo
 
-
-
 module.exports = db;
