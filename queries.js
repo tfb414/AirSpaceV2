@@ -25,10 +25,10 @@ function upsertHost(host_id, first_name, last_name) {
 // }
 function upsertGuest(guest_id, first_name, last_name) {
     db.guest.upsert({
-        email,
+        guest_id,
         first_name,
         last_name
-    }).catcy((err) => {
+    }).catch((err) => {
         console.log(err);
     })
 }

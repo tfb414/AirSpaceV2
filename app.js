@@ -12,7 +12,7 @@ require('dotenv').config();
 
 var index = require('./routes/index');
 var host = require('./routes/host');
-var host = require('./routes/guest');
+var guest = require('./routes/guest');
 
 var app = express();
 
@@ -48,7 +48,7 @@ passport.deserializeUser(function(email, done) {
 passport.use('host', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK_HOST
   },
     function(accessToken, refreshToken, profile, done) {
         let firstname = profile.name.givenName;
@@ -63,7 +63,7 @@ passport.use('host', new GoogleStrategy({
 passport.use('guest', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    callbackURL: process.env.GOOGLE_CALLBACK_GUEST
   },
     function(accessToken, refreshToken, profile, done) {
         let firstname = profile.name.givenName;
