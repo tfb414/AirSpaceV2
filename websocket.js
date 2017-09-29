@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const query = require('./queries');
 
 function init() {
     const wss = new WebSocket.Server({ port: 8080 });
@@ -21,13 +22,16 @@ function init() {
             // }
         });
 
-        console.log('IT IS ALIIIVE')
         ws.on('message', function incoming(data) {
-            console.log('derp back to you')
+            let parsedData = JSON.parse(data);
+            console.log('inc Data')
             // Broadcast to everyone else.
             // sendToWebSocket("hey!")
-            console.log(data);
-
+            console.log(JSON.parse(data));
+            if (parsedData.type === 'CREATESURVEY') {
+                console.log('we here')
+                query.addSQ(parsedData.payload.title, parsedData.payload.host_id)
+            }
 
 
         });

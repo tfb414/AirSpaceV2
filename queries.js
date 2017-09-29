@@ -11,9 +11,9 @@ const guid = require('guid');
 
 function upsertHost(host_id, first_name, last_name) {
     db.host.upsert({
-            host_id,
-            first_name,
-            last_name
+        host_id,
+        first_name,
+        last_name
     }).catch((err) => {
         console.log(err);
     })
@@ -21,7 +21,7 @@ function upsertHost(host_id, first_name, last_name) {
 
 
 // function hostUpsert(host_id, email, first_name, last_name) {
-    
+
 // }
 function upsertGuest(guest_id, first_name, last_name) {
     db.guest.upsert({
@@ -52,11 +52,12 @@ function upsertGuest(guest_id, first_name, last_name) {
 // //     })
 // // }
 
-// function addSQ(sq_name) {
-//     db.sq.create({
-//         sq_name
-//     })
-// }
+function addSQ(sq_name, host_id) {
+    db.sq.create({
+        sq_name,
+        host_id
+    })
+}
 
 // function addQuestion(question_text, question_number) {
 //     db.question.create({
@@ -213,7 +214,8 @@ function upsertGuest(guest_id, first_name, last_name) {
 
 module.exports = {
     upsertHost,
-    upsertGuest
+    upsertGuest,
+    addSQ
 };
 
 
