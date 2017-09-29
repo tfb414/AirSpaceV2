@@ -1,5 +1,4 @@
 const db = require('./sequelize.js');
-const guid = require('guid');
 
 // function getAllHosts() {
 //     return db.host.findAll();
@@ -19,10 +18,6 @@ function upsertHost(host_id, first_name, last_name) {
     })
 }
 
-
-// function hostUpsert(host_id, email, first_name, last_name) {
-    
-// }
 function upsertGuest(guest_id, first_name, last_name) {
     db.guest.upsert({
         guest_id,
