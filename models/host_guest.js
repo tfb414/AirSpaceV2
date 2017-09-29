@@ -21,7 +21,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true
+            autoIncrement: true,
+            unique: true
         }
     }, {
             tableName: 'host_guest'

@@ -5,11 +5,8 @@ module.exports = (sequelize, Sequelize) => {
         host_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
-        },
-        email: {
-        type: Sequelize.STRING,
-        allowNull: false
+        primaryKey: true,
+        unique: true
         },
         first_name: {
         type: Sequelize.TEXT,
