@@ -10,7 +10,15 @@ module.exports = (sequelize, Sequelize) => {
         sq_name: {
         type: Sequelize.TEXT,
         allowNull: true
-        }
+    },
+      host_id: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          references: {
+              model: 'host',
+              key: 'host_id'
+          }
+      }  
     }, {
         tableName: 'sq'
     });

@@ -4,7 +4,8 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-
+    console.log('whaaaat');
+    res.render('host')
     // queries.getHostById('578')
     //     .then(host => {
     //         res.json(host);
