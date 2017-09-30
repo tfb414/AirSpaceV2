@@ -47,7 +47,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route exact path="/host" component={(match) => (<HostDashboard match={match} />)} />
+              <Route exact path="/hostdashboard/" component={(match) => (<HostDashboard match={match} />)} />
             </Switch>
           </div>
         </BrowserRouter>
