@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
+const ensureAuthenticated = require('../utils').ensureAuthenticated;
+var React = require('react');
+// var HostDashboard = require('../client/src/components/HostDashboard.js');
+// var markup = React.renderComponentToString(HostDashboard)
 // const queries = require('../queries.js');
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    console.log('whaaaat');
+router.get('/', ensureAuthenticated, function(req, res, next) {
     res.render('host')
     // queries.getHostById('578')
     //     .then(host => {

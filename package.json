@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build-css": "node-sass-chokidar client/src/ -o client/src/",
+    "watch-css": "npm run build-css && node-sass-chokidar client/src/ -o client/src/ --watch --recursive",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -12,13 +14,18 @@
     "dotenv": "^4.0.0",
     "express": "~4.15.2",
     "express-session": "^1.15.6",
+<<<<<<< HEAD
     "guid": "^0.0.12",
+=======
+>>>>>>> master
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
+    "node-sass-chokidar": "^0.0.3",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
+    "react": "^16.0.0",
     "sequelize": "^4.11.1",
     "serve-favicon": "~2.4.2",
     "ws": "^3.2.0"
