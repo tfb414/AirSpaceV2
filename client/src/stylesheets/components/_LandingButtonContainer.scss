@@ -1,0 +1,6 @@
+.landingButton {
+    font-size: 300%;
+    @include respond-to(medium) {
+        font-size: 500%;
+    }
+}
