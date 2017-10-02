@@ -31,14 +31,14 @@ export default class CreateSurvey extends Component {
 
     render() {
         let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
-            return <SurveyQuestionInput num={Object.keys(data)} value={data[Object.keys(data)].text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion}/>
-            
+            return <SurveyQuestionInput num={Object.keys(data)} value={data[Object.keys(data)].text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
+
         })
 
         return (
             <div>
                 <div>
-                    <p>Survey Title: 
+                    <p>Survey Title:
                     <input type='text' value={this.state.title} onChange={this.handleChange}></input>
                     </p>
                 </div>
@@ -55,7 +55,7 @@ export default class CreateSurvey extends Component {
         let new_form = this.state.question
         var new_num = new_form.length + 1
         let new_object = {}
-        new_object[new_num]={text: ""}                      // adding the new object to this.state.question
+        new_object[new_num] = { text: "" }                      // adding the new object to this.state.question
         new_form.push(new_object)
         this.setState({
             question: new_form
@@ -81,9 +81,9 @@ export default class CreateSurvey extends Component {
         })
     }
 
-    _submitSurvey = () => {                             // Since the DB is down, I commented it out and added a console.log to see the payload
+    _submitSurvey = () => {
         console.log(this._createPayload())
-        // this.props.sendMessage(this._createPayload());
+        this.props.sendMessage(this._createPayload());
     }
 
     _createPayload = () => {
