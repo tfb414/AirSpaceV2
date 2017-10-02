@@ -9,9 +9,8 @@ export default class CreateSurvey extends Component {
             title: "",
             question: [
                 {
-                    1: {
-                        text: ""
-                    }
+                    question_number: 1,
+                    text: ""
                 },
             ]
         }
@@ -91,12 +90,10 @@ export default class CreateSurvey extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATESURVEY',
-            payload: {
-                host_id: this.state.host_id,
-                title: this.state.title,
-                question: question_object
-            }
+            TYPE: 'CREATESURVEY',
+            HOST_ID: this.state.host_id,
+            TITLE: this.state.title,
+            PAYLOAD: question_object
         }
         return JSON.stringify(payload);
 
