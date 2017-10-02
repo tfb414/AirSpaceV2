@@ -23,31 +23,48 @@ function init() {
         });
 
         ws.on('message', function incoming(data) {
-            let parsedData = derp;
+            let parsedData = createQuizExample;
             // let parsedData = JSON.parse(data);
+            // let parsedData = createSurveyExample;
             // console.log('inc Data')
             // Broadcast to everyone else.
             // sendToWebSocket("hey!")
             // console.log(JSON.parse(data));
             // if (parsedData.type === 'CREATESURVEY') {
-
-            query.addSQ(parsedData.title, parsedData.host_id);
-            addQuestion(parsedData.payload);
+            //     addSurveyAndQuestions(parsedData);
             // }
+            addQuizQuestionsAnswers(parsedData);
+
 
 
         });
     });
 }
 
-function addQuestion(parsedData) {
+function addQuizQuestionsAnswers(parsedData) {
+    query.addSQ(parsedData.title, parsedData.host_id);
+    addQuestionsAndAnswers(parsedData.payload);
+}
+
+
+function addQuestionsAndAnswers(parsedData) {
     parsedData.forEach((question) => {
-        console.log(question);
         query.addQuestion(question.text, question.question_number);
+        if (question.option !== undefined) {
+            addOptions(question, parsedData);
+        }
     })
 }
 
-const derp = {
+function addOptions(question, parsedData) {
+    question.option.forEach((option) => {
+        query.addOption(option.text, option.value)
+    })
+}
+
+
+
+const createSurveyExample = {
     type: 'CREATESURVEY',
     title: "title of survey",
     host_id: "tfb414@gmail.com",
@@ -64,6 +81,62 @@ const derp = {
     ]
 }
 
+const createSurveyExample2 = {
+    "type": "CREATESURVEY",
+    "host_id": "tfb414@gmail.com",
+    "title": "Title 1",
+    "payload": [
+        {
+            "question_number": 1,
+            "text": "Favorite Color?"
+        },
+        {
+            "question_number": 2,
+            "text": "Favorite Animal?"
+        }]
+}
+
+const createQuizExample =
+    {
+        type: 'CREATEQUIZ',
+        title: "title of Quiz",
+        host_id: "tfb414@gmail.com",
+        payload: [
+            {
+                question_number: 1,
+                text: 'Favorite Color',
+                option: [{
+                    value: 'true',
+                    text: "blue"
+                },
+                {
+                    value: 'false',
+                    text: 'green'
+                },
+                {
+                    value: 'false',
+                    text: 'purple'
+                },
+                ]
+            },
+            {
+                question_number: 2,
+                text: 'favorite animal?',
+                option: [{
+                    value: 'true',
+                    text: "horse"
+                },
+                {
+                    value: 'false',
+                    text: 'cow'
+                },
+                {
+                    value: 'false',
+                    text: 'dog'
+                },
+                ]
+            }]
+    }
 
 
 // function sendToWebSocket(message) {

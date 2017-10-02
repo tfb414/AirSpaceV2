@@ -61,12 +61,12 @@ function addQuestion(question_text, question_number) {
     })
 }
 
-// function addOption(option_text, option_value) {
-//     db.option.create({
-//         option: option_text,
-//         option_value
-//     })
-// }
+function addOption(option_text, option_value) {
+    db.option.create({
+        option: option_text,
+        option_value
+    })
+}
 
 // function addSQQuestionOption(sq_id, question_id, option_id) {
 //     db.sq_question_option.create({
@@ -211,7 +211,8 @@ module.exports = {
     upsertHost,
     upsertGuest,
     addSQ,
-    addQuestion
+    addQuestion,
+    addOption
 };
 
 
