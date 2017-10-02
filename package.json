@@ -14,7 +14,6 @@
     "dotenv": "^4.0.0",
     "express": "~4.15.2",
     "express-session": "^1.15.6",
-    "guid": "0.0.12",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
     "node-sass-chokidar": "^0.0.3",
@@ -22,6 +21,7 @@
     "passport-google-oauth": "^1.0.0",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
+    "react": "^16.0.0",
     "sequelize": "^4.11.1",
     "serve-favicon": "~2.4.2",
     "ws": "^3.2.0"
