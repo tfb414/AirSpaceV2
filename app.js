@@ -9,6 +9,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const queries = require('./queries');
 const session = require('express-session');
 require('dotenv').config();
+const ensureAuthenticated = require('./utils').ensureAuthenticated;
 
 var index = require('./routes/index');
 var host = require('./routes/host');
@@ -84,16 +85,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
         
-app.use('/', index);
-app.use('/host', host);
-app.use('/guest', guest);
+// app.use('/', index);
 
 app.get('/host/auth/google',
     passport.authenticate('host', { scope: ['profile', 'email'] }));
 
 app.get('/host/auth/google/callback', 
     passport.authenticate('host', {
-        successRedirect: '/host',
+        successRedirect: '/host/',
         failureRedirect: '/',
         failureFlash: true }));
 
@@ -105,6 +104,10 @@ app.get('/guest/auth/google/callback',
         successRedirect: '/guest',
         failureRedirect: '/',
         failureFlash: true }));
+
+app.get('*', ensureAuthenticated, (req, res, next) => {
+  res.sendFile('/public/index.html', {"root": __dirname});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
