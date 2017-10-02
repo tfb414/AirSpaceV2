@@ -14,7 +14,7 @@ sequelize
     })
     .catch(err => {
         console.error('Unable to connect to the database:', err);
-    }); 
+    });
 
 // Connect all the models/tables in the database to a db object, so everything is acessible via // one object
 const db = {};
