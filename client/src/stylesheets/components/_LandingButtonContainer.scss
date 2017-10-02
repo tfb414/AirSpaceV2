@@ -1,5 +1,6 @@
 .landingButton {
     width: 5rem;
+    height: 2.2rem;
     border: none;
     @include respond-to(medium) {
         font-size: 500%;
@@ -8,9 +9,10 @@
 
 .landingButtonContainer {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 10%;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     border: 1px solid blue;
 }
