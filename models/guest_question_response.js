@@ -1,6 +1,13 @@
 
 module.exports = (sequelize, Sequelize) => {
     const guest_question_response = sequelize.define('guest_question_response', {
+        gqr_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+        unique: true
+        },
         guest_id: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -28,6 +35,10 @@ module.exports = (sequelize, Sequelize) => {
             model: 'option',
             key: 'option_id'
         }
+    },
+        response: {
+        type: Sequelize.STRING,
+        allowNull: true,
         }
     }, {
         tableName: 'guest_question_response'

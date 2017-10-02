@@ -10,9 +10,9 @@ const db = require('./sequelize.js');
 
 function upsertHost(host_id, first_name, last_name) {
     db.host.upsert({
-            host_id,
-            first_name,
-            last_name
+        host_id,
+        first_name,
+        last_name
     }).catch((err) => {
         console.log(err);
     })
