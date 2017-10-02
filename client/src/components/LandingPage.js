@@ -4,7 +4,7 @@ import LandingButtonContainer from './LandingButtonContainer'
 
 const LandingPage = () => {
     return (
-        <div>
+        <div className="landingPage">
             <LandingButtonContainer />
         </div>
     )

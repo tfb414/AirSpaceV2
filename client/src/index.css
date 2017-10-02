@@ -393,12 +393,54 @@ template {
   box-sizing: inherit; }
 
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%; }
+
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.App {
+  width: 100%;
+  height: 100%; }
+
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
 
 .landingButton {
-  font-size: 300%; }
+  width: 5rem;
+  border: none; }
   @media (min-width: 768px) {
     .landingButton {
       font-size: 500%; } }
+
+.landingButtonContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid blue; }
+
+.landingPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.App > div {
+  width: 100%;
+  height: 100%; }
 
 /*# sourceMappingURL=index.css.map */

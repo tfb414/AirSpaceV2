@@ -13,7 +13,7 @@ const handleGuestClick = () => {
 
 const LandingButtonContainer = () => {
     return (
-        <div>
+        <div className="landingButtonContainer">
             <Button className="landingButton" text="Host" onClick={handleHostClick}/>
             <Button className="landingButton" text="Guest" onClick={handleGuestClick}/>
         </div>
