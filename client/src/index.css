@@ -390,8 +390,7 @@ template {
   display: none; }
 
 * {
-  box-sizing: inherit;
-  border: 2px solid red; }
+  box-sizing: inherit; }
 
 html {
   box-sizing: border-box; }
