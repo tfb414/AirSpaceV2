@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import LandingPage from './components/LandingPage'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import HostDashboard from "./components/HostDashboard"
 import env from './utility/env'
-
-
-
-
-
-
 
 class App extends Component {
   constructor(props) {
@@ -17,10 +10,8 @@ class App extends Component {
     this.state = {
       messages: ['hey'],
       host_id: 'tfb414@gmail.com'
-
     }
   }
-
 
   componentDidMount() {
     console.log('derp')
@@ -45,10 +36,10 @@ class App extends Component {
   render() {
     console.log(this.connection)
     return (
-      <div className='App'>
-        <div>
+      <div className="App">
+        {/* <div>
           {this.state.messages.map((msg, idx) => <li key={'msg-' + idx}>{msg}</li>)}
-        </div>
+        </div> */}
         <BrowserRouter>
           <div>
             <Switch>
