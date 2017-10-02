@@ -47,11 +47,12 @@ function upsertGuest(guest_id, first_name, last_name) {
 // //     })
 // // }
 
-// function addSQ(sq_name) {
-//     db.sq.create({
-//         sq_name
-//     })
-// }
+function addSQ(sq_name, host_id) {
+    db.sq.create({
+        sq_name,
+        host_id
+    })
+}
 
 // function addQuestion(question_text, question_number) {
 //     db.question.create({
@@ -208,7 +209,8 @@ function upsertGuest(guest_id, first_name, last_name) {
 
 module.exports = {
     upsertHost,
-    upsertGuest
+    upsertGuest,
+    addSQ
 };
 
 
