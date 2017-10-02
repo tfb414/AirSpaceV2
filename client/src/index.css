@@ -389,6 +389,9 @@ template {
 [hidden] {
   display: none; }
 
+/**
+ * Basic typography style for copy text
+ */
 * {
   box-sizing: inherit; }
 
@@ -418,17 +421,30 @@ body {
   justify-content: center; }
 
 .landingButton {
-  width: 5rem;
-  height: 2.2rem;
-  border: none; }
+  width: 40%;
+  height: 60%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+  @media (min-width: 320px) {
+    .landingButton {
+      font-size: 2.2rem; } }
   @media (min-width: 768px) {
     .landingButton {
       font-size: 500%; } }
 
+.landingButton:focus,
+.landingButton:hover {
+  background-color: black;
+  transition: .7s background-color ease-in-out; }
+
 .landingButtonContainer {
   display: flex;
-  width: 80%;
-  height: 10%;
+  width: 100%;
+  height: 30%;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
@@ -440,7 +456,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  background: url(stylesheets/images/blooboard.jpg);
+  background-size: cover; }
 
 .App > div {
   width: 100%;
