@@ -4,7 +4,7 @@ const pg = require('pg');
 // const host = require('./models/host.js');
 
 
-const sequelize = new Sequelize(`postgres://${process.env.DB_USER}@${process.env.DB_HOST}:5432/${process.env.DB_NAME}`);
+const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
 
 // Verifies connection to database
 sequelize
@@ -14,7 +14,7 @@ sequelize
     })
     .catch(err => {
         console.error('Unable to connect to the database:', err);
-    }); 
+    });
 
 // Connect all the models/tables in the database to a db object, so everything is acessible via // one object
 const db = {};
