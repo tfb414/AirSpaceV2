@@ -432,9 +432,6 @@ body {
   @media (min-width: 320px) {
     .landingButton {
       font-size: 2.2rem; } }
-  @media (min-width: 768px) {
-    .landingButton {
-      font-size: 500%; } }
 
 .landingButton:focus,
 .landingButton:hover {
@@ -447,8 +444,7 @@ body {
   height: 30%;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
-  border: 1px solid blue; }
+  align-items: center; }
 
 .landingPage {
   width: 100%;
@@ -458,7 +454,18 @@ body {
   align-items: center;
   justify-content: center;
   background: url(stylesheets/images/blooboard.jpg);
-  background-size: cover; }
+  background-size: cover;
+  color: white;
+  text-align: center;
+  font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+
+.branding {
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 3rem; }
+  @media (min-width: 320px) {
+    .branding {
+      font-size: 4rem; } }
 
 .App > div {
   width: 100%;
