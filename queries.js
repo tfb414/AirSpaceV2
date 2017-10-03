@@ -51,6 +51,8 @@ function addSQ(sq_name, host_id) {
     db.sq.create({
         sq_name,
         host_id
+    }).then(resp => {
+        console.log(resp.dataValues.sq_id);
     })
 }
 
@@ -68,13 +70,13 @@ function addOption(option_text, option_value) {
     })
 }
 
-// function addSQQuestionOption(sq_id, question_id, option_id) {
-//     db.sq_question_option.create({
-//         option_id,
-//         question_id,
-//         sq_id
-//     })
-// }
+function addSQQuestionOption(sq_id, question_id, option_id) {
+    db.sq_question_option.create({
+        option_id,
+        question_id,
+        sq_id
+    })
+}
 
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
@@ -212,7 +214,8 @@ module.exports = {
     upsertGuest,
     addSQ,
     addQuestion,
-    addOption
+    addOption, 
+    addSQQuestionOption
 };
 
 
