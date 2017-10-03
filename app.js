@@ -101,7 +101,7 @@ app.get('/guest/auth/google',
 
 app.get('/guest/auth/google/callback', 
     passport.authenticate('guest', {
-        successRedirect: '/guest',
+        successRedirect: '/guest/',
         failureRedirect: '/',
         failureFlash: true }));
 
