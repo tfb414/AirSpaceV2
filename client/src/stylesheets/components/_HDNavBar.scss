@@ -1,6 +1,6 @@
-.hostDash > div {
-    width: 35%;
-    min-width: 5rem;
+.hostDash > div:nth-child(1) {
+    width: 45%;
+    min-width: 4rem;
     @include respond-to(medium) {
         max-width: 15rem;
     }
