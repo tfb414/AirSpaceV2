@@ -5,10 +5,10 @@ import HDNavButton from './HDNavButton'
 
 const HDNavBar = (props) => {
     let navBar = props.name.map((link) => {
-        return <HDNavButton match={props.match} name={link} />
+        return <HDNavButton className={props.className} match={props.match} name={link} />
     })
     return (
-        <div>
+        <div className={props.className}>
             {navBar}
         </div>
 
