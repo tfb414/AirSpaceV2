@@ -436,7 +436,8 @@ body {
   @media (min-width: 768px) {
     .landingButton {
       width: 30%;
-      height: 50%; } }
+      height: 50%;
+      margin: 3rem; } }
   @media (min-width: 1024px) {
     .landingButton {
       width: 20%;
@@ -454,6 +455,9 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center; }
+  @media (min-width: 768px) {
+    .landingButtonContainer {
+      justify-content: center; } }
 
 .landingPage {
   width: 100%;
