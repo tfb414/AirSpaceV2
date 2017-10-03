@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 
 import HDNavBar from './HDNavBar'
-import CreateSurvey from './CreateSurvey'
+import CreateSurvey from './CreateSurvey';
+import Create from './Create.js';
+
 
 
 class HostDashboard extends Component {
@@ -21,7 +23,7 @@ class HostDashboard extends Component {
                     <HDNavBar match={this.props.match} name={['create', 'struff']} />
                     <Switch>
                         <Route path="/host/struff" />
-                        <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+                        <Route path="/host/create" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
                     </Switch>
                 </div>
             </BrowserRouter>
