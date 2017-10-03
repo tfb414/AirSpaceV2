@@ -1,0 +1,24 @@
+.landingPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url(stylesheets/images/blooboard.jpg);
+    background-size: cover;
+    color: white;
+
+    text-align: center;
+    font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.branding {
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 3rem;
+    @include respond-to(small) {
+        font-size: 4rem;
+    }
+}

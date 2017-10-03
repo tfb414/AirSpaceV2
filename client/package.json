@@ -12,6 +12,7 @@
     "ws": "^3.2.0"
   },
   "scripts": {
+    "sass": "sass --watch src/stylesheets/main.scss:src/index.css",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

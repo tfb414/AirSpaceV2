@@ -3,8 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build-css": "node-sass-chokidar client/src/ -o client/src/",
-    "watch-css": "npm run build-css && node-sass-chokidar client/src/ -o client/src/ --watch --recursive",
     "start": "node ./bin/www"
   },
   "dependencies": {
