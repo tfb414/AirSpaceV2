@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import LandingPage from './components/LandingPage'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import HostDashboard from "./components/HostDashboard"
-import env from './utility/env'
+import LandingPage from './components/LandingPage';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import HostDashboard from "./components/HostDashboard";
+import env from './utility/env';
+import CreateSurvey from './components/CreateSurvey';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('derp')
+    console.log('derp');
 
     // this is an "echo" websocket service for testing pusposes
     this.connection = new WebSocket(env);
@@ -45,6 +46,8 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
               <Route exact path="/host/" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} sendMessage={this._sendMessage} />)} />
+              <Route path="/host/struff" />
+              <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this._sendMessage} />} />
             </Switch>
           </div>
         </BrowserRouter>
