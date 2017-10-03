@@ -80,7 +80,8 @@ passport.use('guest', new GoogleStrategy({
 app.use(session({
     secret: 'asdfjkl;',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -106,7 +107,8 @@ app.get('/guest/auth/google/callback',
         failureFlash: true }));
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
-  res.sendFile('/public/index.html', {"root": __dirname});
+    console.log(req.user);
+    res.sendFile('/public/index.html', {"root": __dirname});
 });
 
 // catch 404 and forward to error handler

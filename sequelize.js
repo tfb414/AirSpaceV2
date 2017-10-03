@@ -43,7 +43,7 @@ db.sq_question_option = require('./models/sq_question_option.js')(sequelize, Seq
 // db.host_guest.sync({force: true});
 // db.option.sync({force: true});
 // db.question.sync({force: true});
-db.sq.sync({force: true});
+// db.sq.sync({force: true});
 // db.sq_question_option.sync({force: true});
 
 module.exports = db;
