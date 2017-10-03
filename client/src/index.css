@@ -465,7 +465,22 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; }
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: white; }
+
+.createBox {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid white; }
+
+.quizOrSurveyBox {
+  display: flex;
+  flex-direction: column; }
 
 .landingButton {
   width: 40%;

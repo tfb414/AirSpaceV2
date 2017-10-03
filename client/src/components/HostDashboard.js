@@ -24,6 +24,13 @@ class HostDashboard extends Component {
                         <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
                     </Switch>
                     <div className="createSelection">
+                        <div className="createBox">
+                            <h1>Create</h1>
+                            <div className="quizOrSurveyBox">
+                                <button className="createOption"></button>
+                                <button className="createOption"></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </BrowserRouter>
