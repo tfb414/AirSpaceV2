@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import BaseStyles from './BaseStyles';
-import BurgerIcon from './BurgerIcon';
-import CrossIcon from './CrossIcon';
+// import BurgerIcon from './BurgerIcon';
+// import CrossIcon from './CrossIcon';
 
 export default (styles) => {
   class Menu extends Component {
@@ -84,7 +84,7 @@ export default (styles) => {
       const propName = 'bm' + el.replace(el.charAt(0), el.charAt(0).toUpperCase());
 
       // Set base styles.
-      let output = baseStyles[el] ? this.getStyle(baseStyles[el]) : {};
+      let output = BaseStyles[el] ? this.getStyle(BaseStyles[el]) : {};
 
       // Add animation-specific styles.
       if (styles[el]) {
@@ -212,7 +212,7 @@ export default (styles) => {
                 })}
               </nav>
             </div>
-            {this.props.customCrossIcon !== false && (
+            {/* {this.props.customCrossIcon !== false && (
               <div style={this.getStyles('closeButton')}>
                 <CrossIcon
                   onClick={() => this.toggleMenu()}
@@ -222,9 +222,9 @@ export default (styles) => {
                   crossClassName={this.props.crossClassName}
                 />
               </div>
-            )}
+            )} */}
           </div>
-          {this.props.customBurgerIcon !== false && (
+          {/* {this.props.customBurgerIcon !== false && (
             <div style={this.getStyles('burgerIcon')}>
               <BurgerIcon
                 onClick={() => this.toggleMenu()}
@@ -234,7 +234,7 @@ export default (styles) => {
                 barClassName={this.props.burgerBarClassName}
               />
             </div>
-          )}
+          )} */}
         </div>
       );
     }
@@ -246,8 +246,8 @@ export default (styles) => {
     burgerButtonClassName: PropTypes.string,
     crossButtonClassName: PropTypes.string,
     crossClassName: PropTypes.string,
-    customBurgerIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.oneOf([false])]),
-    customCrossIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.oneOf([false])]),
+    // customBurgerIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.oneOf([false])]),
+    // customCrossIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.oneOf([false])]),
     disableOverlayClick: PropTypes.bool,
     id: PropTypes.string,
     isOpen: PropTypes.bool,
