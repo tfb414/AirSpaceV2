@@ -23,8 +23,8 @@ function init() {
         });
 
         ws.on('message', function incoming(data) {
-            let parsedData = createQuizExample;
-            // let parsedData = JSON.parse(data);
+            // let parsedData = createQuizExample;
+            let parsedData = JSON.parse(data);
             // let parsedData = createSurveyExample;
             // console.log('inc Data')
             // Broadcast to everyone else.
@@ -33,6 +33,7 @@ function init() {
             // if (parsedData.type === 'CREATESURVEY') {
             //     addSurveyAndQuestions(parsedData);
             // }
+            console.log(parsedData)
             addQuizQuestionsAnswers(parsedData);
 
 
@@ -42,15 +43,15 @@ function init() {
 }
 
 function addQuizQuestionsAnswers(parsedData) {
-    query.addSQ(parsedData.title, parsedData.host_id);
+    query.addSQ(parsedData['title'], parsedData['host_id']);
     addQuestionsAndAnswers(parsedData.payload);
 }
 
 
 function addQuestionsAndAnswers(parsedData) {
     parsedData.forEach((question) => {
-        query.addQuestion(question.text, question.question_number);
-        if (question.option !== undefined) {
+        query.addQuestion(question['text'], question['question_number']);
+        if (question['option'] !== undefined) {
             addOptions(question, parsedData);
         }
     })
