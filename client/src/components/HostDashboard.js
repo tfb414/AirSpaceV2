@@ -17,7 +17,7 @@ class HostDashboard extends Component {
         return (
 
             <BrowserRouter>
-                <div>
+                <div className="hostDash">
                     <HDNavBar match={this.props.match} name={['create', 'struff']} />
                     <Switch>
                         <Route path="/host/struff" />
@@ -32,4 +32,4 @@ class HostDashboard extends Component {
 
 }
 
-export default HostDashboard
+export default HostDashboard;
