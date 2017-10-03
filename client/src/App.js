@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HostDashboard from "./components/HostDashboard";
 import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
+import Create from './components/Create.js'
 
 class App extends Component {
   constructor(props) {
@@ -46,8 +47,10 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
               <Route exact path="/host/" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} sendMessage={this._sendMessage} />)} />
-              <Route path="/host/struff" />
-              <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this._sendMessage} />} />
+              <Route path="/host/struff/" />
+              <Route path="/host/create/" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+              <Route path="/host/quiz" />
+              <Route path="/host/survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
             </Switch>
           </div>
         </BrowserRouter>
