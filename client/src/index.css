@@ -400,6 +400,9 @@ html {
   height: 100%;
   width: 100%; }
 
+a {
+  text-decoration: none; }
+
 body {
   width: 100%;
   height: 100%;
@@ -420,12 +423,39 @@ body {
   align-items: center;
   justify-content: center; }
 
+.hostDash > div {
+  width: 30%;
+  min-width: 5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  color: white; }
+
+.HDNavButton {
+  border: none;
+  padding: 1.6rem;
+  font-size: 1rem;
+  background-color: unset;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  @media (min-width: 320px) {
+    .HDNavButton {
+      font-size: 1.2rem; } }
+
+.HDNavButton:focus,
+.HDNavButton:hover {
+  background-color: blue;
+  transition: 1s background-color ease-in-out; }
+
+.HDNavButton a {
+  color: white; }
+
 .hostDash {
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
-  align-items: center; }
+  align-items: flex-start; }
 
 .landingButton {
   width: 40%;
