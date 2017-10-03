@@ -5,16 +5,24 @@
     color: white;
     font-weight: bold;
     text-align: center;
-    background-color: rgba(0,0,0,0.3);
+    // background-color: rgba(0,0,0,0.3);
+    background-color: unset;
+    border: 1px solid white;
     font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    // letter-spacing: 2px;
     @include respond-to(small) {
-        font-size: 2.2rem;
+        font-size: 2rem;
+    }
+    @include respond-to(medium) {
+        width: 30%;
+        height: 50%;
     }
 }
 
 .landingButton:focus,
 .landingButton:hover {
-    background-color: black;
+    // background-color: black;
+    background-color: rgba(255,255,255, 0.1);
     transition: .7s background-color ease-in-out;
 }
 
