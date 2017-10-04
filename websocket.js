@@ -54,8 +54,8 @@ function init() {
                 // if (parsedData.type === 'CREATESURVEY') {
                 //     addSurveyAndQuestions(parsedData);
                 // }
-                // console.log(parsedData);
-                addQuizQuestionsAnswers(parsedData);
+                
+                addQuizQuestionsAnswers(parsedData.payload);
 
             });
 
@@ -64,23 +64,30 @@ function init() {
 }
 
 function addQuizQuestionsAnswers(parsedData) {
-    query.addSQ(parsedData['title'], parsedData['host_id']);
-    addQuestionsAndAnswers(parsedData.payload);
+    query.addSQ(parsedData['title'], parsedData['host_id'], 'quiz').then(resp => {
+        addQuestionsAndAnswers(parsedData.question, resp.dataValues.sq_id);
+    });
 }
 
 
-function addQuestionsAndAnswers(parsedData) {
+function addQuestionsAndAnswers(parsedData, sq_id) {
     parsedData.forEach((question) => {
-        query.addQuestion(question['text'], question['question_number']);
-        if (question['option'] !== undefined) {
-            addOptions(question, parsedData);
-        }
+        query.addQuestion(question['text'], question['question_number']).then(resp => {
+            let question_id = resp.dataValues.question_id
+            if (question['option'] !== undefined) {
+                addOptions(question, parsedData, sq_id, question_id);
+            } else {
+                query.addSQQuestionOption(sq_id, question_id, null);
+            }
+        })
     })
 }
 
-function addOptions(question, parsedData) {
+function addOptions(question, parsedData, sq_id, question_id) {
     question.option.forEach((option) => {
-        query.addOption(option.text, option.value)
+        query.addOption(option.text, option.value).then(resp => {
+            query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
+        })
     })
 }
 

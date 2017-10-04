@@ -28,7 +28,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bo dyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -111,7 +111,7 @@ app.get('/guest/auth/google/callback',
         failureFlash: true }));
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
-    console.log(req.user);
+    // console.log(req.user);
     res.sendFile('/public/index.html', {"root": __dirname});
 });
 

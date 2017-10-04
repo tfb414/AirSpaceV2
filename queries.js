@@ -47,24 +47,23 @@ function upsertGuest(guest_id, first_name, last_name) {
 // //     })
 // // }
 
-function addSQ(sq_name, host_id) {
-    db.sq.create({
+function addSQ(sq_name, host_id, type) {
+    return db.sq.create({
         sq_name,
-        host_id
-    }).then(resp => {
-        console.log(resp.dataValues.sq_id);
+        host_id,
+        type
     })
 }
 
 function addQuestion(question_text, question_number) {
-    db.question.create({
+    return db.question.create({
         question: question_text,
         question_number
     })
 }
 
 function addOption(option_text, option_value) {
-    db.option.create({
+    return db.option.create({
         option: option_text,
         option_value
     })
