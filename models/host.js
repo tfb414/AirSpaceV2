@@ -1,3 +1,5 @@
+
+
 module.exports = (sequelize, Sequelize) => {
     const host = sequelize.define('host', {
         host_id: {

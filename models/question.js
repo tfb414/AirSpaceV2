@@ -1,3 +1,5 @@
+
+
 module.exports = (sequelize, Sequelize) => {
     const question = sequelize.define('question', {
         question: {

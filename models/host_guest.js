@@ -1,21 +1,31 @@
+
 module.exports = (sequelize, Sequelize) => {
-    const option = sequelize.define('option', {
-        option_id: {
-        type: Sequelize.INTEGER,
+    const host_guest = sequelize.define('host_guest', {
+        host_id: {
+        type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
+        references: {
+            model: 'host',
+            key: 'host_id'
+        }
         },
-        option: {
-        type: Sequelize.TEXT,
-        allowNull: true
+        guest_id: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+            model: 'guest',
+            key: 'guest_id'
+        }
         },
-        option_value: {
-        type: Sequelize.BOOLEAN,
-        allowNull: true
+        host_guest_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+            unique: true
         }
     }, {
-        tableName: 'option'
+            tableName: 'host_guest'
     });
-    return option;
+    return host_guest;
 }

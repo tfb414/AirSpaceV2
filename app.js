@@ -31,13 +31,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 /************************************************************* GOOGLE OAUTH *************/
-passport.serializeUser(function(email, done) {
+passport.serializeUser(function (email, done) {
     // saves user's email under req.session.passport.user
     done(null, email);
 });
 
-passport.deserializeUser(function(email, done) {
-  // could get entire profile during deserialization, right now just returning email
+passport.deserializeUser(function (email, done) {
+    // could get entire profile during deserialization, right now just returning email
     // db.one(`select * from users where email = '${email}'`)
     //     .then((result) => {
     //         done(null, result);
@@ -50,8 +50,8 @@ passport.use('host', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_HOST
-  },
-    function(accessToken, refreshToken, profile, done) {
+},
+    function (accessToken, refreshToken, profile, done) {
         let firstname = profile.name.givenName;
         firstname = firstname.replace("'", "''");
         let lastname = profile.name.familyName;
@@ -59,14 +59,14 @@ passport.use('host', new GoogleStrategy({
         let email = profile.emails[0].value;
         queries.upsertHost(email, firstname, lastname);
         done(null, email);
-})) 
+    }))
 
 passport.use('guest', new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.GOOGLE_CALLBACK_GUEST
-  },
-    function(accessToken, refreshToken, profile, done) {
+},
+    function (accessToken, refreshToken, profile, done) {
         let firstname = profile.name.givenName;
         firstname = firstname.replace("'", "''");
         let lastname = profile.name.familyName;
@@ -74,57 +74,61 @@ passport.use('guest', new GoogleStrategy({
         let email = profile.emails[0].value;
         queries.upsertGuest(email, firstname, lastname);
         done(null, email);
-}))   
+    }))
 
 // Express and Passport Session
 app.use(session({
     secret: 'asdfjkl;',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-        
+
 // app.use('/', index);
 
 app.get('/host/auth/google',
     passport.authenticate('host', { scope: ['profile', 'email'] }));
 
-app.get('/host/auth/google/callback', 
+app.get('/host/auth/google/callback',
     passport.authenticate('host', {
         successRedirect: '/host/',
         failureRedirect: '/',
-        failureFlash: true }));
+        failureFlash: true
+    }));
 
 app.get('/guest/auth/google',
     passport.authenticate('guest', { scope: ['profile', 'email'] }));
 
-app.get('/guest/auth/google/callback', 
+app.get('/guest/auth/google/callback',
     passport.authenticate('guest', {
-        successRedirect: '/guest',
+        successRedirect: '/guest/',
         failureRedirect: '/',
-        failureFlash: true }));
+        failureFlash: true
+    }));
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
-  res.sendFile('/public/index.html', {"root": __dirname});
+    console.log(req.user);
+    res.sendFile('/public/index.html', { "root": __dirname });
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
