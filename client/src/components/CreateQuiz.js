@@ -131,6 +131,16 @@ export default class CreateQuiz extends Component {
 
     _submitSurvey = () => {
         console.log(this._createPayload())
+        this.setState({
+            title: "",
+            question: [
+                {
+                    question_number: 1,
+                    text: "",
+                    options: [{text: "", value: true},{text: "", value: false}],
+                },
+            ]
+        })
         // this.props.sendMessage(this._createPayload());
     }
 
