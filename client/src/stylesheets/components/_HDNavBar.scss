@@ -1,0 +1,16 @@
+.hostDash > div:nth-child(1) {
+    width: 45%;
+    min-width: 4rem;
+    @include respond-to(medium) {
+        max-width: 15rem;
+    }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    // align-items: center;
+    // align-items: flex-start;
+    // justify-content: flex-start;
+    background-color: #495FA7;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.6);
+}
