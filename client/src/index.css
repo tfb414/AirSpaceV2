@@ -429,6 +429,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background-color: #495FA7;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6); }
   @media (min-width: 768px) {
@@ -519,6 +520,11 @@ body {
       width: 8rem;
       height: 4rem;
       font-size: 1.8rem; } }
+
+.createOption:hover,
+.createOption:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: .4s background-color ease-in-out; }
 
 .landingButton {
   width: 40%;

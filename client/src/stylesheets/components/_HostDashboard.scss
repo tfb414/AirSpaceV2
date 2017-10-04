@@ -79,3 +79,9 @@
         font-size: 1.8rem;
     }
 }
+
+.createOption:hover,
+.createOption:focus {
+    background-color: rgba(0,0,0,0.5);
+    transition: .4s background-color ease-in-out;
+}
