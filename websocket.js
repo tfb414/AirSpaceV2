@@ -14,7 +14,6 @@ function init() {
     console.log('init ran')
     wss.broadcast = function broadcast(data) {
         wss.clients.forEach(function each(client) {
-            client.send('derp')
             if (client.readyState === WebSocket.OPEN) {
                 client.send(data);
             }
@@ -28,13 +27,14 @@ function init() {
 
                 wss.clients.forEach(function each(client) {
                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send("you're a wizard harry!");
+                    // client.send("you're a wizard harry!");
                     // client.send(data);
 
                     // }
                 });
 
                 ws.on('message', function incoming(data) {
+                    console.log("WE GOT A MESSAGE")
                     // let parsedData = createQuizExample;
                     // console.log(req);
                     // console.log(req.session.passport.user);
@@ -48,18 +48,25 @@ function init() {
                         addQuizQuestionsAnswers(parsedData);
                     }
                     if (parsedData.type === 'ADDGUESTTOHOST') {
-                        addGuestToHost(parsedData).then((resp) => {
+                        addGuestToHost(parsedData, user_id).then((resp) => {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
-                                    console.log(client);
+                                    // console.log(client);
+
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
-                                    client.send("Error")
+                                    client.send(JSON.stringify({ 'type': 'ERROR' }))
                                     // client.send(data);
 
                                     // }
                                 });
+                            } else {
+                                wss.clients.forEach(function each(client) {
+                                    client.send(JSON.stringify({
+                                        'type': 'CONNECTEDTOHOST',
+                                    }))
+                                })
                             }
                         });
                     }
@@ -98,8 +105,8 @@ function addOptions(question, parsedData, sq_id, question_id) {
     })
 }
 
-function addGuestToHost(parsedData) {
-    return query.addHostGuest(parsedData['host_id'], parsedData['guest_id']).then(
+function addGuestToHost(parsedData, guest_id) {
+    return query.addHostGuest(parsedData['host_id'], guest_id).then(
         (resp) => {
             return resp;
         }
