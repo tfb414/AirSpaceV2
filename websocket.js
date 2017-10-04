@@ -2,7 +2,12 @@ const WebSocket = require('ws');
 const query = require('./queries');
 var cookie = require('cookie');
 var cookieParser = require('cookie-parser');
+const express = require('express');
 const session = require('express-session');
+const passport = require('passport');
+// const MemcachedStore = require('connect-memcached')(session);
+const sessionmanager = require('./sessionmanager');
+const ensureAuthenticated = require('./utils').ensureAuthenticated;
 
 function init() {
     const wss = new WebSocket.Server({ port: 8080 });
@@ -17,76 +22,66 @@ function init() {
     };
 
     wss.on('connection', function connection(ws, req) {
-        ws.upgradeReq = req;
-        // var location = url.parse(ws.upgradeReq.url, true);
-        //get sessionID
-        // var cookies = cookie.parse(ws.upgradeReq.headers.cookie);
-        // var sid = cookieParser.signedCookie(cookies["connect.sid"], 'asdfjkl;');
+        sessionmanager.sharedSession(req, {}, function(){
+            req.session.save(function() {
+                let user_id = req.session.passport.user;
+        
+                wss.clients.forEach(function each(client) {
+                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    client.send("you're a wizard harry!");
+                    // client.send(data);
 
-        // //get the session object
-        // store.get(sid,function(err, ss){
-        //     store.createSession(ws.upgradeReq,ss)
-        // });
-        // console.log(ws.upgradeReq.session.passport.user)
-        wss.clients.forEach(function each(client) {
-            // if (client !== ws && client.readyState === WebSocket.OPEN) {
-            client.send("you're a wizard harry!")
-            // client.send(data);
-
-            // }
-        });
-
-        ws.on('message', function incoming(data) {
-            // let parsedData = createQuizExample;
-            // console.log(req);
-            // console.log(req.session.passport.user);
-            let parsedData = JSON.parse(data);
-            // let parsedData = createSurveyExample;
-            // console.log('inc Data')
-            // Broadcast to everyone else.
-            // sendToWebSocket("hey!")
-            // console.log(JSON.parse(data));
-            if (parsedData.type === 'CREATESURVEY') {
-                addQuizQuestionsAnswers(parsedData);
-            }
-            if (parsedData.type === 'ADDGUESTTOHOST') {
-                addGuestToHost(parsedData).then((resp) => {
-
-                    if (resp.name === "SequelizeForeignKeyConstraintError") {
-                        wss.clients.forEach(function each(client) {
-                            console.log(client);
-                            // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                            // console.log(client);
-                            client.send("I'm sorry that host email address does not match our records")
-                            // client.send(data);
-
-                            // }
-                        });
-                    }
+                    // }
                 });
-            }
-        });
-    });
-}
 
-function addQuizQuestionsAnswers(parsedData) {
-    query.addSQ(parsedData['title'], parsedData['host_id']);
-    addQuestionsAndAnswers(parsedData.payload);
-}
+                ws.on('message', function incoming(data) {
+                    // let parsedData = createQuizExample;
+                    // console.log(req);
+                    // console.log(req.session.passport.user);
+                    let parsedData = JSON.parse(data);
+                    // let parsedData = createSurveyExample;
+                    // console.log('inc Data')
+                    // Broadcast to everyone else.
+                    // sendToWebSocket("hey!")
+                    // console.log(JSON.parse(data));
+                    // if (parsedData.type === 'CREATESURVEY') {
+                    //     addSurveyAndQuestions(parsedData);
+                    // }
+                    
+                    addQuizQuestionsAnswers(parsedData.payload, user_id);
+                    console.log(user_id)
+                });
 
-
-function addQuestionsAndAnswers(parsedData) {
-    parsedData.forEach((question) => {
-        query.addQuestion(question['text'], question['question_number']);
-        if (question['option'] !== undefined) {
-            addOptions(question, parsedData);
-        }
+            });
+        })
     })
 }
 
-function addOptions(question, parsedData) {
+function addQuizQuestionsAnswers(parsedData, host_id) {
+    query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
+        addQuestionsAndAnswers(parsedData.question, resp.dataValues.sq_id);
+    });
+}
+
+
+function addQuestionsAndAnswers(parsedData, sq_id) {
+    parsedData.forEach((question) => {
+        query.addQuestion(question['text'], question['question_number']).then(resp => {
+            let question_id = resp.dataValues.question_id
+            if (question['option'] !== undefined) {
+                addOptions(question, parsedData, sq_id, question_id);
+            } else {
+                query.addSQQuestionOption(sq_id, question_id, null);
+            }
+        })
+    })
+}
+
+function addOptions(question, parsedData, sq_id, question_id) {
     question.option.forEach((option) => {
-        query.addOption(option.text, option.value)
+        query.addOption(option.text, option.value).then(resp => {
+            query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
+        })
     })
 }
 
