@@ -22,10 +22,10 @@ function init() {
     };
 
     wss.on('connection', function connection(ws, req) {
-        sessionmanager.sharedSession(req, {}, function(){
-            req.session.save(function() {
+        sessionmanager.sharedSession(req, {}, function () {
+            req.session.save(function () {
                 let user_id = req.session.passport.user;
-        
+
                 wss.clients.forEach(function each(client) {
                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                     client.send("you're a wizard harry!");
@@ -44,18 +44,31 @@ function init() {
                     // Broadcast to everyone else.
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
-                    // if (parsedData.type === 'CREATESURVEY') {
-                    //     addSurveyAndQuestions(parsedData);
-                    // }
-                    
-                    addQuizQuestionsAnswers(parsedData.payload, user_id);
-                    console.log(user_id)
-                });
+                    if (parsedData.type === 'CREATESURVEY') {
+                        addQuizQuestionsAnswers(parsedData);
+                    }
+                    if (parsedData.type === 'ADDGUESTTOHOST') {
+                        addGuestToHost(parsedData).then((resp) => {
 
-            });
+                            if (resp.name === "SequelizeForeignKeyConstraintError") {
+                                wss.clients.forEach(function each(client) {
+                                    console.log(client);
+                                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                    // console.log(client);
+                                    client.send("Error")
+                                    // client.send(data);
+
+                                    // }
+                                });
+                            }
+                        });
+                    }
+                });
+            })
         })
     })
 }
+
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
     query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
@@ -94,80 +107,6 @@ function addGuestToHost(parsedData) {
 }
 
 
-
-const createSurveyExample = {
-    type: 'CREATESURVEY',
-    title: "title of survey",
-    host_id: "tfb414@gmail.com",
-    payload: [
-        {
-            question_number: 1,
-            text: 'Favorite Color',
-        },
-        {
-            question_number: 2,
-            text: 'favorite animal?'
-        }
-
-    ]
-}
-
-const createSurveyExample2 = {
-    "type": "CREATESURVEY",
-    "host_id": "tfb414@gmail.com",
-    "title": "Title 1",
-    "payload": [
-        {
-            "question_number": 1,
-            "text": "Favorite Color?"
-        },
-        {
-            "question_number": 2,
-            "text": "Favorite Animal?"
-        }]
-}
-
-const createQuizExample =
-    {
-        type: 'CREATEQUIZ',
-        title: "title of Quiz",
-        host_id: "tfb414@gmail.com",
-        payload: [
-            {
-                question_number: 1,
-                text: 'Favorite Color',
-                option: [{
-                    value: 'true',
-                    text: "blue"
-                },
-                {
-                    value: 'false',
-                    text: 'green'
-                },
-                {
-                    value: 'false',
-                    text: 'purple'
-                },
-                ]
-            },
-            {
-                question_number: 2,
-                text: 'favorite animal?',
-                option: [{
-                    value: 'true',
-                    text: "horse"
-                },
-                {
-                    value: 'false',
-                    text: 'cow'
-                },
-                {
-                    value: 'false',
-                    text: 'dog'
-                },
-                ]
-            }]
-    }
 
 
 // function sendToWebSocket(message) {
