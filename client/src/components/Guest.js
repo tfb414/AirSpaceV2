@@ -8,7 +8,6 @@ class Guest extends Component {
         super(props);
         this.state = {
             host_id: '',
-            guest_id: props.guest_id,
             message: ""
         }
     }
@@ -73,8 +72,7 @@ class Guest extends Component {
     _createPayload = () => {
         let payload = {
             type: "ADDGUESTTOHOST",
-            host_id: this.state.host_id,
-            guest_id: this.state.guest_id
+            host_id: this.state.host_id
         }
         return JSON.stringify(payload);
     }
