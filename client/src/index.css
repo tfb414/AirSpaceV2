@@ -426,14 +426,21 @@ body {
 .surveyBox {
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   width: 90%;
-  height: 50%;
   display: flex;
+  padding: 2rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 2rem; }
+  @media (min-width: 768px) {
+    .surveyBox {
+      width: 50%; } }
+
+.surveyInnerBox button {
+  padding: .5rem;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
 
 .questionItem p {
   margin-bottom: 0; }
@@ -457,8 +464,42 @@ body {
   align-items: center;
   justify-content: space-around; }
 
-.bottomButtons > button {
-  margin: 1rem; }
+.addSq {
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  color: black;
+  border: 1px solid black;
+  background-color: unset; }
+
+.addSq:hover,
+.addSq:focus {
+  color: white;
+  background-color: black;
+  border: white;
+  transition: .2s background-color ease-in-out; }
+
+.subtractQues {
+  background-color: white;
+  color: black;
+  width: 2rem;
+  margin-left: .5rem;
+  border: none; }
+
+.subtractQues:hover,
+.subtractQues:focus {
+  background-color: red;
+  color: white;
+  transition: .2s background-color ease-in-out; }
+
+.subSurvey {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 2rem; }
+
+.subSurvey:hover,
+.subSurvey:focus {
+  background-color: #11C211; }
 
 .hostDash > div:nth-child(1) {
   width: 45%;
