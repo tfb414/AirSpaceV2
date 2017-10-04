@@ -6,6 +6,7 @@ import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
 import Create from './components/Create.js'
 import Guest from './components/Guest'
+import GuestWaitingRoom from './components/GuestWaitingRoom'
 
 class App extends Component {
   constructor(props) {
@@ -21,20 +22,20 @@ class App extends Component {
   componentDidMount() {
 
     // this is an "echo" websocket service for testing pusposes
-    this.connection = new WebSocket(env);
-    console.log(this.connection);
-    // listen to onmessage event
-    this.connection.onopen = () => {
-      this.connection.onmessage = evt => {
-        console.log(evt);
-        this.setState({
-          messages: evt.data
-        })
-      };
-      // setInterval(_ => {
-      //   this.connection.send(Math.random())
-      // }, 2000)
-    }
+    // this.connection = new WebSocket(env);
+    // console.log(this.connection);
+    // // listen to onmessage event
+    // this.connection.onopen = () => {
+    //   this.connection.onmessage = evt => {
+    //     console.log(evt);
+    //     this.setState({
+    //       messages: evt.data
+    //     })
+    //   };
+    // setInterval(_ => {
+    //   this.connection.send(Math.random())
+    // }, 2000)
+    // }
   }
 
 
@@ -55,7 +56,7 @@ class App extends Component {
               <Route path="/host/quiz" />
               <Route path="/host/survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
               <Route exact path="/guest/" component={(match) => (<Guest match={match} guest_id={this.state.guest_id} sendMessage={this._sendMessage} message={this.state.messages} />)} />
-              <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} />
+              <Route exact path="/guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} /*message={this.state.messages} */ />)} />
             </Switch>
           </div>
         </BrowserRouter>

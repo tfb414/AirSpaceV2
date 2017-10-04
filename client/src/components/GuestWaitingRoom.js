@@ -10,9 +10,7 @@ class GuestWaitingRoom extends Component {
         }
     }
 
-    handleChange = (event) => {
-        this.setState({ host_id: event.target.value });
-    }
+
 
     render() {
         return (

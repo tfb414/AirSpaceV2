@@ -57,7 +57,7 @@ function init() {
                             console.log(client);
                             // if (client !== ws && client.readyState === WebSocket.OPEN) {
                             // console.log(client);
-                            client.send("I'm sorry that host email address does not match our records")
+                            client.send("Error")
                             // client.send(data);
 
                             // }
