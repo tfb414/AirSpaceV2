@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, Sequelize) => {
     sq_question_option = sequelize.define('sq_question_option', {
         sq_id: {
@@ -37,3 +36,7 @@ module.exports = (sequelize, Sequelize) => {
     });
     return sq_question_option;
 }
+
+
+
+

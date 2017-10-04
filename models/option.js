@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, Sequelize) => {
     const option = sequelize.define('option', {
         option_id: {

@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, Sequelize) => {
     const guest_question_response = sequelize.define('guest_question_response', {
         gqr_id: {

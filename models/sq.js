@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, Sequelize) => {
     const sq = sequelize.define('sq', {
         sq_id: {
