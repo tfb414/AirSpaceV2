@@ -6,11 +6,8 @@ import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
 import Create from './components/Create.js'
 import Guest from './components/Guest'
-<<<<<<< HEAD
 import GuestWaitingRoom from './components/GuestWaitingRoom'
-=======
 import CreateQuiz from './components/CreateQuiz'
->>>>>>> master
 
 class App extends Component {
   constructor(props) {
