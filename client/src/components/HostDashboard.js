@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
-
+import env from '../utility/env';
 import HDNavBar from './HDNavBar'
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
@@ -10,9 +10,9 @@ import Create from './Create.js';
 class HostDashboard extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            host_id: props.host_id
-        }
+    }
+    componentDidMount() {
+        this.connection = new WebSocket(env);
     }
 
     render() {
@@ -23,14 +23,17 @@ class HostDashboard extends Component {
                     <HDNavBar match={this.props.match} name={['create', 'struff']} />
                     <Switch>
                         <Route path="/host/struff" />
-                        <Route path="/host/create" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+                        <Route path="/host/create" component={() => <CreateSurvey sendMessage={this._sendMessage} />} />
                     </Switch>
                 </div>
             </BrowserRouter>
 
         )
     }
+     _sendMessage = (payload) => {
+        this.connection.send(payload);
 
+    }
 
 }
 
