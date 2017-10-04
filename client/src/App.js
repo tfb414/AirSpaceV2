@@ -14,6 +14,7 @@ class App extends Component {
       messages: ['hey'],
       // host_id: 'tfb414@gmail.com',
       guest_id: 'tfb414@gmail.com',
+      host_id: 'tfb414@gmail.com'
     }
   }
 
@@ -53,7 +54,7 @@ class App extends Component {
               <Route path="/host/create/" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
               <Route path="/host/quiz" />
               <Route path="/host/survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
-              <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this._sendMessage} />} />
+              <Route exact path="/guest/" component={(match) => (<Guest match={match} guest_id={this.state.guest_id} sendMessage={this._sendMessage} message={this.state.messages} />)} />
               {/* <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} /> */}
             </Switch>
           </div>

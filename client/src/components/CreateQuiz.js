@@ -11,7 +11,7 @@ export default class CreateQuiz extends Component {
                 {
                     question_number: 1,
                     text: "",
-                    options: [{text: "", value: true},{text: "", value: false}],
+                    options: [{ text: "", value: true }, { text: "", value: false }],
                 },
             ]
         }
@@ -41,18 +41,18 @@ export default class CreateQuiz extends Component {
         let old_options = new_question[Number(target[0])].options
         console.log(old_options)
         let new_options = []
-        for (let x = 0; x < old_options.length; x++){
+        for (let x = 0; x < old_options.length; x++) {
             console.log(x)
             console.log(target[1])
             if (x === Number(target[1])) {
-                new_options.push({text:old_options[x].text, value: true})
+                new_options.push({ text: old_options[x].text, value: true })
             } else {
-                new_options.push({text:old_options[x].text, value: false})
+                new_options.push({ text: old_options[x].text, value: false })
             }
         }
         new_question[Number(target[0])].options = new_options
         this.setState({ question: new_question })
-        
+
     }
 
     render() {
@@ -80,7 +80,7 @@ export default class CreateQuiz extends Component {
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
         let new_form = this.state.question
         var new_num = new_form.length + 1
-        let new_object = {question_number: new_num, text: "", options:[{text: "", value: true},{text: "", value: false}]}                     // adding the new object to this.state.question
+        let new_object = { question_number: new_num, text: "", options: [{ text: "", value: true }, { text: "", value: false }] }                     // adding the new object to this.state.question
         new_form.push(new_object)
         this.setState({
             question: new_form
@@ -95,7 +95,7 @@ export default class CreateQuiz extends Component {
         this.setState({
             question: new_form
         })
-        
+
     }
 
     _RemoveOption = (event) => {
@@ -118,7 +118,7 @@ export default class CreateQuiz extends Component {
             let key = data.question_number
             if (key > index + 1) {
                 let new_key = key - 1
-                let changed_data = {question_number: new_key, text: data.text, options: data.options}
+                let changed_data = { question_number: new_key, text: data.text, options: data.options }
                 return changed_data
             }
             return data
@@ -131,17 +131,18 @@ export default class CreateQuiz extends Component {
 
     _submitSurvey = () => {
         console.log(this._createPayload())
+        this.props.sendMessage(this._createPayload());
         this.setState({
             title: "",
             question: [
                 {
                     question_number: 1,
                     text: "",
-                    options: [{text: "", value: true},{text: "", value: false}],
+                    options: [{ text: "", value: true }, { text: "", value: false }],
                 },
             ]
         })
-        // this.props.sendMessage(this._createPayload());
+
     }
 
     _createPayload = () => {
@@ -149,7 +150,7 @@ export default class CreateQuiz extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATESURVEY',
+            type: 'CREATEQUIZ',
             host_id: this.state.host_id,
             title: this.state.title,
             payload: question_object
