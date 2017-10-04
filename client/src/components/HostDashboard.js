@@ -21,17 +21,8 @@ class HostDashboard extends Component {
                     <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
                     <Switch>
                         <Route path="/host/viewResults" />
-                        <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+                        <Route path="/host/Create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
                     </Switch>
-                    <div className="createSelection">
-                        <div className="createBox">
-                            <h1>Create</h1>
-                            <div className="quizOrSurveyBox">
-                                <button className="createOption"></button>
-                                <button className="createOption"></button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </BrowserRouter>
 
