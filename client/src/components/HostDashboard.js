@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
-
+import env from '../utility/env';
 import HDNavBar from './HDNavBar'
 import CreateSurvey from './CreateSurvey'
 
@@ -11,6 +11,9 @@ class HostDashboard extends Component {
         this.state = {
             host_id: props.host_id
         }
+    }
+    componentDidMount() {
+        this.connection = new WebSocket(env);
     }
 
     render() {

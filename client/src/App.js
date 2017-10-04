@@ -14,10 +14,10 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+//   componentDidMount() {
 
     // this is an "echo" websocket service for testing pusposes
-    this.connection = new WebSocket(env);
+    // this.connection = new WebSocket(env);
     // listen to onmessage event
     // this.connection.onopen = () => {
     //   this.connection.onmessage = evt => {
@@ -30,7 +30,7 @@ class App extends Component {
     //     this.connection.send(Math.random())
     //   }, 2000)
     // }
-  }
+//   }
 
 
   render() {

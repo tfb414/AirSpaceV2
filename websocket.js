@@ -6,8 +6,7 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 // const MemcachedStore = require('connect-memcached')(session);
-// const store = new MemcachedStore({});
-const sessionStore = require('express-session').MemoryStore();
+const sessionmanager = require('./sessionmanager');
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
 
 function init() {
@@ -23,44 +22,38 @@ function init() {
     };
 
     wss.on('connection', function connection(ws, req) {
-        ws.upgradeReq = req;
-        // var location = url.parse(ws.upgradeReq.url, true);
-        // get sessionID
-        var cookies = cookie.parse(ws.upgradeReq.headers.cookie);
-        var sid = cookieParser.signedCookie(cookies["connect.sid"], 'asdfjkl;');
+        sessionmanager.sharedSession(req, {}, function(){
+            req.session.save(function() {
+                let user_id = req.session.passport.user;
+        
+                wss.clients.forEach(function each(client) {
+                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    client.send("you're a wizard harry!");
+                    // client.send(data);
 
-        // get the session object
-        // store.get(sid,function(err, ss){
-        //     store.createSession(ws.upgradeReq,ss);
-        //     console.log(ws.upgradeReq.session.passport.user);
-            wss.clients.forEach(function each(client) {
-                // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                client.send("you're a wizard harry!");
-                // client.send(data);
+                    // }
+                });
 
-                // }
-            });
-
-            ws.on('message', function incoming(data) {
-                // let parsedData = createQuizExample;
-                // console.log(req);
-                // console.log(req.session.passport.user);
-                let parsedData = JSON.parse(data);
-                // let parsedData = createSurveyExample;
-                // console.log('inc Data')
-                // Broadcast to everyone else.
-                // sendToWebSocket("hey!")
-                // console.log(JSON.parse(data));
-                // if (parsedData.type === 'CREATESURVEY') {
-                //     addSurveyAndQuestions(parsedData);
-                // }
-                
-                addQuizQuestionsAnswers(parsedData.payload);
+                ws.on('message', function incoming(data) {
+                    // let parsedData = createQuizExample;
+                    // console.log(req);
+                    // console.log(req.session.passport.user);
+                    let parsedData = JSON.parse(data);
+                    // let parsedData = createSurveyExample;
+                    // console.log('inc Data')
+                    // Broadcast to everyone else.
+                    // sendToWebSocket("hey!")
+                    // console.log(JSON.parse(data));
+                    // if (parsedData.type === 'CREATESURVEY') {
+                    //     addSurveyAndQuestions(parsedData);
+                    // }
+                    
+                    addQuizQuestionsAnswers(parsedData.payload);
+                });
 
             });
-
-        // });
-    });
+        })
+    })
 }
 
 function addQuizQuestionsAnswers(parsedData) {

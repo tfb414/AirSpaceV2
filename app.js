@@ -8,7 +8,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 // const MemcachedStore = require('connect-memcached')(session);
-const sessionStore = require('express-session').MemoryStore();
+const sessionmanager = require('./sessionmanager');
 const queries = require('./queries');
 // const sessionStore = new express.session.MemoryStore();
 require('dotenv').config();
@@ -80,13 +80,7 @@ passport.use('guest', new GoogleStrategy({
 }))   
 
 // Express and Passport Session
-app.use(session({
-    secret: 'asdfjkl;',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {},
-    store: sessionStore,
-}));
+app.use(sessionmanager.sharedSession);
 app.use(passport.initialize());
 app.use(passport.session());
         
@@ -111,7 +105,7 @@ app.get('/guest/auth/google/callback',
         failureFlash: true }));
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
-    // console.log(req.user);
+    console.log(req.user);
     res.sendFile('/public/index.html', {"root": __dirname});
 });
 
@@ -133,4 +127,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = app
