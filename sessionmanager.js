@@ -21,10 +21,11 @@ const getUserEmail = (ws, req) => {
 
 module.exports = {
     sessionStore,
-    sharedSession,
-    getUserEmail
+    sharedSession
 }
 
+// var cookies = cookie.parse(ws.upgradeReq.headers.cookie);
+// var sid = cookieParser.signedCookie(cookies["connect.sid"], 'asdfjkl;');
 // sharedSession(ws.upgradeReq, {}, function(){
 //     ws.upgradeReq.session.save(function() {
 //         var sess = ws.upgradeReq.session;

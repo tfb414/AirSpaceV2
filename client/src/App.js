@@ -9,8 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ['hey'],
-      host_id: 'tfb414@gmail.com'
+      messages: ['hey']
     }
   }
 
@@ -44,9 +43,9 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route exact path="/host/" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} sendMessage={this._sendMessage} />)} />
+              <Route exact path="/host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
               <Route path="/host/struff" />
-              <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this._sendMessage} />} />
+              <Route path="/host/create" component={() => <CreateSurvey />} />
             </Switch>
           </div>
         </BrowserRouter>
@@ -54,10 +53,6 @@ class App extends Component {
     );
   }
 
-  _sendMessage = (payload) => {
-    this.connection.send(payload);
-
-  }
 
 }
 

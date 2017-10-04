@@ -48,7 +48,8 @@ function init() {
                     //     addSurveyAndQuestions(parsedData);
                     // }
                     
-                    addQuizQuestionsAnswers(parsedData.payload);
+                    addQuizQuestionsAnswers(parsedData.payload, user_id);
+                    console.log(user_id)
                 });
 
             });
@@ -56,8 +57,8 @@ function init() {
     })
 }
 
-function addQuizQuestionsAnswers(parsedData) {
-    query.addSQ(parsedData['title'], parsedData['host_id'], 'quiz').then(resp => {
+function addQuizQuestionsAnswers(parsedData, host_id) {
+    query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
         addQuestionsAndAnswers(parsedData.question, resp.dataValues.sq_id);
     });
 }

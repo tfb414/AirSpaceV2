@@ -5,7 +5,6 @@ export default class CreateSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: props.host_id,
             title: "",
             question: [
                 {
@@ -88,7 +87,6 @@ export default class CreateSurvey extends Component {
         }, {})
         let payload = {
             type: 'CREATESURVEY',
-            host_id: this.state.host_id,
             title: this.state.title,
             payload: question_object
         }
