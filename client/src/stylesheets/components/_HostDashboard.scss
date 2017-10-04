@@ -6,43 +6,76 @@
     // background: url(stylesheets/images/littleboard3.jpg);
 }
 
-.createSelection {
+.createPage {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: $copyfont;
-    // color: white;
 }
 
-// .createSelection h1 {
-//     margin: 0;
-// }
+.createSelection {
+    width: 70%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    font-family: $copyfont;
+    // border: 1px solid black;
+    // box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+}
+
+.createTitle {
+    // margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    @include respond-to(medium) {
+        margin-top: 0;
+        margin-bottom: 2rem;
+        font-size: 2.8em;
+    }
+}
 
 .createBox {
-    width: 50%;
-    height: 50%;
+    width: 90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px solid black;
+    // border: 1px solid black;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+    font-family: $copyfont;
+    border-radius: 2rem;
+    @include respond-to(medium) {
+        width: 100%;
+        height: 100%;
+    }
 }
 
 .quizOrSurveyBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    height: 50%;
-    border: 2px solid white;
+    @include respond-to(medium) {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
 }
 
 .createOption {
-    width: 4rem;
-    height: 2rem;
+    width: 5rem;
+    height: 2.4rem;
     margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: black;
+    @include respond-to(medium) {
+        width: 8rem;
+        height: 4rem;
+        font-size: 1.8rem;
+    }
 }

@@ -7,9 +7,7 @@ import CreateQuizSurvey from './CreateQuizSurvey'
 
 const Create = (props) => {
     return (
-        <div>
-            {/* <NavLink to={`/host/Create/survey`}> Survey </NavLink>
-            <NavLink to={`/host/Create/quiz`}> Quiz </NavLink> */}
+        <div className="createPage">
             <Switch>
                 <Route exact path="/host/Create" component={(host_id) => <CreateQuizSurvey {...props}/>}/>
                 <Route path="/host/Create/Quiz" component={(host_id) => <CreateQuiz {...props} />}/>
