@@ -22,7 +22,7 @@ function init() {
         //get sessionID
         // var cookies = cookie.parse(ws.upgradeReq.headers.cookie);
         // var sid = cookieParser.signedCookie(cookies["connect.sid"], 'asdfjkl;');
-        
+
         // //get the session object
         // store.get(sid,function(err, ss){
         //     store.createSession(ws.upgradeReq,ss)
@@ -46,14 +46,25 @@ function init() {
             // Broadcast to everyone else.
             // sendToWebSocket("hey!")
             // console.log(JSON.parse(data));
-            // if (parsedData.type === 'CREATESURVEY') {
-            //     addSurveyAndQuestions(parsedData);
-            // }
-            // console.log(parsedData);
-            addQuizQuestionsAnswers(parsedData);
+            if (parsedData.type === 'CREATESURVEY') {
+                addQuizQuestionsAnswers(parsedData);
+            }
+            if (parsedData.type === 'ADDGUESTTOHOST') {
+                addGuestToHost(parsedData).then((resp) => {
 
+                    if (resp.name === "SequelizeForeignKeyConstraintError") {
+                        wss.clients.forEach(function each(client) {
+                            console.log(client);
+                            // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                            // console.log(client);
+                            client.send("I'm sorry that host email address does not match our records")
+                            // client.send(data);
 
-
+                            // }
+                        });
+                    }
+                });
+            }
         });
     });
 }
@@ -77,6 +88,14 @@ function addOptions(question, parsedData) {
     question.option.forEach((option) => {
         query.addOption(option.text, option.value)
     })
+}
+
+function addGuestToHost(parsedData) {
+    return query.addHostGuest(parsedData['host_id'], parsedData['guest_id']).then(
+        (resp) => {
+            return resp;
+        }
+    );
 }
 
 

@@ -52,7 +52,7 @@ export default class CreateSurvey extends Component {
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
         let new_form = this.state.question
         var new_num = new_form.length + 1
-        let new_object = {question_number: new_num, text: ""}                     // adding the new object to this.state.question
+        let new_object = { question_number: new_num, text: "" }                     // adding the new object to this.state.question
         new_form.push(new_object)
         this.setState({
             question: new_form
@@ -67,7 +67,7 @@ export default class CreateSurvey extends Component {
             let key = data.question_number
             if (key > index + 1) {
                 let new_key = key - 1
-                let changed_data = {question_number: new_key, text: data.text}
+                let changed_data = { question_number: new_key, text: data.text }
                 return changed_data
             }
             return data

@@ -28,12 +28,17 @@ function upsertGuest(guest_id, first_name, last_name) {
     })
 }
 
-// function addHostGuest(host_id, guest_id) {
-//     db.host_guest.create({
-//         guest_id,
-//         host_id
-//     })
-// }
+function addHostGuest(host_id, guest_id) {
+    return db.host_guest.create({
+        guest_id,
+        host_id
+    }).catch((err) => {
+        return err;
+    });
+}
+
+//check if it's already in the host_guest db
+//then add to the host_guest table
 
 // // function findGuestsByHostId() {
 // //     db.host_guest.findAll({
@@ -214,8 +219,9 @@ module.exports = {
     upsertGuest,
     addSQ,
     addQuestion,
-    addOption, 
-    addSQQuestionOption
+    addOption,
+    addSQQuestionOption,
+    addHostGuest
 };
 
 
