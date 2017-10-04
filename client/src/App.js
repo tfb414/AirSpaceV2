@@ -8,6 +8,8 @@ import Create from './components/Create.js'
 import Guest from './components/Guest'
 import GuestWaitingRoom from './components/GuestWaitingRoom'
 import CreateQuiz from './components/CreateQuiz'
+import GuestRenderSurvey from './components/GuestRenderSurvey'
+import GuestRenderQuiz from './components/GuestRenderQuiz'
 
 class App extends Component {
   constructor(props) {
@@ -54,6 +56,8 @@ class App extends Component {
               <Route path="/host/Create/Survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
               <Route exact path="/guest/" component={(match) => (<Guest match={match} guest_id={this.state.guest_id} sendMessage={this._sendMessage} message={this.state.messages} />)} />
               <Route exact path="/guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} /*message={this.state.messages} */ />)} />
+              <Route exact path="/guest/survey/" component={(match) => (<GuestRenderSurvey survey={{ title: "Survey 1", sq_id: "1" }} payload={[{ question_number: "1", question_id: "1", text: "What is the meaning of life" }, { question_number: "2", question_id: "2", text: "Why are we here?" }]} />)} />
+              <Route exact path="/guest/quiz/" component={(match) => (<GuestRenderQuiz quiz={{ title: "Quiz 1", sq_id: "1" }} payload={[{ question_number: "1", question_id: "1", text: "Cat or Dog?", option: [{ text: "Dog", option_id: "1" }, { text: "Cat", option_id: "2" }] }, { question_number: "2", question_id: "2", text: "Zombie or Vampire?", option: [{ text: "Zombie", option_id: "3" }, {text: "Vampire", option_id: "4"}] }]} />)} /> 
             </Switch>
           </div>
         </BrowserRouter>
