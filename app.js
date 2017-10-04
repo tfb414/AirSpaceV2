@@ -10,7 +10,6 @@ const session = require('express-session');
 // const MemcachedStore = require('connect-memcached')(session);
 const sessionmanager = require('./sessionmanager');
 const queries = require('./queries');
-// const sessionStore = new express.session.MemoryStore();
 require('dotenv').config();
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
 var index = require('./routes/index');
