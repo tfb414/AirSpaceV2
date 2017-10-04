@@ -423,6 +423,27 @@ body {
   align-items: center;
   justify-content: center; }
 
+.surveyBox {
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 90%;
+  height: 50%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 2rem; }
+
+.cnsTitle {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.2rem; }
+
+.surveyTitle {
+  margin-bottom: 0; }
+
 .hostDash > div:nth-child(1) {
   width: 45%;
   min-width: 4rem;

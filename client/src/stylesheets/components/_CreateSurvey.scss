@@ -1,0 +1,27 @@
+.surveyBox {
+    font-family: $copyfont;
+    width: 90%;
+    height: 50%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+    font-family: $copyfont;
+    border-radius: 2rem;
+}
+
+.surveyInnerBox {
+    
+}
+
+.cnsTitle {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+}
+
+.surveyTitle {
+    margin-bottom: 0;
+}

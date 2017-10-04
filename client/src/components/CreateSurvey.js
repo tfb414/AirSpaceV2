@@ -34,17 +34,18 @@ export default class CreateSurvey extends Component {
         })
 
         return (
-            <div className="surveyBox">
-                <div>
+            <div className='surveyBox'>
+                <div className='surveyInnerBox'>
                     <div>
-                        <h1>Create New Survey</h1>
-                        <h3>Title <input type='text' value={this.state.title} onChange={this.handleChange}></input></h3>
+                        <h1 className='cnsTitle'>Create New Survey</h1>
+                        <h3 className='surveyTitle'>Title</h3>
+                        <input type='text' value={this.state.title} onChange={this.handleChange}></input>
                     </div>
-                </div>
                 {questionForm}                                 {/* Where the mapped question inputs are */}
                 <br />
                 <button onClick={this._addQuestion}>Add Question + </button>
                 <button onClick={this._submitSurvey}>Submit</button>
+                </div>
             </div >
         )
 
