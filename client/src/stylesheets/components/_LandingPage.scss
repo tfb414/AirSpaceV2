@@ -5,19 +5,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: url(stylesheets/images/blooboard.jpg);
+    background: url(stylesheets/images/littleboard3.jpg);
     background-size: cover;
     color: white;
-
-    text-align: center;
-    font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
 }
 
 .branding {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: bold;
     font-size: 3rem;
+    text-align: center;
+    font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    // letter-spacing: 3px;
     @include respond-to(small) {
         font-size: 4rem;
     }

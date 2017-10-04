@@ -19,22 +19,23 @@ class HostDashboard extends Component {
         return (
 
             <BrowserRouter>
-                <div>
-                    <HDNavBar match={this.props.match} name={['create', 'struff']} />
+                <div className="hostDash">
+                    <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
                     <Switch>
-                        <Route path="/host/struff" />
+                        <Route path="/host/ViewResults/" />
                         <Route path="/host/create" component={() => <CreateSurvey sendMessage={this._sendMessage} />} />
+
                     </Switch>
                 </div>
             </BrowserRouter>
 
         )
     }
-     _sendMessage = (payload) => {
+    _sendMessage = (payload) => {
         this.connection.send(payload);
 
     }
 
 }
 
-export default HostDashboard
+export default HostDashboard;

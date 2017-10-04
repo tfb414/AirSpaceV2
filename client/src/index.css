@@ -400,6 +400,9 @@ html {
   height: 100%;
   width: 100%; }
 
+a {
+  text-decoration: none; }
+
 body {
   width: 100%;
   height: 100%;
@@ -420,6 +423,74 @@ body {
   align-items: center;
   justify-content: center; }
 
+.hostDash > div:nth-child(1) {
+  width: 45%;
+  min-width: 4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #495FA7;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6); }
+  @media (min-width: 768px) {
+    .hostDash > div:nth-child(1) {
+      max-width: 15rem; } }
+
+.HDNavButton {
+  border: none;
+  padding: 1.6rem;
+  font-size: 1rem;
+  background-color: unset;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  @media (min-width: 320px) {
+    .HDNavButton {
+      font-size: 1.2rem; } }
+
+.HDNavButton:focus,
+.HDNavButton:hover {
+  background-color: black;
+  transition: .5s background-color ease-in-out; }
+
+.HDNavButton a {
+  color: white; }
+
+.hostDash {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row; }
+
+.createSelection {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+
+.createBox {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black; }
+
+.quizOrSurveyBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50%;
+  border: 2px solid white; }
+
+.createOption {
+  width: 4rem;
+  height: 2rem;
+  margin: 1rem; }
+
 .landingButton {
   width: 40%;
   height: 60%;
@@ -427,15 +498,25 @@ body {
   color: white;
   font-weight: bold;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+  background-color: unset;
+  border: 1px solid white;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .landingButton {
-      font-size: 2.2rem; } }
+      font-size: 2rem; } }
+  @media (min-width: 768px) {
+    .landingButton {
+      width: 30%;
+      height: 50%;
+      margin: 3rem; } }
+  @media (min-width: 1024px) {
+    .landingButton {
+      width: 20%;
+      font-size: 2.5rem; } }
 
 .landingButton:focus,
 .landingButton:hover {
-  background-color: black;
+  background-color: rgba(255, 255, 255, 0.1);
   transition: .7s background-color ease-in-out; }
 
 .landingButtonContainer {
@@ -445,6 +526,9 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center; }
+  @media (min-width: 768px) {
+    .landingButtonContainer {
+      justify-content: center; } }
 
 .landingPage {
   width: 100%;
@@ -453,16 +537,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: url(stylesheets/images/blooboard.jpg);
+  background: url(stylesheets/images/littleboard3.jpg);
   background-size: cover;
-  color: white;
-  text-align: center;
-  font-family: Montserrat, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+  color: white; }
 
 .branding {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-weight: bold;
-  font-size: 3rem; }
+  font-size: 3rem;
+  text-align: center;
+  font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }
