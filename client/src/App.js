@@ -52,7 +52,7 @@ class App extends Component {
 
               <Route path="/host/struff" />
               <Route path="/host/create" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this._sendMessage} />} />
-              <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} />
+              {/* <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} /> */}
             </Switch>
           </div>
         </BrowserRouter>
