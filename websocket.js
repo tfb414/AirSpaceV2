@@ -45,10 +45,10 @@ function init() {
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
                     if (parsedData.type === 'CREATESURVEY') {
-                        addQuizQuestionsAnswers(parsedData);
+                        addQuizQuestionsAnswers(parsedData, user_id);
                     }
                     if (parsedData.type === 'ADDGUESTTOHOST') {
-                        addGuestToHost(parsedData).then((resp) => {
+                        addGuestToHost(parsedData, user_id).then((resp) => {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
@@ -98,9 +98,8 @@ function addOptions(question, parsedData, sq_id, question_id) {
     })
 }
 
-function addGuestToHost(parsedData) {
-    return query.addHostGuest(parsedData['host_id'], parsedData['guest_id']).then(
-        (resp) => {
+function addGuestToHost(parsedData, guest_id) {
+    return query.addHostGuest(parsedData['host_id'], guest_id).then(resp => {
             return resp;
         }
     );
