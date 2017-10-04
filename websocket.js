@@ -52,7 +52,6 @@ function init() {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
-                                    console.log(client);
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
                                     client.send("Error")
@@ -72,13 +71,13 @@ function init() {
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
     query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
-        addQuestionsAndAnswers(parsedData.question, resp.dataValues.sq_id);
+        addQuestionsAndAnswers(parsedData.payload, resp.dataValues.sq_id);
     });
 }
 
 
-function addQuestionsAndAnswers(parsedData, sq_id) {
-    parsedData.forEach((question) => {
+function addQuestionsAndAnswers(questions, sq_id) {
+    questions.forEach((question) => {
         query.addQuestion(question['text'], question['question_number']).then(resp => {
             let question_id = resp.dataValues.question_id
             if (question['option'] !== undefined) {

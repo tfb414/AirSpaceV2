@@ -11,9 +11,9 @@ const Create = (props) => {
             {/* <NavLink to={`/host/Create/survey`}> Survey </NavLink>
             <NavLink to={`/host/Create/quiz`}> Quiz </NavLink> */}
             <Switch>
-                <Route exact path="/host/Create" component={() => <CreateQuizSurvey {...props}/>}/>
-                <Route path="/host/Create/Quiz" component={() => <CreateQuiz {...props} />}/>
-                <Route path="/host/Create/Survey" component={() => <CreateSurvey {...props} />} />
+                <Route path="/Host/Create/Quiz" component={() => <CreateQuiz {...props} />}/>
+                <Route path="/Host/Create/Survey" component={() => <CreateSurvey {...props} />} />
+                <Route exact path="/Host/Create" component={() => <CreateQuizSurvey {...props}/>}/>
             </Switch>
         </div>
 
