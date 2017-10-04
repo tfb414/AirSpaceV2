@@ -6,6 +6,7 @@ import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
 import Create from './components/Create.js'
 import Guest from './components/Guest'
+import CreateQuiz from './components/CreateQuiz'
 
 class App extends Component {
   constructor(props) {
@@ -51,9 +52,9 @@ class App extends Component {
               <Route exact path="/" component={() => (<LandingPage />)} />
               <Route exact path="/host/" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} sendMessage={this._sendMessage} />)} />
               <Route path="/host/struff/" />
-              <Route path="/host/create/" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
-              <Route path="/host/quiz" />
-              <Route path="/host/survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+              <Route path="/host/Create/" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
+              <Route path="/host/Create/Quiz" component={(host_id) => <CreateQuiz host_id={this.state.host_id} sendMessage={this.props.sendMessage} />}/>
+              <Route path="/host/Create/Survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
               <Route exact path="/guest/" component={(match) => (<Guest match={match} guest_id={this.state.guest_id} sendMessage={this._sendMessage} message={this.state.messages} />)} />
               {/* <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} /> */}
             </Switch>
