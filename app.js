@@ -6,14 +6,17 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const queries = require('./queries');
 const session = require('express-session');
+// const MemcachedStore = require('connect-memcached')(session);
+const sessionStore = require('express-session').MemoryStore();
+const queries = require('./queries');
+// const sessionStore = new express.session.MemoryStore();
 require('dotenv').config();
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
-
 var index = require('./routes/index');
 var host = require('./routes/host');
 var guest = require('./routes/guest');
+var websocket = require('./websocket');
 
 var app = express();
 
@@ -25,7 +28,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bo dyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -81,7 +84,8 @@ app.use(session({
     secret: 'asdfjkl;',
     resave: true,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {},
+    store: sessionStore,
 }));
 app.use(passport.initialize());
 app.use(passport.session());

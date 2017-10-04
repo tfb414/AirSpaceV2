@@ -15,7 +15,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log('derp');
 
     // this is an "echo" websocket service for testing pusposes
     this.connection = new WebSocket(env);
