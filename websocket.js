@@ -52,17 +52,14 @@ function init() {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
-<<<<<<< HEAD
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
                                     // client.send("Error");
-=======
                                     // console.log(client);
 
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
                                     client.send(JSON.stringify({ 'type': 'ERROR' }))
->>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
                                     // client.send(data);
 
                                     // }
