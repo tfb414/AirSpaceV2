@@ -4,10 +4,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HostDashboard from "./components/HostDashboard";
 import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
-import Create from './components/Create.js'
-import Guest from './components/Guest'
-import GuestWaitingRoom from './components/GuestWaitingRoom'
-import CreateQuiz from './components/CreateQuiz'
+import Create from './components/Create.js';
+import Guest from './components/Guest';
+import GuestWaitingRoom from './components/GuestWaitingRoom';
+import CreateQuiz from './components/CreateQuiz';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +19,6 @@ class App extends Component {
 
 
   render() {
-    console.log(this.connection)
     return (
       <div className="App">
         {/* <div>
@@ -29,10 +28,10 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route path="/Host/Create/Quiz" component={() => <CreateQuiz sendMessage={this.props.sendMessage} />}/>
-              <Route path="/Host/Create/Survey" component={() => <CreateSurvey sendMessage={this.props.sendMessage} />} />
+              <Route exact path="/Host/Create/Quiz" component={() => <CreateQuiz sendMessage={this.props.sendMessage} />}/>
+              <Route exact path="/Host/Create/Survey" component={() => <CreateSurvey sendMessage={this.props.sendMessage} />} />
               <Route path="/Host/struff/" />
-              <Route path="/Host/Create/" component={() => <Create match={this.props.match} name={['survey', 'quiz']} sendMessage={this.props.sendMessage} />} />
+              <Route exact path="/Host/Create/" component={() => <Create match={this.props.match} name={['survey', 'quiz']} sendMessage={this.props.sendMessage} />} />
               <Route exact path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
               <Route exact path="/Guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} /*message={this.state.messages} */ />)} />
               <Route exact path="/Guest/" component={(match) => (<Guest match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />

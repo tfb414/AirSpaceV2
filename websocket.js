@@ -28,7 +28,7 @@ function init() {
 
                 wss.clients.forEach(function each(client) {
                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send("you're a wizard harry!");
+                    // client.send("you're a wizard harry!");
                     // client.send(data);
 
                     // }
@@ -61,6 +61,16 @@ function init() {
                                 });
                             }
                         });
+                    }
+                    if (parsedData.type === 'GETHOSTID') {
+                        wss.clients.forEach(function each(client) {
+                            let payload = {
+                                type: 'RETURNHOSTID',
+                                host_id: user_id,
+                                id: parsedData.id
+                            }
+                            client.send(JSON.stringify(payload));
+                        })
                     }
                 });
             })
