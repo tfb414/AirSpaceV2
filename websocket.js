@@ -122,12 +122,7 @@ function addOptions(question, parsedData, sq_id, question_id) {
 }
 
 function addGuestToHost(parsedData, guest_id) {
-<<<<<<< HEAD
     return query.addHostGuest(parsedData['host_id'], guest_id).then(resp => {
-=======
-    return query.addHostGuest(parsedData['host_id'], guest_id).then(
-        (resp) => {
->>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
             return resp;
         }
     );

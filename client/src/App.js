@@ -4,19 +4,12 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HostDashboard from "./components/HostDashboard";
 import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
-<<<<<<< HEAD
-import Create from './components/Create.js';
-import Guest from './components/Guest';
-import GuestWaitingRoom from './components/GuestWaitingRoom';
-import CreateQuiz from './components/CreateQuiz';
-=======
 import Create from './components/Create.js'
 import Guest from './components/Guest'
 import GuestWaitingRoom from './components/GuestWaitingRoom'
 import CreateQuiz from './components/CreateQuiz'
 import GuestRenderSurvey from './components/GuestRenderSurvey'
 import GuestRenderQuiz from './components/GuestRenderQuiz'
->>>>>>> 5a4ec143edef835b384215b64fb8dde9acf25cbf
 
 class App extends Component {
   constructor(props) {
