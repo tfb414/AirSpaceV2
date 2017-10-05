@@ -1,7 +1,6 @@
 .surveyBox {
     font-family: $copyfont;
     width: 90%;
-    // height: 50%;
     display: flex;
     padding: 2rem;
     flex-direction: column;
@@ -16,23 +15,8 @@
 }
 
 .surveyInnerBox button {
-    // border: none;
     padding: .5rem;
-    // background-color: black;
-    // color: white;
     font-family: $copyfont;
-}
-
-.questionItem p {
-    margin-bottom: 0;
-}
-
-.questionItem input {
-    // width: 10rem;
-}
-
-.questionItem {
-    width: 100%;
 }
 
 .cnsTitle {
@@ -45,10 +29,19 @@
     margin-bottom: 0;
 }
 
+.questionItem p {
+    margin-bottom: 0;
+}
+
+.questionItem {
+    width: 100%;
+}
+
+
+
 .bottomButtons {
     width: 100%;
     height: 100%;
-    // margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +51,6 @@
 .addSq {
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
-    // background-color: white;
     color: black;
     border: 1px solid black;
     background-color: unset;

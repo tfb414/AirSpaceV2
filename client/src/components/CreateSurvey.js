@@ -38,10 +38,10 @@ export default class CreateSurvey extends Component {
                     <h1 className='cnsTitle'>Create New Survey</h1>
                     <h3 className='surveyTitle'>Title</h3>
                     <input type='text' value={this.state.title} onChange={this.handleChange}></input>
-                    {questionForm}                                 {/* Where the mapped question inputs are */}
-                    <div className="bottomButtons">
-                        <button className="addSq" onClick={this._addQuestion}>Add Question + </button>
-                        <button className="subSurvey" onClick={this._submitSurvey}>Submit</button>
+                    {questionForm}       {/* Where the mapped question inputs are */}
+                    <div className='bottomButtons'>
+                        <button className='addSq' onClick={this._addQuestion}>Add Question + </button>
+                        <button className='subSurvey' onClick={this._submitSurvey}>Submit</button>
                     </div>
                 </div>
             </div >

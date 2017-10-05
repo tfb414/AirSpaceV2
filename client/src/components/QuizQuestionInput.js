@@ -10,10 +10,9 @@ const SurveyQuestionInput = ({RonChange, Qvalue, QonChange, OonChange, num, remo
         return <QuizOptionInput value={data.text} target={target} RonChange={RonChange} onChange={OonChange} addOption={addOption} num={num} selected={data.value}/>
     })
     return (
-        <div>
-            <p>Question {num}: 
+        <div className='quizQuestionItem'>
+            <p>{num}.</p> 
             <input type='text' target={num} value={Qvalue} onChange={QonChange}></input><button onClick={remove} target={num}>Remove Question</button>
-            </p>
             <form>
                 {Options} 
             </form>    
