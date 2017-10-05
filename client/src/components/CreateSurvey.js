@@ -87,7 +87,8 @@ export default class CreateSurvey extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATESURVEY',
+            type: 'CREATESURVEYQUIZ',
+            value: 'survey',
             title: this.state.title,
             payload: question_object
         }

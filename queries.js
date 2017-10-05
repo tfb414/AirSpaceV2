@@ -29,9 +29,15 @@ function upsertGuest(guest_id, first_name, last_name) {
 }
 
 function addHostGuest(host_id, guest_id) {
-    return db.host_guest.create({
-        guest_id,
-        host_id
+    return db.host_guest.count({ where: { host_id, guest_id } })
+    .then(count => {
+        if (count === 0) {
+            return db.host_guest.create({
+                guest_id,
+                host_id
+            })
+        }
+        return count;
     }).catch((err) => {
         return err;
     });

@@ -39,7 +39,7 @@ class HostDashboard extends Component {
     }
 
     render() {
-        console.log(this.state.host_id);
+      
         return (
 
             <BrowserRouter>
@@ -47,7 +47,7 @@ class HostDashboard extends Component {
                     <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
                     <Switch>
                         <Route path="/Host/ViewResults/" />
-                        <Route path="/Host/create" component={() => <CreateSurvey sendMessage={this._sendMessage} />} />
+                        <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                     </Switch>
                 </div>
             </BrowserRouter>
