@@ -544,8 +544,8 @@ body {
   border: 1px solid black;
   background-color: unset; }
 
-.addQq:hover,
-.addQq:focus {
+.addQuizQues:hover,
+.addQuizQues:focus {
   color: white;
   background-color: black;
   border: white;
@@ -581,7 +581,16 @@ body {
 
 .quizOptionsBlock {
   display: flex;
+  align-self: flex-end;
   flex-direction: column; }
+
+.quizOptionItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row; }
+
+.quizOptionsBlock input {
+  width: 80%; }
 
 .quizOptionsBlock p {
   align-self: flex-end; }
