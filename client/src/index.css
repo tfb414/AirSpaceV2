@@ -423,12 +423,91 @@ body {
   align-items: center;
   justify-content: center; }
 
+.surveyBox {
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 90%;
+  display: flex;
+  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 2rem; }
+  @media (min-width: 768px) {
+    .surveyBox {
+      width: 50%; } }
+
+.surveyInnerBox button {
+  padding: .5rem;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+
+.questionItem p {
+  margin-bottom: 0; }
+
+.questionItem {
+  width: 100%; }
+
+.cnsTitle {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.2rem; }
+
+.surveyTitle {
+  margin-bottom: 0; }
+
+.bottomButtons {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around; }
+
+.addSq {
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  color: black;
+  border: 1px solid black;
+  background-color: unset; }
+
+.addSq:hover,
+.addSq:focus {
+  color: white;
+  background-color: black;
+  border: white;
+  transition: .2s background-color ease-in-out; }
+
+.subtractQues {
+  background-color: white;
+  color: black;
+  width: 2rem;
+  margin-left: .5rem;
+  border: none; }
+
+.subtractQues:hover,
+.subtractQues:focus {
+  background-color: red;
+  color: white;
+  transition: .2s background-color ease-in-out; }
+
+.subSurvey {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 2rem; }
+
+.subSurvey:hover,
+.subSurvey:focus {
+  background-color: #11C211; }
+
 .hostDash > div:nth-child(1) {
   width: 45%;
   min-width: 4rem;
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background-color: #495FA7;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6); }
   @media (min-width: 768px) {
@@ -459,37 +538,71 @@ body {
   height: 100%;
   flex-direction: row; }
 
-.createSelection {
+.createPage {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; }
+
+.createSelection {
+  width: 70%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
 
-.createBox {
-  width: 50%;
-  height: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid black; }
+.createTitle {
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
+  @media (min-width: 768px) {
+    .createTitle {
+      margin-top: 0;
+      margin-bottom: 2rem;
+      font-size: 2.8em; } }
 
-.quizOrSurveyBox {
+.createBox {
+  width: 90%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  height: 50%;
-  border: 2px solid white; }
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 2rem; }
+  @media (min-width: 768px) {
+    .createBox {
+      width: 100%;
+      height: 100%; } }
+
+@media (min-width: 768px) {
+  .quizOrSurveyBox {
+    display: flex;
+    flex-direction: row;
+    align-items: center; } }
 
 .createOption {
-  width: 4rem;
-  height: 2rem;
-  margin: 1rem; }
+  width: 5rem;
+  height: 2.4rem;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: black; }
+  @media (min-width: 768px) {
+    .createOption {
+      width: 8rem;
+      height: 4rem;
+      font-size: 1.8rem; } }
+
+.createOption:hover,
+.createOption:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: .4s background-color ease-in-out; }
 
 .landingButton {
   width: 40%;
