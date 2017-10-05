@@ -574,16 +574,17 @@ body {
   transition: .2s background-color ease-in-out; }
 
 .quizOptionButtons {
-  margin-top: .5rem;
   display: flex;
-  width: 30%;
-  border: 1px solid black; }
+  width: 30%; }
 
 .subtractQoption,
 .addQoption {
   border: none;
   background-color: white;
-  color: black; }
+  color: black;
+  border: 1px solid black;
+  margin-top: .5rem;
+  margin-bottom: .5rem; }
 
 .subtractQoption:hover,
 .subtractQoption:focus,
@@ -609,7 +610,8 @@ body {
 
 .quizOptionsBlock .correct {
   margin-top: 0;
-  align-self: flex-end; }
+  align-self: flex-end;
+  width: 50%; }
 
 .quizOptionRadio {
   display: flex;
