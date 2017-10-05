@@ -54,7 +54,7 @@ function init() {
                                 wss.clients.forEach(function each(client) {
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
-                                    client.send("Error")
+                                    // client.send("Error");
                                     // client.send(data);
 
                                     // }
@@ -62,11 +62,11 @@ function init() {
                             }
                         });
                     }
-                    if (parsedData.type === 'GETHOSTID') {
+                    if (parsedData.type === 'GETUSERID') {
                         wss.clients.forEach(function each(client) {
                             let payload = {
-                                type: 'RETURNHOSTID',
-                                host_id: user_id,
+                                type: 'RETURNUSERID',
+                                user_id: user_id,
                                 id: parsedData.id
                             }
                             client.send(JSON.stringify(payload));

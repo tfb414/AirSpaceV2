@@ -18,7 +18,7 @@ class HostDashboard extends Component {
     componentWillMount() {
         let id = guid.raw();
         let payload = {
-            type: 'GETHOSTID',
+            type: 'GETUSERID',
             id: id
         };
         this.setState({
@@ -29,9 +29,9 @@ class HostDashboard extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
-                if (parsedData.type === 'RETURNHOSTID' && parsedData.id === this.state.host_id) {
+                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
                     this.setState({
-                        host_id: parsedData.host_id
+                        host_id: parsedData.user_id
                     })
                 }
             };
@@ -39,7 +39,6 @@ class HostDashboard extends Component {
     }
 
     render() {
-        console.log(this.state.host_id);
         return (
 
             <BrowserRouter>

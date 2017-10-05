@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch, NavLink } from 'react-router-dom'
-
+import guid from 'guid';
 import env from '../utility/env';
 
 class Guest extends Component {
@@ -8,7 +8,8 @@ class Guest extends Component {
         super(props);
         this.state = {
             host_id: '',
-            message: ""
+            guest_id: '',
+            message: ''
         }
     }
 
@@ -17,12 +18,24 @@ class Guest extends Component {
     }
 
     componentWillMount() {
-
+        let id = guid.raw();
+        let payload = {
+            type: 'GETUSERID',
+            id: id
+        };
+        this.setState({
+            guest_id: id
+        })
+        this.setState({
+            guest_id: id
+        })
         this.connection = new WebSocket(env);
-        console.log(this.connection);
+        
         // listen to onmessage event
         this.connection.onopen = () => {
+            this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = evt => {
+                let parsedData = JSON.parse(evt.data);
                 if (evt.data !== "Error") {
                     console.log(evt.data);
                     this.setState({
@@ -35,6 +48,12 @@ class Guest extends Component {
 
                     })
                 }
+                
+                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
+                    this.setState({
+                        guest_id: parsedData.user_id
+                    })
+                }
 
             };
         }
@@ -42,6 +61,7 @@ class Guest extends Component {
 
 
     render() {
+        console.log(this.state.guest_id);
         return (
             <div>
                 <div>
