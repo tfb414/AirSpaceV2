@@ -58,7 +58,7 @@
 .addSq:hover,
 .addSq:focus {
     color: white;
-    background-color: black;
+    background-color: $fontcolor;
     border: white;
     transition: .2s background-color ease-in-out;
 }
@@ -83,7 +83,9 @@
     background-color: $newblue;
     color: white;
     border: none;
-    border-radius: 1rem;
+    width: 5.5rem;
+    height: 2.4rem;
+    border-radius: 2rem;
     padding: 2rem;
 }
 
