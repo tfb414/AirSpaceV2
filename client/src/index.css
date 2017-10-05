@@ -442,19 +442,19 @@ body {
   padding: .5rem;
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
 
+.cnsTitle {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 1.6rem; }
+
+.surveyTitle {
+  margin-bottom: 0; }
+
 .questionItem p {
   margin-bottom: 0; }
 
 .questionItem {
   width: 100%; }
-
-.cnsTitle {
-  margin-top: 0;
-  margin-bottom: 2rem;
-  font-size: 1.2rem; }
-
-.surveyTitle {
-  margin-bottom: 0; }
 
 .bottomButtons {
   width: 100%;
@@ -491,15 +491,140 @@ body {
   color: white;
   transition: .2s background-color ease-in-out; }
 
-.subSurvey {
+.submitSurvey {
   background-color: black;
   color: white;
   border: none;
   padding: 2rem; }
 
-.subSurvey:hover,
-.subSurvey:focus {
+.submitSurvey:hover,
+.submitSurvey:focus {
   background-color: #11C211; }
+
+.quizBox {
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 90%;
+  display: flex;
+  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 2rem; }
+  @media (min-width: 768px) {
+    .quizBox {
+      width: 50%; } }
+
+.quizInnerBox button {
+  padding: .5rem;
+  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+
+.cnqTitle {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 2rem; }
+
+.quizTitle {
+  margin-bottom: 0; }
+
+.quizQuestionLine {
+  width: 100%; }
+
+.quizQuestionItem p {
+  margin-bottom: 0; }
+
+.quizQuesTest {
+  width: 100%; }
+
+.addQuizQues {
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  color: black;
+  border: 1px solid black;
+  background-color: unset; }
+
+.addQuizQues:hover,
+.addQuizQues:focus {
+  color: white;
+  background-color: black;
+  border: white;
+  transition: .2s background-color ease-in-out; }
+
+.submitQuiz {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 2rem; }
+
+.submitQuiz:hover,
+.submitQuiz:focus {
+  background-color: #11C211; }
+
+.subtractQuizQues {
+  background-color: white;
+  color: black;
+  margin-left: .5rem;
+  border: none; }
+
+.subtractQuizQues:hover,
+.subtractQuizQues:focus {
+  background-color: red;
+  color: white;
+  transition: .2s background-color ease-in-out; }
+
+.quizOptionButtons {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end; }
+
+.subtractQoption,
+.addQoption {
+  border: none;
+  background-color: white;
+  color: black;
+  margin-top: .5rem;
+  margin-bottom: .5rem; }
+
+.subtractQoption:hover,
+.subtractQoption:focus,
+.addQoption:hover,
+.addQoption:focus {
+  border: none;
+  background-color: black;
+  color: white;
+  transition: .2s background-color ease-in-out; }
+
+.quizOptionsBlock {
+  display: flex;
+  align-self: flex-end;
+  flex-direction: column; }
+
+.quizOptionItem {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse; }
+
+.quizOptionsBlock input {
+  width: 80%; }
+
+.quizOptionsBlock .correct {
+  margin-top: .2rem;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%; }
+
+.correct p {
+  margin-top: .5rem;
+  align-self: center; }
+
+.quizOptionRadio {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-end; }
 
 .hostDash > div:nth-child(1) {
   width: 45%;
