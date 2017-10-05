@@ -1,5 +1,6 @@
 .quizBox {
     font-family: $copyfont;
+    color: $fontcolor;
     width: 90%;
     // height: 50%;
     display: flex;
@@ -48,29 +49,34 @@
 .addQuizQues {
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
-    color: black;
-    border: 1px solid black;
+    color: $fontcolor;
+    // border: 1px solid black;
+    border: 1px solid $fontcolor;
     background-color: unset;
 }
 
 .addQuizQues:hover,
 .addQuizQues:focus {
     color: white;
-    background-color: black;
+    background-color: $fontcolor;
     border: white;
     transition: .2s background-color ease-in-out;
 }
 
 .submitQuiz {
-    background-color: black;
+    background-color: $newblue;
     color: white;
     border: none;
+    width: 5.5rem;
+    height: 2.4rem;
+    border-radius: 2rem;
     padding: 2rem;
 }
 
 .submitQuiz:hover,
 .submitQuiz:focus {
     background-color: #11C211;
+    // background-color: $darkerblue;
 }
 
 .subtractQuizQues {
@@ -108,7 +114,7 @@
 .addQoption:hover,
 .addQoption:focus {
     border: none;
-    background-color: black;
+    background-color: $fontcolor;
     color: white;
     transition: .2s background-color ease-in-out;
 }

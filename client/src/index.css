@@ -507,6 +507,7 @@ body {
 
 .quizBox {
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  color: #455358;
   width: 90%;
   display: flex;
   padding: 2rem;
@@ -544,21 +545,24 @@ body {
 .addQuizQues {
   margin-top: 1.6rem;
   margin-bottom: 1.6rem;
-  color: black;
-  border: 1px solid black;
+  color: #455358;
+  border: 1px solid #455358;
   background-color: unset; }
 
 .addQuizQues:hover,
 .addQuizQues:focus {
   color: white;
-  background-color: black;
+  background-color: #455358;
   border: white;
   transition: .2s background-color ease-in-out; }
 
 .submitQuiz {
-  background-color: black;
+  background-color: #527bff;
   color: white;
   border: none;
+  width: 5.5rem;
+  height: 2.4rem;
+  border-radius: 2rem;
   padding: 2rem; }
 
 .submitQuiz:hover,
@@ -595,7 +599,7 @@ body {
 .addQoption:hover,
 .addQoption:focus {
   border: none;
-  background-color: black;
+  background-color: #455358;
   color: white;
   transition: .2s background-color ease-in-out; }
 

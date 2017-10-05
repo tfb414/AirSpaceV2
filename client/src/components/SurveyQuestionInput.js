@@ -4,7 +4,7 @@ const SurveyQuestionInput = ({value, onChange, num, remove}) => {
     return (
         <div className='questionItem'>
             <p>{num}.</p>
-            <input type='text' target={num} value={value} onChange={onChange}></input>
+            <textarea> target={num} value={value} onChange={onChange}></textarea>
             <button className='subtractQues' onClick={remove} target={num}>—</button>
         </div>
     );
