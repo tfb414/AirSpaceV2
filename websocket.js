@@ -44,7 +44,7 @@ function init() {
                     // Broadcast to everyone else.
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
-                    if (parsedData.type === 'CREATESURVEY') {
+                    if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
                     }
                     if (parsedData.type === 'ADDGUESTTOHOST') {
@@ -91,7 +91,7 @@ function init() {
 
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
-    query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
+    query.addSQ(parsedData['title'], host_id, parsedData['value']).then(resp => {
         addQuestionsAndAnswers(parsedData.payload, resp.dataValues.sq_id);
     });
 }
@@ -101,8 +101,8 @@ function addQuestionsAndAnswers(questions, sq_id) {
     questions.forEach((question) => {
         query.addQuestion(question['text'], question['question_number']).then(resp => {
             let question_id = resp.dataValues.question_id
-            if (question['option'] !== undefined) {
-                addOptions(question, parsedData, sq_id, question_id);
+            if (question['options'] !== undefined) {
+                addOptions(question, sq_id, question_id);
             } else {
                 query.addSQQuestionOption(sq_id, question_id, null);
             }
@@ -110,8 +110,8 @@ function addQuestionsAndAnswers(questions, sq_id) {
     })
 }
 
-function addOptions(question, parsedData, sq_id, question_id) {
-    question.option.forEach((option) => {
+function addOptions(question, sq_id, question_id) {
+    question.options.forEach((option) => {
         query.addOption(option.text, option.value).then(resp => {
             query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
         })

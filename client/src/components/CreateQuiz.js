@@ -129,7 +129,8 @@ export default class CreateQuiz extends Component {
     }
 
     _submitSurvey = () => {
-        console.log(this._createPayload())
+        console.log(this._createPayload());
+        console.log(this.props);
         this.props.sendMessage(this._createPayload());
         this.setState({
             title: "",
@@ -149,7 +150,8 @@ export default class CreateQuiz extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATEQUIZ',
+            type: 'CREATESURVEYQUIZ',
+            value: 'quiz',
             title: this.state.title,
             payload: question_object
         }

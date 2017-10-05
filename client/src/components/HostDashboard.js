@@ -39,7 +39,7 @@ class HostDashboard extends Component {
     }
 
     render() {
-        console.log(this.state.host_id);
+      
         return (
 
             <BrowserRouter>

@@ -31,10 +31,7 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route exact path="/Host/Create" component={() => <Create match={this.props.match} name={['survey', 'quiz']} sendMessage={this.props.sendMessage} />} />
-              <Route exact path="/Host/Create/Quiz" component={() => <CreateQuiz sendMessage={this.props.sendMessage} />} />
-              <Route exact path="/Host/Create/Survey" component={() => <CreateSurvey sendMessage={this.props.sendMessage} />} />
-              <Route exact path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
+              <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
               <Route exact path="/Guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} /*message={this.state.messages} */ />)} />
               <Route exact path="/Guest/" component={(match) => (<Guest match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
               <Route exact path="/Host/Results" component={(match) => (<HostRenderResults match={match} title="Survey 1" payload={[{ first_name: "Aaron", last_name: "Sosa", question: [{ text: "Do you like Dogs or cats?", response: "Dogs" }, { text: "Are you happy?", response: "Yes"}]}, { first_name: "Tim", last_name: "Brady", question: [{ text: "Do you like Dogs or cats?", response: "Cats" }, { text: "Are you happy?", response: "Yes"}]}]} />)} />
