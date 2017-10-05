@@ -426,6 +426,7 @@ body {
 .surveyBox {
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   width: 90%;
+  color: #455358;
   display: flex;
   padding: 2rem;
   flex-direction: column;
@@ -467,8 +468,8 @@ body {
 .addSq {
   margin-top: 1.6rem;
   margin-bottom: 1.6rem;
-  color: black;
-  border: 1px solid black;
+  color: #455358;
+  border: 1px solid #455358;
   background-color: unset; }
 
 .addSq:hover,
@@ -492,9 +493,10 @@ body {
   transition: .2s background-color ease-in-out; }
 
 .submitSurvey {
-  background-color: black;
+  background-color: #527bff;
   color: white;
   border: none;
+  border-radius: 1rem;
   padding: 2rem; }
 
 .submitSurvey:hover,
@@ -633,8 +635,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #495FA7;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.6); }
+  background-color: #3ca0cf;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); }
   @media (min-width: 768px) {
     .hostDash > div:nth-child(1) {
       max-width: 15rem; } }
@@ -651,7 +653,7 @@ body {
 
 .HDNavButton:focus,
 .HDNavButton:hover {
-  background-color: black;
+  background-color: #335ce0;
   transition: .5s background-color ease-in-out; }
 
 .HDNavButton a {
@@ -681,7 +683,8 @@ body {
 
 .createTitle {
   margin-top: 1rem;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  color: #455358; }
   @media (min-width: 768px) {
     .createTitle {
       margin-top: 0;
@@ -711,22 +714,23 @@ body {
 
 .createOption {
   width: 5rem;
-  height: 2.4rem;
+  height: 2.7rem;
   margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  background-color: black; }
+  border-radius: 2rem;
+  background-color: #527bff; }
   @media (min-width: 768px) {
     .createOption {
-      width: 8rem;
-      height: 4rem;
+      width: 8.4rem;
+      height: 4.2rem;
       font-size: 1.8rem; } }
 
 .createOption:hover,
 .createOption:focus {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #335ce0;
   transition: .4s background-color ease-in-out; }
 
 .landingButton {

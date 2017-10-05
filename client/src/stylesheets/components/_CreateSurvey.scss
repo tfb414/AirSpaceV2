@@ -1,6 +1,7 @@
 .surveyBox {
     font-family: $copyfont;
     width: 90%;
+    color: $fontcolor;
     display: flex;
     padding: 2rem;
     flex-direction: column;
@@ -49,8 +50,8 @@
 .addSq {
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
-    color: black;
-    border: 1px solid black;
+    color: $fontcolor;
+    border: 1px solid $fontcolor;
     background-color: unset;
 }
 
@@ -78,9 +79,11 @@
 }
 
 .submitSurvey {
-    background-color: black;
+    // background-color: black;
+    background-color: $newblue;
     color: white;
     border: none;
+    border-radius: 1rem;
     padding: 2rem;
 }
 

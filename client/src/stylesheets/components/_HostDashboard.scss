@@ -28,6 +28,7 @@
     // margin-top: 2rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    color: $fontcolor;
     @include respond-to(medium) {
         margin-top: 0;
         margin-bottom: 2rem;
@@ -62,22 +63,24 @@
 
 .createOption {
     width: 5rem;
-    height: 2.4rem;
+    height: 2.7rem;
     margin: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    background-color: black;
+    border-radius: 2rem;
+    background-color: $newblue;
     @include respond-to(medium) {
-        width: 8rem;
-        height: 4rem;
+        width: 8.4rem;
+        height: 4.2rem;
         font-size: 1.8rem;
     }
 }
 
 .createOption:hover,
 .createOption:focus {
-    background-color: rgba(0,0,0,0.5);
+    // background-color: rgba(0,0,0,0.5);
+    background-color: $darkerblue;
     transition: .4s background-color ease-in-out;
 }
