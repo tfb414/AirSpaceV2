@@ -44,7 +44,7 @@ function init() {
                     // Broadcast to everyone else.
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
-                    if (parsedData.type === 'CREATESURVEY') {
+                    if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
                     }
                     if (parsedData.type === 'ADDGUESTTOHOST') {
