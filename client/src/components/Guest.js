@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom'
-
+import { BrowserRouter, Route, Link, Switch, NavLink } from 'react-router-dom'
+import guid from 'guid';
 import env from '../utility/env';
 
 class Guest extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: 'tfb414@gmail.com',
-            guest_id: 'tfb414@gmail.com',
-            message: "",
-            connectedToHost: '',
-            link: "/guest/",
-
+            host_id: '',
+            guest_id: '',
+            message: ''
         }
     }
 
@@ -21,18 +18,25 @@ class Guest extends Component {
     }
 
     componentWillMount() {
-
+        let id = guid.raw();
+        let payload = {
+            type: 'GETUSERID',
+            id: id
+        };
+        this.setState({
+            guest_id: id
+        })
+        this.setState({
+            guest_id: id
+        })
         this.connection = new WebSocket(env);
-        console.log(this.connection);
+        
         // listen to onmessage event
         this.connection.onopen = () => {
-
+            this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = evt => {
-
-                let data = JSON.parse(evt.data)
-
-                console.log("we in message")
-                if (data.type === "CONNECTEDTOHOST") {
+                let parsedData = JSON.parse(evt.data);
+                if (parsedData.type === "CONNECTEDTOHOST") {
                     console.log('connected to host')
                     this.setState({
                         connectedToHost: true,
@@ -41,10 +45,16 @@ class Guest extends Component {
                     })
                     console.log(this.state.connectedToHost)
                 }
-                if (data.type === "ERROR") {
+                if (parsedData.type === "ERROR") {
                     this.setState({
                         message: 'Could not connect to host',
 
+                    })
+                }
+                
+                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
+                    this.setState({
+                        guest_id: parsedData.user_id
                     })
                 }
 
@@ -54,11 +64,15 @@ class Guest extends Component {
 
 
     render() {
+<<<<<<< HEAD
+        console.log(this.state.guest_id);
+=======
         let redirect = this.state.connectedToHost;
         if (redirect) {
             console.log('redirect is true')
             return <Redirect to='waiting/' />;
         }
+>>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
         return (
             <div>
                 <div>
@@ -91,8 +105,7 @@ class Guest extends Component {
         console.log('create payload')
         let payload = {
             type: "ADDGUESTTOHOST",
-            host_id: this.state.host_id,
-            guest_id: this.state.guest_id
+            host_id: this.state.host_id
         }
         return JSON.stringify(payload);
     }

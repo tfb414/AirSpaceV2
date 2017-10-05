@@ -45,13 +45,16 @@ function init() {
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
                     if (parsedData.type === 'CREATESURVEY') {
-                        addQuizQuestionsAnswers(parsedData);
+                        addQuizQuestionsAnswers(parsedData, user_id);
                     }
                     if (parsedData.type === 'ADDGUESTTOHOST') {
                         addGuestToHost(parsedData, user_id).then((resp) => {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
+                                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                    // console.log(client);
+                                    // client.send("Error");
                                     // console.log(client);
 
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -70,6 +73,16 @@ function init() {
                             }
                         });
                     }
+                    if (parsedData.type === 'GETUSERID') {
+                        wss.clients.forEach(function each(client) {
+                            let payload = {
+                                type: 'RETURNUSERID',
+                                user_id: user_id,
+                                id: parsedData.id
+                            }
+                            client.send(JSON.stringify(payload));
+                        })
+                    }
                 });
             })
         })
@@ -79,13 +92,13 @@ function init() {
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
     query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
-        addQuestionsAndAnswers(parsedData.question, resp.dataValues.sq_id);
+        addQuestionsAndAnswers(parsedData.payload, resp.dataValues.sq_id);
     });
 }
 
 
-function addQuestionsAndAnswers(parsedData, sq_id) {
-    parsedData.forEach((question) => {
+function addQuestionsAndAnswers(questions, sq_id) {
+    questions.forEach((question) => {
         query.addQuestion(question['text'], question['question_number']).then(resp => {
             let question_id = resp.dataValues.question_id
             if (question['option'] !== undefined) {
@@ -106,8 +119,7 @@ function addOptions(question, parsedData, sq_id, question_id) {
 }
 
 function addGuestToHost(parsedData, guest_id) {
-    return query.addHostGuest(parsedData['host_id'], guest_id).then(
-        (resp) => {
+    return query.addHostGuest(parsedData['host_id'], guest_id).then(resp => {
             return resp;
         }
     );

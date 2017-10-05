@@ -1,21 +1,45 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import env from '../utility/env';
-import HDNavBar from './HDNavBar'
+import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
+import guid from 'guid';
 
 
 
 class HostDashboard extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            host_id: ""
+        }
     }
-    componentDidMount() {
+    componentWillMount() {
+        let id = guid.raw();
+        let payload = {
+            type: 'GETUSERID',
+            id: id
+        };
+        this.setState({
+            host_id: id
+        })
         this.connection = new WebSocket(env);
+        this.connection.onopen = () => {
+            this._sendMessage(JSON.stringify(payload));
+            this.connection.onmessage = event => {
+                let parsedData = JSON.parse(event.data);
+                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
+                    this.setState({
+                        host_id: parsedData.user_id
+                    })
+                }
+            };
+        }
     }
 
     render() {
+        console.log(this.state.host_id);
         return (
 
             <BrowserRouter>
@@ -24,7 +48,6 @@ class HostDashboard extends Component {
                     <Switch>
                         <Route path="/host/ViewResults/" />
                         <Route path="/host/create" component={() => <CreateSurvey sendMessage={this._sendMessage} />} />
-
                     </Switch>
                 </div>
             </BrowserRouter>

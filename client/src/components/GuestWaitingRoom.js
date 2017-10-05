@@ -5,8 +5,7 @@ class GuestWaitingRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: props.host_id,
-            guest_id: props.guest_id
+            host_id: props.host_id
         }
     }
 

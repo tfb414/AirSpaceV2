@@ -10,7 +10,6 @@ const session = require('express-session');
 // const MemcachedStore = require('connect-memcached')(session);
 const sessionmanager = require('./sessionmanager');
 const queries = require('./queries');
-// const sessionStore = new express.session.MemoryStore();
 require('dotenv').config();
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
 var index = require('./routes/index');
@@ -91,7 +90,7 @@ app.get('/host/auth/google',
 
 app.get('/host/auth/google/callback',
     passport.authenticate('host', {
-        successRedirect: '/host/',
+        successRedirect: '/Host/',
         failureRedirect: '/',
         failureFlash: true
     }));
@@ -101,13 +100,12 @@ app.get('/guest/auth/google',
 
 app.get('/guest/auth/google/callback',
     passport.authenticate('guest', {
-        successRedirect: '/guest/',
+        successRedirect: '/Guest/',
         failureRedirect: '/',
         failureFlash: true
     }));
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
-    console.log(req.user);
     res.sendFile('/public/index.html', { "root": __dirname });
 });
 

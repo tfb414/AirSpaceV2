@@ -5,7 +5,6 @@ export default class CreateQuiz extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: props.host_id,
             title: "",
             question: [
                 {
@@ -151,7 +150,6 @@ export default class CreateQuiz extends Component {
         }, {})
         let payload = {
             type: 'CREATEQUIZ',
-            host_id: this.state.host_id,
             title: this.state.title,
             payload: question_object
         }
