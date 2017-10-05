@@ -10,14 +10,24 @@ const SurveyQuestionInput = ({RonChange, Qvalue, QonChange, OonChange, num, remo
         return <QuizOptionInput value={data.text} target={target} RonChange={RonChange} onChange={OonChange} addOption={addOption} num={num} selected={data.value}/>
     })
     return (
-        <div>
-            <p>Question {num}: 
-            <input type='text' target={num} value={Qvalue} onChange={QonChange}></input><button onClick={remove} target={num}>Remove Question</button>
-            </p>
-            <form>
-                {Options} 
-            </form>    
-            <button target={num} onClick={addOption}> + </button><button target={num} onClick={removeOption}> - </button>
+        <div className='quizQuestionItem'>
+            <div className='quizQuestionLine'>
+                <p>{num}.</p>
+                <textarea target={num} value={Qvalue} onChange={QonChange}></textarea>
+                <button className='subtractQuizQues' onClick={remove} target={num}>—</button>
+            </div>
+            <div className='quizOptionsBlock'>
+                <div className='correct'>
+                    <p>Correct</p>
+                </div>
+                <form>
+                    {Options}
+                </form>
+                <div className='quizOptionButtons'>
+                    <button className='addQoption' target={num} onClick={addOption}> + </button>
+                    <button className='subtractQoption' target={num} onClick={removeOption}> — </button>
+                </div>
+            </div>
         </div>
     );
 };
