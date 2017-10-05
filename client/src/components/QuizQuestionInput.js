@@ -12,7 +12,7 @@ const SurveyQuestionInput = ({RonChange, Qvalue, QonChange, OonChange, num, remo
     return (
         <div className='quizQuestionItem'>
             <div className='quizQuestionLine'>
-                <p>{num}.</p> 
+                <p>{num}.</p>
                 <input type='text' target={num} value={Qvalue} onChange={QonChange}></input>
                 <button className='subtractQuizQues' onClick={remove} target={num}>—</button>
             </div>

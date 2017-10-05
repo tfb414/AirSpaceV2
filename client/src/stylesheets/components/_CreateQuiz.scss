@@ -32,6 +32,9 @@
 
 .quizQuestionLine {
     width: 100%;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: space-around;
 }
 
 .quizQuestionItem p {
@@ -86,7 +89,8 @@
 
 .quizOptionButtons {
     display: flex;
-    width: 30%;
+    flex-direction: row;
+    align-self: flex-end;
 }
 
 .subtractQoption,
@@ -94,7 +98,7 @@
     border: none;
     background-color: white;
     color: black;
-    border: 1px solid black;
+    // border: 1px solid black;
     margin-top: .5rem;
     margin-bottom: .5rem;
 }
@@ -118,7 +122,7 @@
 .quizOptionItem {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
 }
 
 .quizOptionsBlock input {
@@ -127,7 +131,7 @@
 
 .quizOptionsBlock .correct {
     margin-top: .2rem;
-    align-self: flex-end;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -136,6 +140,7 @@
 }
 
 .correct p {
+    margin-top: .5rem;
     align-self: center;
 }
 
