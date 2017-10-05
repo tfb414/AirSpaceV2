@@ -37,7 +37,7 @@ function addHostGuest(host_id, guest_id) {
                 host_id
             })
         }
-        return;
+        return count;
     }).catch((err) => {
         return err;
     });
