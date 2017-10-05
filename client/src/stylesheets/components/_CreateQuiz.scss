@@ -90,3 +90,16 @@
     background-color: black;
     color: white;
 }
+
+.quizOptionsBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.quizOptionsBlock p {
+    align-self: flex-end;
+}
+
+.quizOptionButtons {
+    align-self: flex-end;
+}

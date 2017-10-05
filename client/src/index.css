@@ -579,6 +579,16 @@ body {
   background-color: black;
   color: white; }
 
+.quizOptionsBlock {
+  display: flex;
+  flex-direction: column; }
+
+.quizOptionsBlock p {
+  align-self: flex-end; }
+
+.quizOptionButtons {
+  align-self: flex-end; }
+
 .hostDash > div:nth-child(1) {
   width: 45%;
   min-width: 4rem;

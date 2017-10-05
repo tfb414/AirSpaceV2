@@ -21,8 +21,10 @@ const SurveyQuestionInput = ({RonChange, Qvalue, QonChange, OonChange, num, remo
                 <form>
                     {Options}
                 </form>
-                <button className='addQoption' target={num} onClick={addOption}> + </button>
-                <button className='subtractQoption' target={num} onClick={removeOption}> — </button>
+                <div className='quizOptionButtons'>
+                    <button className='addQoption' target={num} onClick={addOption}> + </button>
+                    <button className='subtractQoption' target={num} onClick={removeOption}> — </button>
+                </div>
             </div>
         </div>
     );
