@@ -20,7 +20,6 @@ class GuestWaitingRoom extends Component {
                 <div>
 
                 </div>
-
             </div>
 
         )
