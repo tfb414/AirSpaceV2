@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link, Switch, NavLink } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Switch, NavLink, Redirect } from 'react-router-dom'
 import guid from 'guid';
 import env from '../utility/env';
 
@@ -30,7 +30,7 @@ class Guest extends Component {
             guest_id: id
         })
         this.connection = new WebSocket(env);
-        
+
         // listen to onmessage event
         this.connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
@@ -51,7 +51,7 @@ class Guest extends Component {
 
                     })
                 }
-                
+
                 if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
                     this.setState({
                         guest_id: parsedData.user_id
@@ -64,15 +64,12 @@ class Guest extends Component {
 
 
     render() {
-<<<<<<< HEAD
         console.log(this.state.guest_id);
-=======
         let redirect = this.state.connectedToHost;
         if (redirect) {
             console.log('redirect is true')
             return <Redirect to='waiting/' />;
         }
->>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
         return (
             <div>
                 <div>
