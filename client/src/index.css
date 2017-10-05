@@ -528,11 +528,14 @@ body {
 .quizTitle {
   margin-bottom: 0; }
 
-.quizQuestionItem {
+.quizQuestionLine {
   width: 100%; }
 
 .quizQuestionItem p {
   margin-bottom: 0; }
+
+.quizQuesTest {
+  width: 100%; }
 
 .addQuizQues {
   margin-top: 1.6rem;
@@ -569,6 +572,12 @@ body {
   background-color: red;
   color: white;
   transition: .2s background-color ease-in-out; }
+
+.subtractQoption,
+.addQoption {
+  border: none;
+  background-color: black;
+  color: white; }
 
 .hostDash > div:nth-child(1) {
   width: 45%;

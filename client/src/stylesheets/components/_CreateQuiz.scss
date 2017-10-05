@@ -30,12 +30,16 @@
     margin-bottom: 0;
 }
 
-.quizQuestionItem {
+.quizQuestionLine {
     width: 100%;
 }
 
 .quizQuestionItem p {
     margin-bottom: 0;
+}
+
+.quizQuesTest {
+    width: 100%;
 }
 
 .addQuizQues {
@@ -69,7 +73,6 @@
 .subtractQuizQues {
     background-color: white;
     color: black;
-    // width: 2rem;
     margin-left: .5rem;
     border: none;
 }
@@ -79,4 +82,11 @@
     background-color: red;
     color: white;
     transition: .2s background-color ease-in-out;
+}
+
+.subtractQoption,
+.addQoption {
+    border: none;
+    background-color: black;
+    color: white;
 }
