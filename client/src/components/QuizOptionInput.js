@@ -4,7 +4,7 @@ const QuizOptionInput = ({RonChange, value, target, onChange, addOption, num, se
     return (
         <div className='quizOptionItem'>
             <input type='text' value={value} target={target} onChange={onChange}></input>
-            <input type='radio' name={num} onChange={RonChange} target={target} checked={selected}></input>    
+            <input className='quizOptionRadio' type='radio' name={num} onChange={RonChange} target={target} checked={selected}></input>    
         </div>
     );
 };

@@ -592,10 +592,16 @@ body {
 .quizOptionsBlock input {
   width: 80%; }
 
-.quizOptionsBlock p {
+.quizOptionsBlock .correct {
+  margin-top: 0;
   align-self: flex-end; }
 
 .quizOptionButtons {
+  display: flex;
+  width: 5%;
+  justify-content: space-between; }
+
+.quizOptionRadio {
   align-self: flex-end; }
 
 .hostDash > div:nth-child(1) {
