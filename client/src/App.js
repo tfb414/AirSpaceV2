@@ -6,41 +6,21 @@ import env from './utility/env';
 import CreateSurvey from './components/CreateSurvey';
 import Create from './components/Create.js'
 import Guest from './components/Guest'
+import GuestWaitingRoom from './components/GuestWaitingRoom'
 import CreateQuiz from './components/CreateQuiz'
+import GuestRenderSurvey from './components/GuestRenderSurvey'
+import GuestRenderQuiz from './components/GuestRenderQuiz'
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: ['hey'],
-      // host_id: 'tfb414@gmail.com',
-      guest_id: 'tfb414@gmail.com',
-      host_id: 'tfb414@gmail.com'
-    }
-  }
-
-  componentDidMount() {
-
-    // this is an "echo" websocket service for testing pusposes
-    this.connection = new WebSocket(env);
-    console.log(this.connection);
-    // listen to onmessage event
-    this.connection.onopen = () => {
-      this.connection.onmessage = evt => {
-        console.log(evt);
-        this.setState({
-          messages: evt.data
-        })
-      };
-      // setInterval(_ => {
-      //   this.connection.send(Math.random())
-      // }, 2000)
+      messages: ['hey']
     }
   }
 
 
   render() {
-    console.log(this.connection)
     return (
       <div className="App">
         {/* <div>
@@ -50,13 +30,13 @@ class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route exact path="/host/" component={(match) => (<HostDashboard match={match} host_id={this.state.host_id} sendMessage={this._sendMessage} />)} />
-              <Route path="/host/struff/" />
-              <Route path="/host/Create/" component={(host_id) => <Create match={this.props.match} name={['survey', 'quiz']} host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
-              <Route path="/host/Create/Quiz" component={(host_id) => <CreateQuiz host_id={this.state.host_id} sendMessage={this.props.sendMessage} />}/>
-              <Route path="/host/Create/Survey" component={(host_id) => <CreateSurvey host_id={this.state.host_id} sendMessage={this.props.sendMessage} />} />
-              <Route exact path="/guest/" component={(match) => (<Guest match={match} guest_id={this.state.guest_id} sendMessage={this._sendMessage} message={this.state.messages} />)} />
-              {/* <Route exact path="/guest/waiting" component={(match) => (<GuestWaitingRoom match={match} guest_id={this.state.guest_id} message={this.state.messages} />)} /> */}
+              <Route exact path="/Host/Create/Quiz" component={() => <CreateQuiz sendMessage={this.props.sendMessage} />}/>
+              <Route exact path="/Host/Create/Survey" component={() => <CreateSurvey sendMessage={this.props.sendMessage} />} />
+              <Route path="/Host/struff/" />
+              <Route exact path="/Host/Create/" component={() => <Create match={this.props.match} name={['survey', 'quiz']} sendMessage={this.props.sendMessage} />} />
+              <Route exact path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
+              <Route exact path="/Guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} /*message={this.state.messages} */ />)} />
+              <Route exact path="/Guest/" component={(match) => (<Guest match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
             </Switch>
           </div>
         </BrowserRouter>
@@ -64,10 +44,6 @@ class App extends Component {
     );
   }
 
-  _sendMessage = (payload) => {
-    this.connection.send(payload);
-
-  }
 
 }
 
