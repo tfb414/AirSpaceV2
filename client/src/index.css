@@ -523,7 +523,7 @@ body {
 .cnqTitle {
   margin-top: 0;
   margin-bottom: 2rem;
-  font-size: 1.2rem; }
+  font-size: 2rem; }
 
 .quizTitle {
   margin-bottom: 0; }
@@ -573,11 +573,26 @@ body {
   color: white;
   transition: .2s background-color ease-in-out; }
 
+.quizOptionButtons {
+  margin-top: .5rem;
+  display: flex;
+  width: 30%;
+  border: 1px solid black; }
+
 .subtractQoption,
 .addQoption {
   border: none;
+  background-color: white;
+  color: black; }
+
+.subtractQoption:hover,
+.subtractQoption:focus,
+.addQoption:hover,
+.addQoption:focus {
+  border: none;
   background-color: black;
-  color: white; }
+  color: white;
+  transition: .2s background-color ease-in-out; }
 
 .quizOptionsBlock {
   display: flex;
@@ -596,12 +611,9 @@ body {
   margin-top: 0;
   align-self: flex-end; }
 
-.quizOptionButtons {
-  display: flex;
-  width: 5%;
-  justify-content: space-between; }
-
 .quizOptionRadio {
+  display: flex;
+  flex-direction: row;
   align-self: flex-end; }
 
 .hostDash > div:nth-child(1) {
