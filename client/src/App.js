@@ -10,6 +10,7 @@ import GuestWaitingRoom from './components/GuestWaitingRoom'
 import CreateQuiz from './components/CreateQuiz'
 import GuestRenderSurvey from './components/GuestRenderSurvey'
 import GuestRenderQuiz from './components/GuestRenderQuiz'
+import GuestRouter from './components/GuestRouter'
 
 class App extends Component {
   constructor(props) {
@@ -31,8 +32,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
               <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
-              <Route exact path="/Guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} /*message={this.state.messages} */ />)} />
-              <Route exact path="/Guest/" component={(match) => (<Guest match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
+              <Route path="/Guest/" component={(match) => (<GuestRouter match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
             </Switch>
           </div>
         </BrowserRouter>
