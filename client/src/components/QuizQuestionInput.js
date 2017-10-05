@@ -13,7 +13,7 @@ const SurveyQuestionInput = ({RonChange, Qvalue, QonChange, OonChange, num, remo
         <div className='quizQuestionItem'>
             <div className='quizQuestionLine'>
                 <p>{num}.</p>
-                <input type='text' target={num} value={Qvalue} onChange={QonChange}></input>
+                <textarea target={num} value={Qvalue} onChange={QonChange}></textarea>
                 <button className='subtractQuizQues' onClick={remove} target={num}>—</button>
             </div>
             <div className='quizOptionsBlock'>
