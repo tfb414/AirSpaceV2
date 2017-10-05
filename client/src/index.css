@@ -609,9 +609,16 @@ body {
   width: 80%; }
 
 .quizOptionsBlock .correct {
-  margin-top: 0;
+  margin-top: .2rem;
   align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 50%; }
+
+.correct p {
+  align-self: center; }
 
 .quizOptionRadio {
   display: flex;

@@ -85,12 +85,8 @@
 }
 
 .quizOptionButtons {
-    // margin-top: .5rem;
-    // margin-bottom: .5rem;
     display: flex;
     width: 30%;
-    // justify-content: space-between;
-    // border: 1px solid black;
 }
 
 .subtractQoption,
@@ -130,9 +126,17 @@
 }
 
 .quizOptionsBlock .correct {
-    margin-top: 0;
+    margin-top: .2rem;
     align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 50%;
+}
+
+.correct p {
+    align-self: center;
 }
 
 .quizOptionRadio {
