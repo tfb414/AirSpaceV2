@@ -36,15 +36,18 @@ class Guest extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
-                if (evt.data !== "Error") {
-                    console.log(evt.data);
+                if (parsedData.type === "CONNECTEDTOHOST") {
+                    console.log('connected to host')
                     this.setState({
-                        proceed: true
+                        connectedToHost: true,
+                        message: "connected to host!",
 
                     })
-                } else {
+                    console.log(this.state.connectedToHost)
+                }
+                if (parsedData.type === "ERROR") {
                     this.setState({
-                        messages: evt.data,
+                        message: 'Could not connect to host',
 
                     })
                 }
@@ -61,7 +64,15 @@ class Guest extends Component {
 
 
     render() {
+<<<<<<< HEAD
         console.log(this.state.guest_id);
+=======
+        let redirect = this.state.connectedToHost;
+        if (redirect) {
+            console.log('redirect is true')
+            return <Redirect to='waiting/' />;
+        }
+>>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
         return (
             <div>
                 <div>
@@ -71,10 +82,10 @@ class Guest extends Component {
                     <input type='text' value={this.state.host_id} onChange={this.handleChange}></input>
                 </div>
                 <div>
-                    <button onClick={this._submitHost_id}></button>
+                    <button onClick={this._submitHost_id}>Submit</button>
                 </div>
                 <div>
-                    Message recieved form backend sir! {this.state.message}
+                    Message recieved form backend sir!: {this.state.message}
                 </div>
 
             </div>
@@ -85,11 +96,13 @@ class Guest extends Component {
 
 
     _submitHost_id = () => {
+        console.log('submit')
         this._sendMessage(this._createPayload());
 
     }
 
     _createPayload = () => {
+        console.log('create payload')
         let payload = {
             type: "ADDGUESTTOHOST",
             host_id: this.state.host_id
@@ -98,6 +111,7 @@ class Guest extends Component {
     }
 
     _sendMessage = (payload) => {
+        console.log('send message')
         this.connection.send(payload);
 
     }

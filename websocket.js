@@ -14,7 +14,6 @@ function init() {
     console.log('init ran')
     wss.broadcast = function broadcast(data) {
         wss.clients.forEach(function each(client) {
-            client.send('derp')
             if (client.readyState === WebSocket.OPEN) {
                 client.send(data);
             }
@@ -35,6 +34,7 @@ function init() {
                 });
 
                 ws.on('message', function incoming(data) {
+                    console.log("WE GOT A MESSAGE")
                     // let parsedData = createQuizExample;
                     // console.log(req);
                     // console.log(req.session.passport.user);
@@ -52,13 +52,27 @@ function init() {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
+<<<<<<< HEAD
                                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                                     // console.log(client);
                                     // client.send("Error");
+=======
+                                    // console.log(client);
+
+                                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                                    // console.log(client);
+                                    client.send(JSON.stringify({ 'type': 'ERROR' }))
+>>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
                                     // client.send(data);
 
                                     // }
                                 });
+                            } else {
+                                wss.clients.forEach(function each(client) {
+                                    client.send(JSON.stringify({
+                                        'type': 'CONNECTEDTOHOST',
+                                    }))
+                                })
                             }
                         });
                     }
@@ -108,7 +122,12 @@ function addOptions(question, parsedData, sq_id, question_id) {
 }
 
 function addGuestToHost(parsedData, guest_id) {
+<<<<<<< HEAD
     return query.addHostGuest(parsedData['host_id'], guest_id).then(resp => {
+=======
+    return query.addHostGuest(parsedData['host_id'], guest_id).then(
+        (resp) => {
+>>>>>>> f3b39df6a5d15db3d0f9ea6d9392268e5f9da73e
             return resp;
         }
     );
