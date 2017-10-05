@@ -41,7 +41,7 @@ export default class CreateSurvey extends Component {
                     {questionForm}       {/* Where the mapped question inputs are */}
                     <div className='bottomButtons'>
                         <button className='addSq' onClick={this._addQuestion}>Add Question + </button>
-                        <button className='subSurvey' onClick={this._submitSurvey}>Submit</button>
+                        <button className='submitSurvey' onClick={this._submitSurvey}>Submit</button>
                     </div>
                 </div>
             </div >

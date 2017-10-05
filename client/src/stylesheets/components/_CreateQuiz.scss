@@ -30,10 +30,53 @@
     margin-bottom: 0;
 }
 
-.addQq {
-
+.quizQuestionItem {
+    width: 100%;
 }
 
-.subQuiz {
+.quizQuestionItem p {
+    margin-bottom: 0;
+}
 
+.addQuizQues {
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+    color: black;
+    border: 1px solid black;
+    background-color: unset;
+}
+
+.addQq:hover,
+.addQq:focus {
+    color: white;
+    background-color: black;
+    border: white;
+    transition: .2s background-color ease-in-out;
+}
+
+.submitQuiz {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 2rem;
+}
+
+.submitQuiz:hover,
+.submitQuiz:focus {
+    background-color: #11C211;
+}
+
+.subtractQuizQues {
+    background-color: white;
+    color: black;
+    width: 2rem;
+    margin-left: .5rem;
+    border: none;
+}
+
+.subtractQuizQues:hover,
+.subtractQuizQues:focus {
+    background-color: red;
+    color: white;
+    transition: .2s background-color ease-in-out;
 }
