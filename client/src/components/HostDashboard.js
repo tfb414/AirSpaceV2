@@ -42,15 +42,13 @@ class HostDashboard extends Component {
       
         return (
 
-            <BrowserRouter>
-                <div className="hostDash">
-                    <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
-                    <Switch>
-                        <Route path="/Host/ViewResults/" />
-                        <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
-                    </Switch>
-                </div>
-            </BrowserRouter>
+            <div className="hostDash">
+                <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
+                <Switch>
+                    <Route path="/Host/ViewResults/" />
+                    <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
+                </Switch>
+            </div>
 
         )
     }
