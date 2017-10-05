@@ -33,7 +33,6 @@ class HostDashboard extends Component {
     }
     _sendMessage = (payload) => {
         this.connection.send(payload);
-
     }
 
 }
