@@ -91,7 +91,7 @@ function init() {
 
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
-    query.addSQ(parsedData['title'], host_id, 'quiz').then(resp => {
+    query.addSQ(parsedData['title'], host_id, parsedData['value']).then(resp => {
         addQuestionsAndAnswers(parsedData.payload, resp.dataValues.sq_id);
     });
 }
