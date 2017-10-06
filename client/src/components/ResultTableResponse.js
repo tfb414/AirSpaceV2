@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ResultTableResponse = ({ question }) => {
-    let keys = Object.keys(question)
+    let keys = Object.keys(question);
     let tableData = keys.map((data) => {
         let responses = question[data]
         let singleResponse = responses.map((info) => {
