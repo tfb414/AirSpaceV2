@@ -16,7 +16,8 @@ class HostDashboard extends Component {
         super(props);
         this.state = {
             host_id: "",
-            surveyResults: false
+            surveyResults: [{ text: "Survey 1", sq_id: "1" }, { text: "Survey 2", sq_id: "2" }],
+            quizResults: [{ text: "Quiz 1", sq_id: "3" }, { text: "Quiz 2", sq_id: "4" }]
         }
     }
     componentWillMount() {
@@ -44,12 +45,15 @@ class HostDashboard extends Component {
         return (
 
             <div className="hostDash">
-                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Results']} />
+                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
                 <Switch>
-                    <Route path="/Host/Results" component={HostRenderResults} />
+                    <Route exact path="/Host/Your Surveys/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.surveyResults} host_id={this.state.host_id} type="survey"/>} />
+                    <Route exact path="/Host/Your Quizzes/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.quizResults} host_id={this.state.host_id} type="quiz"/>} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
+                    <Route path="/Host/Your Surveys/:id" render={() => { <HostRenderResults />}}/>
+                    <Route path="/Host/Your Quizzes/:id" render={() => { <HostRenderResults />}}/>
                 </Switch>
-                <button onClick={this._createSurveyPayload}>Activate survey</button>
+                {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}
             </div>
 
         )
@@ -68,20 +72,14 @@ class HostDashboard extends Component {
             this.setState({
                 surveyResults: parsedData.payload.payload
             })
+        } else if (parsedData.type === 'DISPLAYQUIZ' && parsedData.id === this.state.host_id) {
+            this.setState({
+                quizResults: parsedData.payload.payload
+            })
         }
 
     }
 
-    _createSurveyPayload = () => {
-        console.log('please work')
-        let payload = {
-            type: "ACTIVATESURVEY",
-            host_id: this.state.host_id,
-            sq_id: 19
-        }
-        payload = JSON.stringify(payload);
-        this._sendMessage(payload);
-    }
 
 }
 
