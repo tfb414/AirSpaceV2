@@ -91,8 +91,11 @@ function init() {
                         })
                     }
 
-                    if (parsedData.type === 'REQUESTSQ') {
-                        
+                    if (parsedData.type === 'REQUESTSQLIST') {
+                        query.getSQList(user_id, parsedData.value)
+                        // .then(resp => {
+                        //     console.log(resp);
+                        // })
                     }
                 });
             })

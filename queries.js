@@ -107,6 +107,16 @@ function getSQResultsHost(sq_id, host_id) {
   
 }
 
+function getSQList(host_id, type) {
+    db.sq.findAll({
+        attributes: ['sq_id', 'sq_name'],
+        where: {host_id, type},
+        raw: true,
+    }).then((results) => {
+        console.log(results);
+    })
+}
+
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
 // //         include: [{
@@ -246,7 +256,8 @@ module.exports = {
     addOption,
     addSQQuestionOption,
     addHostGuest, 
-    getSQResultsHost
+    getSQResultsHost,
+    getSQList
 };
 
 

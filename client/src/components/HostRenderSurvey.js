@@ -14,7 +14,7 @@ class HostRenderSurvey extends Component {
     componentWillMount() {
         let value = this.props.match.url.slice(11);
         console.log(value);
-        let payload = { type: "REQUESTSQ", value: this.props.type };
+        let payload = { type: "REQUESTSQLIST", value: this.props.type };
         this.props.sendMessage(JSON.stringify(payload));
         // if (this.props.payload != false) {
         //     this.setState({
