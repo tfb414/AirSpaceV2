@@ -38,6 +38,11 @@
     // justify-content: space-around;
 }
 
+.quizQuestionLine textarea {
+    width: 80%;
+    max-width: 80%;
+}
+
 .quizQuestionItem p {
     margin-bottom: 0;
 }
@@ -123,6 +128,7 @@
     display: flex;
     align-self: flex-end;
     flex-direction: column;
+    padding-right: 4rem;
 }
 
 .quizOptionItem {

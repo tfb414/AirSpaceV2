@@ -428,6 +428,7 @@ body {
   color: #455358;
   width: 90%;
   display: flex;
+  padding: 2rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -436,6 +437,17 @@ body {
   @media (min-width: 768px) {
     .resultBox {
       width: 50%; } }
+
+.resultTableName {
+  align-self: center; }
+
+.questionBox {
+  width: 2rem; }
+
+td {
+  padding: 1rem;
+  border-right: 1px solid #455358;
+  border-bottom: 1px solid #455358; }
 
 .surveyBox {
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -550,6 +562,10 @@ body {
 .quizQuestionLine {
   width: 100%; }
 
+.quizQuestionLine textarea {
+  width: 80%;
+  max-width: 80%; }
+
 .quizQuestionItem p {
   margin-bottom: 0; }
 
@@ -620,7 +636,8 @@ body {
 .quizOptionsBlock {
   display: flex;
   align-self: flex-end;
-  flex-direction: column; }
+  flex-direction: column;
+  padding-right: 4rem; }
 
 .quizOptionItem {
   width: 100%;
@@ -655,7 +672,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #3ca0cf;
+  background-color: #6694ff;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); }
   @media (min-width: 768px) {
     .hostDash > div:nth-child(1) {
@@ -708,7 +725,6 @@ body {
   @media (min-width: 768px) {
     .createTitle {
       margin-top: 0;
-      margin-bottom: 2rem;
       font-size: 2.8em; } }
 
 .createBox {
@@ -718,7 +734,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-radius: 2rem; }
   @media (min-width: 768px) {
