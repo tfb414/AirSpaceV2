@@ -26,9 +26,7 @@ class GuestRouter extends Component {
         this.setState({
             guest_id: id
         })
-        // this.setState({
-        //     guest_id: id
-        // })
+
         this.connection = new WebSocket(env);
 
         // listen to onmessage event
@@ -36,66 +34,46 @@ class GuestRouter extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
-                if (parsedData.type === "CONNECTEDTOHOST") {
-                    console.log('connected to host')
-                    this.setState({
-                        connectedToHost: true,
-                        message: "connected to host!",
+                this._receiveMessage(parsedData)
 
-                    })
-
-                    this.props.history.push('/Guest/Waiting/');
-                }
-                if (parsedData.type === "ERROR") {
-                    this.setState({
-                        message: 'Could not connect to host',
-
-                    })
-                }
-
-                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
-                    this.setState({
-                        guest_id: parsedData.user_id
-                    })
-                }
 
             };
         }
     }
 
-    render(){
-        
+    render() {
+
 
         return (
             <div>
                 <Switch>
-                    <Route 
-                        exact 
-                        path = '/Guest/' 
+                    <Route
+                        exact
+                        path='/Guest/'
                         render={() => (
-                            <Guest 
-                                handleChange={this._handleChange} 
-                                submitHost_id={this._submitHost_id} 
+                            <Guest
+                                handleChange={this._handleChange}
+                                submitHost_id={this._submitHost_id}
                                 host_id={this.state.host_id}
                             />
                         )}
                     />
-                    <Route 
-                        path="/Guest/Waiting/" 
+                    <Route
+                        path="/Guest/Waiting/"
                         render={() => (
-                            <GuestWaitingRoom 
-                                host_id={this.state.host_id} 
+                            <GuestWaitingRoom
+                                host_id={this.state.host_id}
                             />
-                        )} 
+                        )}
                     />
                 </Switch>
             </div>
         )
-        
+
     }
 
     _handleChange = (host_id) => {
-        this.setState({ host_id});
+        this.setState({ host_id });
     }
 
     _submitHost_id = () => {
@@ -116,7 +94,31 @@ class GuestRouter extends Component {
     _sendMessage = (payload) => {
         console.log('send message')
         this.connection.send(payload);
+    }
 
+    _receiveMessage = (parsedData) => {
+        if (parsedData.type === "CONNECTEDTOHOST") {
+            console.log('connected to host')
+            this.setState({
+                connectedToHost: true,
+                message: "connected to host!",
+
+            })
+
+            this.props.history.push('/Guest/Waiting/');
+        }
+        if (parsedData.type === "ERROR") {
+            this.setState({
+                message: 'Could not connect to host',
+
+            })
+        }
+
+        if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
+            this.setState({
+                guest_id: parsedData.user_id
+            })
+        }
     }
 }
 
