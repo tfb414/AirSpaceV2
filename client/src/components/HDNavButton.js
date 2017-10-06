@@ -5,7 +5,7 @@ const HDNavButton = ({ match, name }) => {
 
     return (
         <button className="HDNavButton">
-            <NavLink to={`${match.location.pathname}${name}`}>{name}</NavLink>
+            <NavLink to={`/Host/${name}`}>{name}</NavLink>
         </button>
     )
 }
