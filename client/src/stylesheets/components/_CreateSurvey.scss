@@ -19,37 +19,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // justify-content: center;
+    width: 100%;
     @include respond-to(medium) {
-        width: 100%;
+        width: 50%;
     }
+    // @include respond-to(large) {
+    //     width: 40%;
+    // }
 }
 
 .surveyInnerBox button {
+    align-self: flex-start;
     padding: .5rem;
     font-family: $copyfont;
 }
 
 .cnsTitle {
     margin-top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 1.6rem;
     @include respond-to(medium) {
         font-size: 2rem;
     }
 }
 
-.surveyTitle {
+.surveyTitle,
+.surveyQTitle {
     margin-bottom: 0;
     align-self: flex-start;
 }
 
-.surveyQTitle {
+.surveyTinput {
     align-self: flex-start;
 }
 
 .questionItem p {
-    margin-bottom: 0;
+    margin-bottom: .5rem;
 }
 
 .questionItem {
@@ -60,9 +65,9 @@
 }
 
 .questionClump {
+    align-self: flex-start;
     display: flex;
     flex-direction: row;
-    align-self: center;
 }
 
 .bottomButtons {

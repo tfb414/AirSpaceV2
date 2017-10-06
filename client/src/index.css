@@ -468,32 +468,35 @@ td {
 .surveyInnerBox {
   display: flex;
   flex-direction: column;
-  align-items: center; }
+  align-items: center;
+  width: 100%; }
   @media (min-width: 768px) {
     .surveyInnerBox {
-      width: 100%; } }
+      width: 50%; } }
 
 .surveyInnerBox button {
+  align-self: flex-start;
   padding: .5rem;
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
 
 .cnsTitle {
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-size: 1.6rem; }
   @media (min-width: 768px) {
     .cnsTitle {
       font-size: 2rem; } }
 
-.surveyTitle {
+.surveyTitle,
+.surveyQTitle {
   margin-bottom: 0;
   align-self: flex-start; }
 
-.surveyQTitle {
+.surveyTinput {
   align-self: flex-start; }
 
 .questionItem p {
-  margin-bottom: 0; }
+  margin-bottom: .5rem; }
 
 .questionItem {
   width: 100%;
@@ -502,9 +505,9 @@ td {
   flex-direction: column; }
 
 .questionClump {
+  align-self: flex-start;
   display: flex;
-  flex-direction: row;
-  align-self: center; }
+  flex-direction: row; }
 
 .bottomButtons {
   width: 100%;
