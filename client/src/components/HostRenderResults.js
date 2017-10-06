@@ -47,13 +47,11 @@ class HostRenderResults extends Component {
                 }
                 
             })
-        })
-        
             new_nameList.push(new_name);
-            console.log(new_question);
+        })
             this.setState({
-                name: new_nameList,
-                question: new_question
+                nameList: new_nameList,
+                questionList: new_questionList
             })
     }
 
