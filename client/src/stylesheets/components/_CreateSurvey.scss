@@ -11,7 +11,13 @@
     font-family: $copyfont;
     border-radius: 2rem;
     @include respond-to(medium) {
-        width: 50%;
+        width: 90%;
+    }
+}
+
+.surveyInnerBox {
+    @include respond-to(medium) {
+        width: 100%;
     }
 }
 

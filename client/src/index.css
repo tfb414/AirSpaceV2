@@ -463,7 +463,11 @@ td {
   border-radius: 2rem; }
   @media (min-width: 768px) {
     .surveyBox {
-      width: 50%; } }
+      width: 90%; } }
+
+@media (min-width: 768px) {
+  .surveyInnerBox {
+    width: 100%; } }
 
 .surveyInnerBox button {
   padding: .5rem;
