@@ -5,7 +5,7 @@ import ResultTableResponse from './ResultTableResponse'
 
 const RenderResultsTable = (props) => {
     return (
-        <div className='resultBox'>
+        <div>
             <table>
                 <ResultTableName {...props}/>
                 <ResultTableResponse {...props} />

@@ -9,7 +9,7 @@ const ResultTableName = ({ name }) => {
         )
     })
     return (
-            <tr className='resultTableName'>
+            <tr>
                 <td>
                     <p></p>
                 </td>

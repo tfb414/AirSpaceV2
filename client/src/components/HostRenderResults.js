@@ -38,8 +38,8 @@ class HostRenderResults extends Component {
     render() {
         let questions=Object.keys(this.state.question)
         return (
-            <div>
-                <h1>{this.props.title}</h1>
+            <div className='resultBox'>
+                <h1 className='resultTableName'>{this.props.title}</h1>
                 <RenderResultsTable name={this.state.name} question={this.state.question}/>
             </div>
         );
