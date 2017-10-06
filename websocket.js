@@ -44,6 +44,18 @@ function init() {
                     // Broadcast to everyone else.
                     // sendToWebSocket("hey!")
                     // console.log(JSON.parse(data));
+
+                    if (parsedData.type === 'ACTIVATESURVEY') {
+                        let pulledData = {
+                            "type": 'ACTIVATESURVEY',
+                            "host_id": 'tfb414@gmail.com',
+                            "title": "Tim's survey",
+                            "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
+                        }
+                        ActivateSurvey(pulledData, wss)
+
+                    }
+
                     if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
                     }
@@ -52,15 +64,8 @@ function init() {
 
                             if (resp.name === "SequelizeForeignKeyConstraintError") {
                                 wss.clients.forEach(function each(client) {
-                                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                                    // console.log(client);
-                                    // client.send("Error");
-                                    // console.log(client);
 
-                                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                                    // console.log(client);
                                     client.send(JSON.stringify({ 'type': 'ERROR' }))
-                                    // client.send(data);
 
                                     // }
                                 });
@@ -120,9 +125,18 @@ function addOptions(question, sq_id, question_id) {
 
 function addGuestToHost(parsedData, guest_id) {
     return query.addHostGuest(parsedData['host_id'], guest_id).then(resp => {
-            return resp;
-        }
+        return resp;
+    }
     );
+}
+
+function ActivateSurvey(payload, wss) {
+    console.log('we are sending a messages to activate survey');
+
+    wss.clients.forEach(function each(client) {
+
+        client.send(JSON.stringify(payload))
+    });
 }
 
 

@@ -5,6 +5,7 @@ import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
 import guid from 'guid';
+import ActivateSurvey from './ActivateSurvey'
 
 
 
@@ -45,11 +46,13 @@ class HostDashboard extends Component {
                     <Route path="/Host/ViewResults/" />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                 </Switch>
+                <button onClick={this._createSurveyPayload}>Activate survey</button>
             </div>
 
         )
     }
     _sendMessage = (payload) => {
+        console.log('we sent a message')
         this.connection.send(payload);
     }
 
@@ -60,6 +63,17 @@ class HostDashboard extends Component {
             })
         }
 
+    }
+
+    _createSurveyPayload = () => {
+        console.log('please work')
+        let payload = {
+            type: "ACTIVATESURVEY",
+            host_id: this.state.host_id,
+            sq_id: 19
+        }
+        payload = JSON.stringify(payload);
+        this._sendMessage(payload);
     }
 
 }
