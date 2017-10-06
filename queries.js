@@ -88,6 +88,27 @@ function addSQQuestionOption(sq_id, question_id, option_id) {
     })
 }
 
+function getSQResultsHost(sq_id, host_id) {
+    sequelize.query(`select g.first_name, g.last_name, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
+    from guest g
+    inner join host_guest hg
+    on hg.guest_id = g.guest_id
+    inner join sq sq
+    on sq.host_id = hg.host_id
+    inner join sq_question_option sqqo
+    on sqqo.sq_id = sq.sq_id
+    inner join question q
+    on q.question_id = sqqo.question_id
+    left outer join guest_question_response gqr
+    on gqr.question_id = q.question_id and gqr.guest_id = hg.guest_id
+    inner join options o
+    on o.option_id = gqr.option_id
+    where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: sequelize.QueryTypes.SELECT}).then(resp => {
+        console.log(resp);
+  })
+  
+}
+
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
 // //         include: [{
