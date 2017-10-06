@@ -50,9 +50,7 @@
     @include respond-to(medium) {
         width: 30rem;
     }
-    @include respond-to(large) {
-        width: 45rem;
-    }
+}
 
 .quizOrSurveyBox {
     @include respond-to(medium) {
