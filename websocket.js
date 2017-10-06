@@ -80,7 +80,7 @@ function init() {
                     if (parsedData.type === 'REQUESTRESULTS') {
                         query.getSQResultsHost(parsedData.sq_id, user_id)
                         .then((resp) => {
-                            formatResults(resp, user_id);
+                            client.send(JSON.stringify(formatResults(resp, user_id)));
                         })
                     }
                 });
@@ -89,34 +89,45 @@ function init() {
     })
 }
 
-type:"DISPLAYRESULTS"
-host_id: "aarontsosa@gmail.com",
-title="Survey 1" ,
-payload={
-email: { first_name: "Aaron", 
-last_name: "Sosa", 
-question: [{ 
-text: "Do you like Dogs or cats?", response: "Dogs" }, 
-{ text: "Are you happy?", response: "Yes"}]}, 
-{ first_name: "Tim", 
-last_name: "Brady", 
-question: [
-{ text: "Do you like Dogs or cats?", response: "Cats" }, 
-{ text: "Are you happy?", response: "Yes"}}
+// type:"DISPLAYRESULTS"
+// host_id: "aarontsosa@gmail.com",
+// title="Survey 1" ,
+// payload={
+// email: { first_name: "Aaron", 
+// last_name: "Sosa", 
+// question: [{ 
+// text: "Do you like Dogs or cats?", response: "Dogs" }, 
+// { text: "Are you happy?", response: "Yes"}]}, 
+// { first_name: "Tim", 
+// last_name: "Brady", 
+// question: [
+// { text: "Do you like Dogs or cats?", response: "Cats" }, 
+// { text: "Are you happy?", response: "Yes"}}
 
 function formatResults(resp, user_id) {
     let result = {};
     result["type"] = "DISPLAYRESULTS";
     result["host_id"] = user_id;
-    result["payload"] = [];
+    result["title"] = resp[0]["sq_name"];
+    result["payload"] = {};
     resp.forEach((person)=> {
-        let email = person.email;
-        if (email in result.payload) {
-            
+        let email = person.guest_id;
+        if (!(email in result.payload)) {
+            result.payload[email] = {};
+            result.payload[email].first_name = person.first_name;
+            result.payload[email].last_name = person.last_name;
+            result.payload[email].question = [];
         }
-
+        let question_obj = {};
+        question_obj["text"] = person.question;
+        question_obj["response"] = person.response;
+        if (person.response === null) {
+            question_obj["response"] = person.option_text;
+            question_obj["value"] = person.option_value;
+        }
+        result.payload[email].question.push(question_obj);
     })
-
+    return result;
 
 }
 
