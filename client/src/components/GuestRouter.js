@@ -34,6 +34,7 @@ class GuestRouter extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
+                console.log('we got a message in connnect.onopen')
                 this._receiveMessage(parsedData)
 
 
@@ -62,7 +63,9 @@ class GuestRouter extends Component {
                         path="/Guest/Waiting/"
                         render={() => (
                             <GuestWaitingRoom
-                                host_id={this.state.host_id}
+                                host_id={this.state.host_id} 
+                                title={this.state.title} 
+                                payload={this.state.payload}
                             />
                         )}
                     />
@@ -97,6 +100,7 @@ class GuestRouter extends Component {
     }
 
     _receiveMessage = (parsedData) => {
+        console.log('we received a messaged' + parsedData.type)
         if (parsedData.type === "CONNECTEDTOHOST") {
             console.log('connected to host')
             this.setState({
@@ -117,6 +121,13 @@ class GuestRouter extends Component {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.guest_id) {
             this.setState({
                 guest_id: parsedData.user_id
+            })
+        }
+        if (parsedData.type === 'ACTIVATESURVEY') {
+            console.log('we got a message called activateSurvey')
+            this.setState({
+                "title": "This is a survey",
+                "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
             })
         }
     }
