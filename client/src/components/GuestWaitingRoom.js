@@ -1,34 +1,41 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
+import GuestRenderSurvey from './GuestRenderSurvey'
 
 class GuestWaitingRoom extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: props.host_id
+            host_id: props.host_id,
+            title: ""
+
         }
     }
 
-
-
     render() {
-        console.log(this.props.title);
-        console.log(this.props.payload);
+        if (this.props.title !== "") {
+            console.log('here')
+            return (
+                <GuestRenderSurvey payload={this.props.payload} sq_id={18} title={this.props.title} />
+            )
+        }
         return (
             <div>
                 <div>
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
-                </div>
-                <div>
-                    {this.props.host_id} please derping work
                     {this.props.title}
-                    {this.props.payload}
                 </div>
             </div>
 
         )
+
     }
 
+
+
 }
+
+
+
 
 export default GuestWaitingRoom

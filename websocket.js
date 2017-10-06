@@ -26,18 +26,20 @@ function init() {
                 let user_id = req.session.passport.user;
 
                 // wss.clients.forEach(function each(client) {
-                    // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    // client.send("you're a wizard harry!");
-                    // client.send(data);
+                // if (client !== ws && client.readyState === WebSocket.OPEN) {
+                // client.send("you're a wizard harry!");
+                // client.send(data);
 
-                    // }
+                // }
                 // });
 
                 ws.on('message', function incoming(data) {
                     console.log("WE GOT A MESSAGE");
                     // console.log(data);
                     let parsedData = JSON.parse(data);
+                    console.log(parsedData.type);
                     if (parsedData.type === 'ACTIVATESURVEY') {
+                        console.log("we're in activate survey in websockets")
                         let pulledData = {
                             "type": 'ACTIVATESURVEY',
                             "host_id": 'tfb414@gmail.com',
@@ -83,12 +85,12 @@ function init() {
 
                     if (parsedData.type === 'REQUESTRESULTS') {
                         query.getSQResultsHost(parsedData.sq_id, user_id)
-                        .then((resp) => {
-                            let payload = formatResults(resp, user_id);
-                            wss.clients.forEach(function each(client) {
-                                client.send(JSON.stringify(payload));
+                            .then((resp) => {
+                                let payload = formatResults(resp, user_id);
+                                wss.clients.forEach(function each(client) {
+                                    client.send(JSON.stringify(payload));
+                                })
                             })
-                        })
                     }
                 });
             })
@@ -117,7 +119,7 @@ function formatResults(resp, user_id) {
     result["host_id"] = user_id;
     result["title"] = resp[0]["sq_name"];
     result["payload"] = {};
-    resp.forEach((person)=> {
+    resp.forEach((person) => {
         let email = person.guest_id;
         if (!(email in result.payload)) {
             result.payload[email] = {};
