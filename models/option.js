@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-    const option = sequelize.define('option', {
+    const option = sequelize.define('options', {
         option_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
         },
-        option: {
+        option_text: {
         type: Sequelize.TEXT,
         allowNull: true
         },
@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: true
         }
     }, {
-        tableName: 'option'
+        tableName: 'options'
     });
     return option;
 }

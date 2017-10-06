@@ -83,6 +83,10 @@ function init() {
                             client.send(JSON.stringify(payload));
                         })
                     }
+
+                    if (parsedData.type === 'REQUESTRESULTS') {
+                        query.getSQResultsHost(parsedData, user_id);
+                    }
                 });
             })
         })

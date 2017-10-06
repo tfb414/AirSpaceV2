@@ -5,6 +5,7 @@ import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
 import guid from 'guid';
+import HostRenderResults from './HostRenderResults';
 
 
 
@@ -40,9 +41,9 @@ class HostDashboard extends Component {
         return (
 
             <div className="hostDash">
-                <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
+                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Results']} />
                 <Switch>
-                    <Route path="/Host/ViewResults/" />
+                    <Route path="/Host/Results" component={HostRenderResults} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                 </Switch>
             </div>

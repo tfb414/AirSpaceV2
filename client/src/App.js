@@ -3,11 +3,10 @@ import LandingPage from './components/LandingPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HostDashboard from "./components/HostDashboard";
 import env from './utility/env';
-import CreateSurvey from './components/CreateSurvey';
-import Create from './components/Create.js'
+
 import Guest from './components/Guest'
 import GuestWaitingRoom from './components/GuestWaitingRoom'
-import CreateQuiz from './components/CreateQuiz'
+
 import GuestRenderSurvey from './components/GuestRenderSurvey'
 import GuestRenderQuiz from './components/GuestRenderQuiz'
 import GuestRouter from './components/GuestRouter'
@@ -51,3 +50,4 @@ export default App;
 //           <div key={host.host_id}>{host.first_name} {host.last_name} {host.email}</div>
 //         )}
 
+// payload={[{ first_name: "Aaron", last_name: "Sosa", question: [{ text: "Do you like Dogs or cats?", response: "Dogs" }, { text: "Are you happy?", response: "Yes"}]}, { first_name: "Tim", last_name: "Brady", question: [{ text: "Do you like Dogs or cats?", response: "Cats" }, { text: "Are you happy?", response: "Yes"}]}]}
