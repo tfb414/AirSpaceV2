@@ -61,17 +61,18 @@ export default class CreateQuiz extends Component {
         })
 
         return (
-            <div>
-                <div>
-                    <p>Quiz Title:
-                    <input type='text' value={this.state.title} onChange={this.handleChange}></input>
-                    </p>
+            <div className='quizBox'>
+                <div className='quizInnerBox'>
+                    <h1 className='cnqTitle'>Create New Quiz</h1>
+                    <h3 className='quizTitle'>Title</h3>
+                    <input className='quizQuesText' type='text' value={this.state.title} onChange={this.handleChange}></input>
+                    {questionForm}      {/* Where the mapped question inputs are */}
+                    <div className='bottomButtons'>
+                        <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
+                        <button className='submitQuiz' onClick={this._submitSurvey}>Submit</button>
+                    </div>
                 </div>
-                {questionForm}                                                              {/* Where the maped question inputs are */}
-                <br />
-                <button onClick={this._addQuestion}>Add Question</button>
-                <button onClick={this._submitSurvey}>Submit</button>
-            </div >
+            </div>
         )
 
     }
