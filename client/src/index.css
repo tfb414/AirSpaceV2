@@ -465,9 +465,13 @@ td {
     .surveyBox {
       width: 90%; } }
 
-@media (min-width: 768px) {
-  .surveyInnerBox {
-    width: 100%; } }
+.surveyInnerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  @media (min-width: 768px) {
+    .surveyInnerBox {
+      width: 100%; } }
 
 .surveyInnerBox button {
   padding: .5rem;
@@ -477,15 +481,30 @@ td {
   margin-top: 0;
   margin-bottom: 2rem;
   font-size: 1.6rem; }
+  @media (min-width: 768px) {
+    .cnsTitle {
+      font-size: 2rem; } }
 
 .surveyTitle {
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  align-self: flex-start; }
+
+.surveyQTitle {
+  align-self: flex-start; }
 
 .questionItem p {
   margin-bottom: 0; }
 
 .questionItem {
-  width: 100%; }
+  width: 100%;
+  align-self: center;
+  display: flex;
+  flex-direction: column; }
+
+.questionClump {
+  display: flex;
+  flex-direction: row;
+  align-self: center; }
 
 .bottomButtons {
   width: 100%;

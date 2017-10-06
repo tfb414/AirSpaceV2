@@ -16,6 +16,10 @@
 }
 
 .surveyInnerBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
     @include respond-to(medium) {
         width: 100%;
     }
@@ -30,10 +34,18 @@
     margin-top: 0;
     margin-bottom: 2rem;
     font-size: 1.6rem;
+    @include respond-to(medium) {
+        font-size: 2rem;
+    }
 }
 
 .surveyTitle {
     margin-bottom: 0;
+    align-self: flex-start;
+}
+
+.surveyQTitle {
+    align-self: flex-start;
 }
 
 .questionItem p {
@@ -42,6 +54,15 @@
 
 .questionItem {
     width: 100%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.questionClump {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
 }
 
 .bottomButtons {
