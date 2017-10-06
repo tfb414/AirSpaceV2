@@ -5,7 +5,7 @@ import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
 import guid from 'guid';
-import HostRenderResults from './components/HostRenderResults';
+import HostRenderResults from './HostRenderResults';
 
 
 

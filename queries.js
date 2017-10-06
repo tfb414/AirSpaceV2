@@ -247,7 +247,8 @@ module.exports = {
     addQuestion,
     addOption,
     addSQQuestionOption,
-    addHostGuest
+    addHostGuest, 
+    getSQResultsHost
 };
 
 
