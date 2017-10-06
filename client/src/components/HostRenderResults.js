@@ -4,10 +4,11 @@ import RenderResultsTable from './RenderResultsTable'
 class HostRenderResults extends Component {
     constructor(props) {
         super(props);
-        this.state = ({
+        this.state = {
+            host_id: this.props.host_id,
             name: [],
             question: {}
-        })
+        }
     }
 
     componentWillMount() {
@@ -57,7 +58,7 @@ class HostRenderResults extends Component {
         );
     }
     _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYRESULTS') {
+        if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
             console.log(parsedData);
         }
 

@@ -43,7 +43,7 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Results']} />
                 <Switch>
-                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} />} />
+                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} host_id={this.state.host_id} />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                 </Switch>
             </div>
