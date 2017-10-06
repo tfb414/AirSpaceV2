@@ -67,6 +67,7 @@ export default class CreateQuiz extends Component {
                     <div className='quizInnerBox'>
                         <h3 className='quizTitle'>Title</h3>
                         <input className='quizQuesText' type='text' value={this.state.title} onChange={this.handleChange}></input>
+                        <h3 className='surveyQTitle'>Questions</h3>
                         {questionForm}      {/* Where the mapped question inputs are */}
                         <div className='bottomButtons'>
                             <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
