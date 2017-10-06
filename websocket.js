@@ -80,7 +80,7 @@ function init() {
                     if (parsedData.type === 'REQUESTRESULTS') {
                         query.getSQResultsHost(parsedData.sq_id, user_id)
                         .then((resp) => {
-                            console.log(resp);
+                            formatResults(resp, user_id);
                         })
                     }
                 });
@@ -89,6 +89,36 @@ function init() {
     })
 }
 
+type:"DISPLAYRESULTS"
+host_id: "aarontsosa@gmail.com",
+title="Survey 1" ,
+payload={
+email: { first_name: "Aaron", 
+last_name: "Sosa", 
+question: [{ 
+text: "Do you like Dogs or cats?", response: "Dogs" }, 
+{ text: "Are you happy?", response: "Yes"}]}, 
+{ first_name: "Tim", 
+last_name: "Brady", 
+question: [
+{ text: "Do you like Dogs or cats?", response: "Cats" }, 
+{ text: "Are you happy?", response: "Yes"}}
+
+function formatResults(resp, user_id) {
+    let result = {};
+    result["type"] = "DISPLAYRESULTS";
+    result["host_id"] = user_id;
+    result["payload"] = [];
+    resp.forEach((person)=> {
+        let email = person.email;
+        if (email in result.payload) {
+            
+        }
+
+    })
+
+
+}
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
     query.addSQ(parsedData['title'], host_id, parsedData['value']).then(resp => {
