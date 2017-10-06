@@ -6,8 +6,8 @@ class HostRenderResults extends Component {
         super(props);
         this.state = {
             host_id: this.props.host_id,
-            name: [],
-            question: {}
+            results: {},
+            resultsReceived: false
         }
     }
 
@@ -16,12 +16,15 @@ class HostRenderResults extends Component {
             type: 'REQUESTRESULTS',
             sq_id: '18'
         }
-        console.log(this.props);
-        console.log(payload);
+        
         this.props.connection.send(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            this._receiveMessage(parsedData);
+            let results = this._receiveMessage(parsedData);
+            this.setState({
+                results,
+                resultsReceived: true
+            })
         }
         // this.props.payload.forEach((data) => {
         //     let new_name = data.first_name + " " + data.last_name
@@ -60,6 +63,7 @@ class HostRenderResults extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
             console.log(parsedData);
+            return parsedData;
         }
 
     }
