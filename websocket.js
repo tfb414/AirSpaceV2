@@ -90,6 +90,10 @@ function init() {
                             })
                         })
                     }
+
+                    if (parsedData.type === 'REQUESTSQ') {
+                        
+                    }
                 });
             })
         })

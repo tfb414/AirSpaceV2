@@ -12,20 +12,22 @@ class HostRenderSurvey extends Component {
     }
 
     componentWillMount() {
-        let payload = { type: "REQUESTSURVEY" }
-        // this.props.sendMessage(JSON.stringify(payload))
-        if (this.props.payload != false) {
-            this.setState({
-                waitingOnData: false
-            })
-        }
+        let value = this.props.match.url.slice(11);
+        console.log(value);
+        let payload = { type: "REQUESTSQ", value: this.props.type };
+        this.props.sendMessage(JSON.stringify(payload));
+        // if (this.props.payload != false) {
+        //     this.setState({
+        //         waitingOnData: false
+        //     })
+        // }
     }
 
     render() {
         if (this.state.waitingOnData) {
             return (
             <div>
-                <h1>Searching for you Survey's and Quizzes</h1>
+                <h1>Searching for you Surveys and Quizzes</h1>
             </div>
             )
         }
