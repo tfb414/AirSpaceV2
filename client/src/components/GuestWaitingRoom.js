@@ -12,13 +12,17 @@ class GuestWaitingRoom extends Component {
 
 
     render() {
+        console.log(this.props.title);
+        console.log(this.props.payload);
         return (
             <div>
                 <div>
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
                 </div>
                 <div>
-                    {this.props.host_id} please uckcing work
+                    {this.props.host_id} please derping work
+                    {this.props.title}
+                    {this.props.payload}
                 </div>
             </div>
 
