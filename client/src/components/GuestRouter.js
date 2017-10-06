@@ -64,11 +64,7 @@ class GuestRouter extends Component {
     }
 
     render(){
-        // let redirect = this.state.connectedToHost;
-        // if (redirect) {
-        //     console.log('redirect is true')
-        //     return <Redirect to='Waiting/' />;
-        // }
+        
 
         return (
             <div>

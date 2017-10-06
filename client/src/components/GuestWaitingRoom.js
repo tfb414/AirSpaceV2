@@ -18,7 +18,7 @@ class GuestWaitingRoom extends Component {
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
                 </div>
                 <div>
-
+                    {this.props.host_id} please uckcing work
                 </div>
             </div>
 
