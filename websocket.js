@@ -80,7 +80,10 @@ function init() {
                     if (parsedData.type === 'REQUESTRESULTS') {
                         query.getSQResultsHost(parsedData.sq_id, user_id)
                         .then((resp) => {
-                            client.send(JSON.stringify(formatResults(resp, user_id)));
+                            let payload = formatResults(resp, user_id);
+                            wss.clients.forEach(function each(client) {
+                                client.send(JSON.stringify(payload));
+                            })
                         })
                     }
                 });
