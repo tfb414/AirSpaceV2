@@ -108,12 +108,10 @@ function getSQResultsHost(sq_id, host_id) {
 }
 
 function getSQList(host_id, type) {
-    db.sq.findAll({
+    return db.sq.findAll({
         attributes: ['sq_id', 'sq_name'],
         where: {host_id, type},
         raw: true,
-    }).then((results) => {
-        console.log(results);
     })
 }
 
