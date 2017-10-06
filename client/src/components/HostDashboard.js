@@ -4,6 +4,7 @@ import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
+import HostRenderSurvey from './HostRenderSurvey'
 import guid from 'guid';
 import HostRenderResults from './HostRenderResults';
 import ActivateSurvey from './ActivateSurvey'
@@ -14,7 +15,8 @@ class HostDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: ""
+            host_id: "",
+            surveyResults: false
         }
     }
     componentWillMount() {
@@ -61,6 +63,10 @@ class HostDashboard extends Component {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
                 host_id: parsedData.user_id
+            })
+        } else if (parsedData.type === 'DISPLAYSURVEY' && parsedData.id === this.state.host_id) {
+            this.setState({
+                surveyResults: parsedData.payload.payload
             })
         }
 
