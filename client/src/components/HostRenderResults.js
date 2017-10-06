@@ -46,17 +46,13 @@ class HostRenderResults extends Component {
         // })
     }
 
-    componentDidMount() {
-        let payload = {}
-        this.props.sendMessage(payload);
-    }
 
     render() {
-        let questions=Object.keys(this.state.question)
+        // let questions=Object.keys(this.state.question)
         return (
             <div>
-                <h1>{this.props.title}</h1>
-                <RenderResultsTable name={this.state.name} question={this.state.question}/>
+                <h1>HIII{this.props.title}</h1>
+                {/*<RenderResultsTable name={this.state.name} question={this.state.question}/>*/}
             </div>
         );
     }

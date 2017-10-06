@@ -25,27 +25,18 @@ function init() {
             req.session.save(function () {
                 let user_id = req.session.passport.user;
 
-                wss.clients.forEach(function each(client) {
+                // wss.clients.forEach(function each(client) {
                     // if (client !== ws && client.readyState === WebSocket.OPEN) {
                     // client.send("you're a wizard harry!");
                     // client.send(data);
 
                     // }
-                });
+                // });
 
                 ws.on('message', function incoming(data) {
                     console.log("WE GOT A MESSAGE");
-                    console.log(data);
-                    // let parsedData = createQuizExample;
-                    // console.log(req);
-                    // console.log(req.session.passport.user);
+                    // console.log(data);
                     let parsedData = JSON.parse(data);
-            
-                    // let parsedData = createSurveyExample;
-                    // console.log('inc Data')
-                    // Broadcast to everyone else.
-                    // sendToWebSocket("hey!")
-                    // console.log(JSON.parse(data));
                     if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
                     }
@@ -87,7 +78,10 @@ function init() {
                     }
 
                     if (parsedData.type === 'REQUESTRESULTS') {
-                        query.getSQResultsHost(parsedData.sq_id, user_id);
+                        query.getSQResultsHost(parsedData.sq_id, user_id)
+                        .then((resp) => {
+                            console.log(resp);
+                        })
                     }
                 });
             })

@@ -89,7 +89,7 @@ function addSQQuestionOption(sq_id, question_id, option_id) {
 }
 
 function getSQResultsHost(sq_id, host_id) {
-    db.sequelize.query(`select g.first_name, g.last_name, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
+    return db.sequelize.query(`select g.first_name, g.last_name, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id
@@ -103,9 +103,7 @@ function getSQResultsHost(sq_id, host_id) {
     on gqr.question_id = q.question_id and gqr.guest_id = hg.guest_id
     inner join options o
     on o.option_id = gqr.option_id
-    where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT}).then(resp => {
-        console.log(resp);
-  })
+    where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT});
   
 }
 
