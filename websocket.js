@@ -34,11 +34,13 @@ function init() {
                 });
 
                 ws.on('message', function incoming(data) {
-                    console.log("WE GOT A MESSAGE")
+                    console.log("WE GOT A MESSAGE");
+                    console.log(data);
                     // let parsedData = createQuizExample;
                     // console.log(req);
                     // console.log(req.session.passport.user);
                     let parsedData = JSON.parse(data);
+            
                     // let parsedData = createSurveyExample;
                     // console.log('inc Data')
                     // Broadcast to everyone else.
@@ -85,7 +87,7 @@ function init() {
                     }
 
                     if (parsedData.type === 'REQUESTRESULTS') {
-                        query.getSQResultsHost(parsedData, user_id);
+                        query.getSQResultsHost(parsedData.sq_id, user_id);
                     }
                 });
             })

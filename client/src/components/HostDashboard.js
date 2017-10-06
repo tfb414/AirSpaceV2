@@ -15,6 +15,7 @@ class HostDashboard extends Component {
         this.state = {
             host_id: ""
         }
+        this.connection = new WebSocket(env);
     }
     componentWillMount() {
         let id = guid.raw();
@@ -25,7 +26,6 @@ class HostDashboard extends Component {
         this.setState({
             host_id: id
         })
-        this.connection = new WebSocket(env);
         this.connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = event => {
@@ -43,7 +43,7 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Results']} />
                 <Switch>
-                    <Route path="/Host/Results" component={HostRenderResults} />
+                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                 </Switch>
             </div>
