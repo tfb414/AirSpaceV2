@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RenderResultsTable from './RenderResultsTable'
+import RenderResultsTable from './RenderResultsTable';
 
 class HostRenderResults extends Component {
     constructor(props) {
@@ -14,17 +14,16 @@ class HostRenderResults extends Component {
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
-            sq_id: '18'
-        }
-        
+            sq_id: this.props.match.match.params.id
+        };
         this.props.connection.send(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            this.setState({
-                results,
-                resultsReceived: true
-            })
+            console.log(this._receiveMessage(parsedData));
+            // this.setState({
+            //     results,
+            //     resultsReceived: true
+            // })
         }
         // this.props.payload.forEach((data) => {
         //     let new_name = data.first_name + " " + data.last_name
@@ -55,8 +54,7 @@ class HostRenderResults extends Component {
         // let questions=Object.keys(this.state.question)
         return (
             <div>
-                <h1>HIII{this.props.title}</h1>
-                {/*<RenderResultsTable name={this.state.name} question={this.state.question}/>*/}
+                <h1>HIII</h1>
             </div>
         );
     }
@@ -70,3 +68,5 @@ class HostRenderResults extends Component {
 }
 
 export default HostRenderResults;
+
+{/*<RenderResultsTable name={this.state.name} question={this.state.question}/>*/}

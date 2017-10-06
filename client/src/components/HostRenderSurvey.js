@@ -58,10 +58,11 @@ class HostRenderSurvey extends Component {
     }
 
     _createSurveyPayload = (event) => {
+        let payloadType;
         if (this.props.type === 'survey') {
-            let payloadType = "ACTIVATESURVEY"
+            payloadType = "ACTIVATESURVEY"
         } else if (this.props.type === 'quiz') {
-            let PayloadType = "ACTIVATEQUIZ"
+            payloadType = "ACTIVATEQUIZ"
         }
         let payload = {
             type: payloadType,
