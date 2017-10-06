@@ -75,7 +75,7 @@ function addQuestion(question_text, question_number) {
 
 function addOption(option_text, option_value) {
     return db.option.create({
-        option: option_text,
+        option_text,
         option_value
     })
 }
