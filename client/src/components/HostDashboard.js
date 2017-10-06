@@ -30,17 +30,14 @@ class HostDashboard extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
-                if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
-                    this.setState({
-                        host_id: parsedData.user_id
-                    })
-                }
+                this._receiveMessage(parsedData);
+
             };
         }
     }
 
     render() {
-      
+
         return (
 
             <div className="hostDash">
@@ -55,6 +52,15 @@ class HostDashboard extends Component {
     }
     _sendMessage = (payload) => {
         this.connection.send(payload);
+    }
+
+    _receiveMessage = (parsedData) => {
+        if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
+            this.setState({
+                host_id: parsedData.user_id
+            })
+        }
+
     }
 
 }
