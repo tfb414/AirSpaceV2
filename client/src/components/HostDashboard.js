@@ -4,6 +4,7 @@ import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
+import HostRenderSurvey from './HostRenderSurvey'
 import guid from 'guid';
 
 
@@ -12,7 +13,8 @@ class HostDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: ""
+            host_id: "",
+            surveyResults: false
         }
     }
     componentWillMount() {
@@ -42,7 +44,7 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar match={this.props.match} name={['Create', 'Your Surveys', 'Your Quizzes', 'View Results']} />
                 <Switch>
-                    <Route path="/Host/ViewResults/" />
+                    <Route path="/Host/View Results" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.surveyResults}/>}/>
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                 </Switch>
             </div>
@@ -57,6 +59,10 @@ class HostDashboard extends Component {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
                 host_id: parsedData.user_id
+            })
+        } else if (parsedData.type === 'DISPLAYSURVEY' && parsedData.id === this.state.host_id) {
+            this.setState({
+                surveyResults: parsedData.payload.payload
             })
         }
 
