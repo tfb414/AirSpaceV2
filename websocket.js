@@ -85,9 +85,9 @@ function init() {
                             sendPayload(payload, wss);
                         })
                     }
-                    query.getSQ('18')
+                    query.getSQ('24')
                     .then(resp => {
-                        let payload = formatSQ(resp, 'sabbey37@gmail.com', 'quiz');
+                        let payload = formatSQ(resp, 'sabbey37@gmail.com', 'survey');
                         console.log(payload);
                     })
 
@@ -113,7 +113,7 @@ function formatSQ(resp, host_id, sqtype) {
     result["sq_id"] = resp[0]["sq_id"];
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
-        result[payload] = surveyPayload(resp);
+        result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
