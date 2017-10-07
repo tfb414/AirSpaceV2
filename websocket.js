@@ -95,10 +95,16 @@ function init() {
                     }
                     if (parsedData.type === 'RESULTQUIZ') {
                         console.log(parsedData);
+                        parsedData.payload.forEach(result => {
+                            query.addGQRQuiz(user_id, result.question_id, result.option_id);
+                        })
                     }
 
                     if (parsedData.type === 'RESULTSURVEY') {
                         console.log(parsedData);
+                        parsedData.payload.forEach(result => {
+                            query.addGQRSurvey(user_id, result.question_id, result.response);
+                        })
                     }
                 });
             })
