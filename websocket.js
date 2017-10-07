@@ -137,8 +137,8 @@ function quizPayload(resp) {
         }
         let option = {};
         option.option_id = question.option_id;
-        option.option_text = question.option_text;
-        option.option_value = question.option_value;
+        option.text = question.option_text;
+        option.value = question.option_value;
         result[question_id].options.push(option);
     })
     return result;

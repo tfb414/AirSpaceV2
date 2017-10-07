@@ -37,7 +37,7 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
+                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button>
                 </div>    
             )
         })
@@ -49,13 +49,20 @@ class HostRenderSurvey extends Component {
     }
 
     _viewResults = (event) => {
-        console.log('hello')
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
         } else if (this.props.sqtype === 'quiz') {
             this.props.history.push(`/Host/Your Quizzes/${event.target.value}`)
         }
 
+    }
+
+    _editSQ = (event) => {
+        if (this.props.sqtype === 'survey') {
+            this.props.history.push(`/Host/Your Surveys/Edit/${event.target.value}`)
+        } else if (this.props.sqtype === 'quiz') {
+            this.props.history.push(`/Host/Your Quizzes/Edit/${event.target.value}`)
+        }
     }
 
     _createSurveyPayload = (event) => {
