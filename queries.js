@@ -107,12 +107,26 @@ function getSQResultsHost(sq_id, host_id) {
   
 }
 
+// Gets list of all surveys or quizzes for a given host
 function getSQList(host_id, type) {
     return db.sq.findAll({
         attributes: ['sq_id', 'sq_name'],
         where: {host_id, type},
         raw: true,
     })
+}
+
+// Gets survey name, id, questions, question id, options, option id, and option value from database for given sq_id
+function getSQ(sq_id) {
+    return db.sequelize.query(`select sqqo.sq_id, sq.sq_name, q.question, q.question_number, q.question_id, o.option_text, o.option_id, o.option_value
+    from sq_question_option sqqo
+    inner join sq sq
+    on sq.sq_id = sqqo.sq_id
+    inner join question q
+    on q.question_id = sqqo.question_id
+    full outer join options o
+    on o.option_id = sqqo.option_id
+    where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
 // // function getGuestsForHost(host_id) {
@@ -208,21 +222,7 @@ function getSQList(host_id, type) {
 // //     `).then((results)=>{
 // //         //put what we want to return here
 // //     }).catch(console.log)
-// // }
-
-// // function getSurveyQuestionsOptions(survey_id){
-// //     return db.one(`
-// //         select q.question, o.option, q.question_number
-// //             from sq_question_option sqqo
-// //             inner join option o
-// //             on o.option_id = sqqo.option_id
-// //             inner join question q
-// //             on q.question_id = sqqo.question_id
-// //             where sqqo.sq_id = '${sq_id}'
-// //     `).then((results)=>{
-// //         //put what you want to return here
-// //     }).catch(console.log)
-// // }
+// // } 
 
 // // function submitGuestResponse(guest_id, question_id, response){
 // //     return db.one(`
@@ -255,7 +255,8 @@ module.exports = {
     addSQQuestionOption,
     addHostGuest, 
     getSQResultsHost,
-    getSQList
+    getSQList,
+    getSQ
 };
 
 

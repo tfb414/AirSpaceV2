@@ -37,18 +37,6 @@ function init() {
                     console.log("WE GOT A MESSAGE");
                     // console.log(data);
                     let parsedData = JSON.parse(data);
-                    console.log(parsedData.type);
-                    if (parsedData.type === 'ACTIVATESURVEY') {
-                        console.log("we're in activate survey in websockets")
-                        let pulledData = {
-                            "type": 'ACTIVATESURVEY',
-                            "host_id": 'tfb414@gmail.com',
-                            "title": "Tim's survey",
-                            "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
-                        }
-                        ActivateSurvey(pulledData, wss)
-
-                    }
 
                     if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
@@ -87,18 +75,21 @@ function init() {
                         query.getSQResultsHost(parsedData.sq_id, user_id)
                             .then((resp) => {
                                 let payload = formatResults(resp, user_id);
-                                wss.clients.forEach(function each(client) {
-                                    client.send(JSON.stringify(payload));
-                                })
+                                sendPayload(payload, wss)
                             })
                     }
 
                     if (parsedData.type === 'REQUESTSQLIST') {
                         query.getSQList(user_id, parsedData.value).then(resp => {
                             let payload = formatSQList(resp, user_id);
-                            wss.clients.forEach(function each(client) {
-                                client.send(JSON.stringify(payload));
-                            })
+                            sendPayload(payload, wss);
+                        })
+                    }
+
+                    if (parsedData.type === 'ACTIVATESQ') {
+                        query.getSQ(parsedData.sq_id).then(resp => {
+                            let payload = formatSQ(resp, parsedData.host_id, parsedData.sqtype); 
+                            sendPayload(payload, wss);
                         })
                     }
                 });
@@ -107,20 +98,51 @@ function init() {
     })
 }
 
-// type:"DISPLAYRESULTS"
-// host_id: "aarontsosa@gmail.com",
-// title="Survey 1" ,
-// payload={
-// email: { first_name: "Aaron", 
-// last_name: "Sosa", 
-// question: [{ 
-// text: "Do you like Dogs or cats?", response: "Dogs" }, 
-// { text: "Are you happy?", response: "Yes"}]}, 
-// { first_name: "Tim", 
-// last_name: "Brady", 
-// question: [
-// { text: "Do you like Dogs or cats?", response: "Cats" }, 
-// { text: "Are you happy?", response: "Yes"}}
+function formatSQ(resp, host_id, sqtype) {
+    let result = {};
+    result["type"] = "DISPLAYACTIVESQ";
+    result["host_id"] = host_id;
+    result["sq_id"] = resp[0]["sq_id"];
+    result["sqtype"] = sqtype;
+    if (sqtype === 'survey') {
+        result["payload"] = surveyPayload(resp);
+    } else if (sqtype === 'quiz') {
+        result["payload"] = quizPayload(resp);
+    }
+    return result;   
+}
+
+function surveyPayload(resp) {
+    let result = [];
+    resp.forEach((question) => {
+        let q_obj = {};
+        q_obj.question_id = question.question_id;
+        q_obj.question_number = question.question_number;
+        q_obj.text = question.question;
+        result.push(q_obj);
+    })
+    return result;
+}
+
+function quizPayload(resp) {
+    let result = {}
+    resp.forEach((question) => {
+        let question_id = question.question_id;
+        if (!(question_id in result)) {
+            result[question_id] = {};
+            result[question_id].question_id = question_id;
+            result[question_id].question_number = question.question_number;
+            result[question_id].text = question.question;
+            result[question_id].options = [];
+        }
+        let option = {};
+        option.option_id = question.option_id;
+        option.option_text = question.option_text;
+        option.option_value = question.option_value;
+        result[question_id].options.push(option);
+    })
+    return result;
+}
 
 function formatSQList(resp, user_id) {
     let result = {};
@@ -130,6 +152,7 @@ function formatSQList(resp, user_id) {
     return result;
 }
 
+// Formats payload for results of survey
 function formatResults(resp, user_id) {
     let result = {};
     result["type"] = "DISPLAYRESULTS";
@@ -192,12 +215,9 @@ function addGuestToHost(parsedData, guest_id) {
     );
 }
 
-function ActivateSurvey(payload, wss) {
-    console.log('we are sending a messages to activate survey');
-
+function sendPayload(payload, wss) {
     wss.clients.forEach(function each(client) {
-
-        client.send(JSON.stringify(payload))
+        client.send(JSON.stringify(payload));
     });
 }
 
