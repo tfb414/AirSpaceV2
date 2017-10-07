@@ -85,11 +85,6 @@ function init() {
                             sendPayload(payload, wss);
                         })
                     }
-                    query.getSQ('24')
-                    .then(resp => {
-                        let payload = formatSQ(resp, 'sabbey37@gmail.com', 'survey');
-                        console.log(payload);
-                    })
 
                     if (parsedData.type === 'ACTIVATESQ') {
                         query.getSQ(parsedData.sq_id).then(resp => {
@@ -102,9 +97,6 @@ function init() {
         })
     })
 }
-
-// "title": "This is a survey",
-//                 "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
 
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
