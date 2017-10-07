@@ -108,19 +108,11 @@ function addGQRQuiz(guest_id, question_id, option_id) {
             db.guest_question_response.update({
                 option_id,
                 gqr_id: resp[0].gqr_id},
-                {where: guest_id, question_id}
+                {where: {guest_id, question_id}}
             )
         }
     })
 }
-
-// db.guest_question_response.findAll({
-//         attributes: ['gqr_id'],
-//         where: {guest_id, question_id},
-//         raw: true,
-//     }).then(resp => {
-//         console.log(resp);
-//     })
 
 function getSQResultsHost(sq_id, host_id) {
     return db.sequelize.query(`select distinct g.first_name, g.last_name, g.guest_id, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
