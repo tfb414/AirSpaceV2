@@ -11,7 +11,9 @@
 
 .HDNavButton:focus,
 .HDNavButton:hover {
-    background-color: black;
+    // background-color: black;
+    // background-color: $newblue;
+    background-color: $darkerblue;
     transition: .5s background-color ease-in-out;
 }
 

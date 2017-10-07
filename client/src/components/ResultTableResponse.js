@@ -13,7 +13,7 @@ const ResultTableResponse = ({ question }) => {
         })
         return (
         <tr>
-            <td>
+            <td className='questionBox'>
                     {data}
             </td>
             {singleResponse}    

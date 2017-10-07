@@ -1,6 +1,7 @@
 .surveyBox {
     font-family: $copyfont;
     width: 90%;
+    color: $fontcolor;
     display: flex;
     padding: 2rem;
     flex-direction: column;
@@ -10,31 +11,63 @@
     font-family: $copyfont;
     border-radius: 2rem;
     @include respond-to(medium) {
-        width: 50%;
+        width: 90%;
     }
 }
 
+.surveyInnerBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    @include respond-to(medium) {
+        width: 50%;
+    }
+    // @include respond-to(large) {
+    //     width: 40%;
+    // }
+}
+
 .surveyInnerBox button {
+    align-self: flex-start;
     padding: .5rem;
     font-family: $copyfont;
 }
 
 .cnsTitle {
     margin-top: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 1.6rem;
+    @include respond-to(medium) {
+        font-size: 2rem;
+    }
 }
 
-.surveyTitle {
+.surveyTitle,
+.surveyQTitle {
     margin-bottom: 0;
+    align-self: flex-start;
+}
+
+.surveyTinput {
+    align-self: flex-start;
 }
 
 .questionItem p {
-    margin-bottom: 0;
+    margin-bottom: .5rem;
 }
 
 .questionItem {
     width: 100%;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.questionClump {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
 }
 
 .bottomButtons {
@@ -49,15 +82,15 @@
 .addSq {
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
-    color: black;
-    border: 1px solid black;
+    color: $fontcolor;
+    border: 1px solid $fontcolor;
     background-color: unset;
 }
 
 .addSq:hover,
 .addSq:focus {
     color: white;
-    background-color: black;
+    background-color: $fontcolor;
     border: white;
     transition: .2s background-color ease-in-out;
 }
@@ -78,13 +111,18 @@
 }
 
 .submitSurvey {
-    background-color: black;
+    // background-color: black;
+    background-color: $newblue;
     color: white;
     border: none;
+    width: 5.5rem;
+    height: 2.4rem;
+    border-radius: 2rem;
     padding: 2rem;
 }
 
 .submitSurvey:hover,
 .submitSurvey:focus {
     background-color: #11C211;
+    // background-color: $darkerblue;
 }

@@ -59,7 +59,7 @@ class HostRenderSurvey extends Component {
         } else if (this.props.type === 'quiz') {
             this.props.history.push(`/Host/Your Quizzes/${event.target.value}`)
         }
-        
+
     }
 
     _createSurveyPayload = (event) => {

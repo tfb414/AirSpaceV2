@@ -62,15 +62,15 @@ class HostRenderResults extends Component {
         // let questions=Object.keys(this.state.question)
         if (this.state.resultsReceived) {
             return (
-                <div>
-                    <h1>{this.state.results.title}</h1>
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>{this.state.results.title}</h1>
                     <RenderResultsTable name={this.state.nameList} question={this.state.questionList}/>
                 </div>
             );
         } else {
             return (
-                <div>
-                    <h1>Waiting for results...</h1>
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>Waiting for results...</h1>
                 </div>
             );
         }
