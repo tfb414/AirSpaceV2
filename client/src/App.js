@@ -3,13 +3,13 @@ import LandingPage from './components/LandingPage';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HostDashboard from "./components/HostDashboard";
 import env from './utility/env';
-import CreateSurvey from './components/CreateSurvey';
-import Create from './components/Create.js'
+
 import Guest from './components/Guest'
 import GuestWaitingRoom from './components/GuestWaitingRoom'
-import CreateQuiz from './components/CreateQuiz'
+
 import GuestRenderSurvey from './components/GuestRenderSurvey'
 import GuestRenderQuiz from './components/GuestRenderQuiz'
+import GuestRouter from './components/GuestRouter'
 import HostRenderResults from './components/HostRenderResults'
 
 class App extends Component {
@@ -32,9 +32,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={() => (<LandingPage />)} />
               <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
-              <Route exact path="/Guest/waiting/" component={(match) => (<GuestWaitingRoom match={match} /*message={this.state.messages} */ />)} />
-              <Route exact path="/Guest/" component={(match) => (<Guest match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
-              <Route exact path="/Results" component={(match) => (<HostRenderResults match={match} title="Survey 1" payload={[{ first_name: "Aaron", last_name: "Sosa", question: [{ text: "Do you like Dogs or cats?", response: "Dogs" }, { text: "Are you happy?", response: "Yes"}]}, { first_name: "Tim", last_name: "Brady", question: [{ text: "Do you like Dogs or cats?", response: "Cats" }, { text: "Are you happy?", response: "Yes"}]}]} />)} />
+              <Route path="/Guest/" component={(match) => (<GuestRouter match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
             </Switch>
           </div>
         </BrowserRouter>
@@ -51,3 +49,4 @@ export default App;
 //           <div key={host.host_id}>{host.first_name} {host.last_name} {host.email}</div>
 //         )}
 
+// payload={[{ first_name: "Aaron", last_name: "Sosa", question: [{ text: "Do you like Dogs or cats?", response: "Dogs" }, { text: "Are you happy?", response: "Yes"}]}, { first_name: "Tim", last_name: "Brady", question: [{ text: "Do you like Dogs or cats?", response: "Cats" }, { text: "Are you happy?", response: "Yes"}]}]}
