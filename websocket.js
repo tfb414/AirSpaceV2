@@ -89,14 +89,36 @@ function init() {
                     if (parsedData.type === 'ACTIVATESQ') {
                         query.getSQ(parsedData.sq_id).then(resp => {
                             let payload = formatSQ(resp, parsedData.host_id, parsedData.sqtype); 
+                            console.log(payload);
                             sendPayload(payload, wss);
                         })
+                    }
+                    if (parsedData.type === 'RESULTQUIZ') {
+                        console.log(parsedData);
+                    }
+
+                    if (parsedData.type === 'RESULTSURVEY') {
+                        console.log(parsedData);
                     }
                 });
             })
         })
     })
 }
+
+// {type: "RESULTSURVEY", sq_id: 19, payload: Array(3)}
+// payload
+// :
+// Array(3)
+// 0
+// :
+// {question_id: 53, response: "Yes"}
+// 1
+// :
+// {question_id: 54, response: "Maybz"}
+// 2
+// :
+// {question_id: 55, response: "IDK"}
 
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
@@ -137,7 +159,7 @@ function quizPayload(resp) {
         }
         let option = {};
         option.option_id = question.option_id;
-        option.option_text = question.option_text;
+        option.text = question.option_text;
         option.option_value = question.option_value;
         result[question_id].options.push(option);
     })
