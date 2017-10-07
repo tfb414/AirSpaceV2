@@ -12,7 +12,8 @@ class GuestRouter extends Component {
         this.state = {
             host_id: '',
             guest_id: '',
-            message: ''
+            message: '',
+            title: ""
         }
 
     }
@@ -63,8 +64,8 @@ class GuestRouter extends Component {
                         path="/Guest/Waiting/"
                         render={() => (
                             <GuestWaitingRoom
-                                host_id={this.state.host_id} 
-                                title={this.state.title} 
+                                host_id={this.state.host_id}
+                                title={this.state.title}
                                 payload={this.state.payload}
                             />
                         )}

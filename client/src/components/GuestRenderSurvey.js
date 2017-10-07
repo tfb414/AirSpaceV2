@@ -5,7 +5,7 @@ class GuestRenderSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            sq_id: props.survey.sq_id,
+            sq_id: props.sq_id,
             payload: []
         })
     }
@@ -31,11 +31,11 @@ class GuestRenderSurvey extends Component {
         let surveyForm = this.props.payload.map((data) => {
             let new_payload = this.props.payload
             let index = new_payload.indexOf(data)
-            return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={this.state.payload[index].response}/>
+            return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={this.state.payload[index].response} />
         })
         return (
             <div>
-                <h2>{this.props.survey.title}</h2>
+                <h2>{this.props.title}</h2>
                 {surveyForm}
                 <button onClick={this._submitSurvey}>Submit</button>
             </div>

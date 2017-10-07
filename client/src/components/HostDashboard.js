@@ -48,12 +48,12 @@ class HostDashboard extends Component {
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
                 <Switch>
 
-                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} host_id={this.state.host_id} />} />
-                    <Route exact path="/Host/Your Surveys/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.surveyResults} host_id={this.state.host_id} type="survey"/>} />
-                    <Route exact path="/Host/Your Quizzes/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.quizResults} host_id={this.state.host_id} type="quiz"/>} />
+                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
+                    <Route exact path="/Host/Your Surveys/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.surveyResults} host_id={this.state.host_id} type="survey" />} />
+                    <Route exact path="/Host/Your Quizzes/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.quizResults} host_id={this.state.host_id} type="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
-                    <Route path="/Host/Your Surveys/:id" render={() => { <HostRenderResults />}}/>
-                    <Route path="/Host/Your Quizzes/:id" render={() => { <HostRenderResults />}}/>
+                    <Route path="/Host/Your Surveys/:id" render={() => { <HostRenderResults /> }} />
+                    <Route path="/Host/Your Quizzes/:id" render={() => { <HostRenderResults /> }} />
                 </Switch>
                 {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}
             </div>

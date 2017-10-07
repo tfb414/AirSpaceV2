@@ -24,16 +24,16 @@ class HostRenderSurvey extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
-            <div>
-                <h1>Searching for you Survey's and Quizzes</h1>
-            </div>
+                <div>
+                    <h1>Searching for you Survey's and Quizzes</h1>
+                </div>
             )
         }
         let surveys = this.props.payload.map((data) => {
             return (
                 <div>
                     <h1>{data.text}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
-                </div>    
+                </div>
             )
         })
         return (
@@ -54,11 +54,12 @@ class HostRenderSurvey extends Component {
         } else if (this.props.type === 'quiz') {
             this.props.history.push(`/Host/Your Quizzes/${event.target.value}`)
         }
-        
+
     }
 
     _createSurveyPayload = (event) => {
-        let payloadType = ""
+
+        let payloadType;
         if (this.props.type === 'survey') {
             payloadType = "ACTIVATESURVEY"
         } else if (this.props.type === 'quiz') {
