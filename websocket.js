@@ -37,18 +37,6 @@ function init() {
                     console.log("WE GOT A MESSAGE");
                     // console.log(data);
                     let parsedData = JSON.parse(data);
-                    console.log(parsedData.type);
-                    if (parsedData.type === 'ACTIVATESURVEY') {
-                        console.log("we're in activate survey in websockets")
-                        let pulledData = {
-                            "type": 'ACTIVATESURVEY',
-                            "host_id": 'tfb414@gmail.com',
-                            "title": "Tim's survey",
-                            "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
-                        }
-                        ActivateSurvey(pulledData, wss)
-
-                    }
 
                     if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
@@ -101,6 +89,10 @@ function init() {
                             })
                         })
                     }
+                    query.getSQ('18')
+                    .then(resp => {
+                        let payload = formatSQList(resp, 'sabbey37@gmail.com', 'quiz');
+                    })
 
                     if (parsedData.type === 'ACTIVATESQ') {
                         query.getSQ(parsedData.sq_id).then(resp => {
