@@ -12,11 +12,16 @@ class HostRenderSurvey extends Component {
     }
 
     componentWillMount() {
-        let payload = { type: "REQUESTSURVEY" }
-        // this.props.sendMessage(JSON.stringify(payload))
-        if (this.props.payload != false) {
+        let payload = { type: "REQUESTSQLIST", value: this.props.type };
+        this.props.sendMessage(JSON.stringify(payload));
+   
+        this.props.connection.onmessage = event => {
+            let parsedData = JSON.parse(event.data);
+            let results = this._receiveMessage(parsedData);
+            console.log(results);
             this.setState({
-                waitingOnData: false
+                waitingOnData: false,
+                results: results
             })
         }
     }
@@ -24,16 +29,16 @@ class HostRenderSurvey extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
-                <div>
-                    <h1>Searching for you Survey's and Quizzes</h1>
-                </div>
+            <div>
+                <h1>Searching for you Surveys and Quizzes</h1>
+            </div>
             )
         }
-        let surveys = this.props.payload.map((data) => {
+        let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <h1>{data.text}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
-                </div>
+                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
+                </div>    
             )
         })
         return (
@@ -58,7 +63,6 @@ class HostRenderSurvey extends Component {
     }
 
     _createSurveyPayload = (event) => {
-
         let payloadType;
         if (this.props.type === 'survey') {
             payloadType = "ACTIVATESURVEY"
@@ -71,6 +75,13 @@ class HostRenderSurvey extends Component {
         }
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
+    }
+
+     _receiveMessage = (parsedData) => {
+        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
+            return parsedData.payload;
+        }
+
     }
 
 }

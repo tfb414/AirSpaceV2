@@ -16,8 +16,8 @@ class HostDashboard extends Component {
         super(props);
         this.state = {
             host_id: "",
-            surveyResults: [{ text: "Survey 1", sq_id: "1" }, { text: "Survey 2", sq_id: "2" }],
-            quizResults: [{ text: "Quiz 1", sq_id: "3" }, { text: "Quiz 2", sq_id: "4" }]
+            surveyResults: [{ text: "Survey 1", sq_id: "" }, { text: "Survey 2", sq_id: "2" }],
+            quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }]
         }
         this.connection = new WebSocket(env);
     }
@@ -47,21 +47,17 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
                 <Switch>
-
-                    <Route path="/Host/Results" component={() => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
-                    <Route exact path="/Host/Your Surveys/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.surveyResults} host_id={this.state.host_id} type="survey" />} />
-                    <Route exact path="/Host/Your Quizzes/" component={() => <HostRenderSurvey sendMessage={this._sendMessage} payload={this.state.quizResults} host_id={this.state.host_id} type="quiz" />} />
+                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} type="survey"/>} />
+                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} type="quiz"/>} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
-                    <Route path="/Host/Your Surveys/:id" render={() => { <HostRenderResults /> }} />
-                    <Route path="/Host/Your Quizzes/:id" render={() => { <HostRenderResults /> }} />
+                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />}/>
+                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} match={match} host_id={this.state.host_id} />}/>
                 </Switch>
-                {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}
             </div>
 
         )
     }
     _sendMessage = (payload) => {
-        console.log('we sent a message')
         this.connection.send(payload);
     }
 
@@ -69,14 +65,6 @@ class HostDashboard extends Component {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
                 host_id: parsedData.user_id
-            })
-        } else if (parsedData.type === 'DISPLAYSURVEY' && parsedData.id === this.state.host_id) {
-            this.setState({
-                surveyResults: parsedData.payload.payload
-            })
-        } else if (parsedData.type === 'DISPLAYQUIZ' && parsedData.id === this.state.host_id) {
-            this.setState({
-                quizResults: parsedData.payload.payload
             })
         }
 
@@ -86,3 +74,4 @@ class HostDashboard extends Component {
 }
 
 export default HostDashboard;
+   {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RenderResultsTable from './RenderResultsTable'
+import RenderResultsTable from './RenderResultsTable';
 
 class HostRenderResults extends Component {
     constructor(props) {
@@ -7,6 +7,8 @@ class HostRenderResults extends Component {
         this.state = {
             host_id: this.props.host_id,
             results: {},
+            nameList: [],
+            questionList: {},
             resultsReceived: false
         }
     }
@@ -14,52 +16,64 @@ class HostRenderResults extends Component {
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
-            sq_id: '18'
-        }
-        
+            sq_id: this.props.match.match.params.id
+        };
+        let resultsReceived = false;
         this.props.connection.send(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             let results = this._receiveMessage(parsedData);
-            this.setState({
-                results,
-                resultsReceived: true
-            })
+            resultsReceived = true;
+            if (resultsReceived) {
+                let names = Object.keys(results.payload);
+                var new_nameList;
+                var new_questionList
+                names.forEach((name)=> {
+                    let data = results.payload[name];
+                    let new_name = data.first_name + " " + data.last_name;
+                    new_nameList = this.state.nameList;
+                    new_questionList = this.state.questionList;
+                    data.question.forEach((question) => {
+                        if (new_questionList[question.text] === undefined) {
+                            new_questionList[question.text] = []
+                        }
+                        if (question.value != undefined) {
+                            new_questionList[question.text].push({ text: question.response, value: question.value })
+                        } else {
+                            new_questionList[question.text].push({ text: question.response, value: 'survey' })
+                        }
+                        
+                    })
+                    new_nameList.push(new_name);
+                })
+            
+                this.setState({
+                        nameList: new_nameList,
+                        questionList: new_questionList,
+                        results,
+                        resultsReceived: true
+                })
+            }
         }
-        // this.props.payload.forEach((data) => {
-        //     let new_name = data.first_name + " " + data.last_name
-        //     let new_nameList = this.state.name
-        //     let new_question = this.state.question
-        //     data.question.forEach((info) => {
-        //         if (new_question[info.text] === undefined) {
-        //             new_question[info.text] = []
-        //         }
-        //         if (info.value != undefined) {
-        //             new_question[info.text].push({ text: info.response, value: info.value })
-        //         } else {
-        //             new_question[info.text].push({ text: info.response, value: 'survey' })
-        //         }
-                
-        //     })
-        //     new_nameList.push(new_name);
-        //     console.log(new_question);
-        //     this.setState({
-        //         name: new_nameList,
-        //         question: new_question
-        //     })
-        // })
     }
 
 
     render() {
         // let questions=Object.keys(this.state.question)
-        return (
-
-            <div className='resultBox'>
-                <h1 className='resultTableName'>{this.props.title}</h1>
-                <RenderResultsTable name={this.state.name} question={this.state.question}/>
-            <div>
-        );
+        if (this.state.resultsReceived) {
+            return (
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>{this.state.results.title}</h1>
+                    <RenderResultsTable name={this.state.nameList} question={this.state.questionList}/>
+                </div>
+            );
+        } else {
+            return (
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>Waiting for results...</h1>
+                </div>
+            );
+        }
     }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {

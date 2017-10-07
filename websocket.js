@@ -92,6 +92,15 @@ function init() {
                                 })
                             })
                     }
+
+                    if (parsedData.type === 'REQUESTSQLIST') {
+                        query.getSQList(user_id, parsedData.value).then(resp => {
+                            let payload = formatSQList(resp, user_id);
+                            wss.clients.forEach(function each(client) {
+                                client.send(JSON.stringify(payload));
+                            })
+                        })
+                    }
                 });
             })
         })
@@ -112,6 +121,14 @@ function init() {
 // question: [
 // { text: "Do you like Dogs or cats?", response: "Cats" }, 
 // { text: "Are you happy?", response: "Yes"}}
+
+function formatSQList(resp, user_id) {
+    let result = {};
+    result["type"] = "DISPLAYSQLIST";
+    result["host_id"] = user_id;
+    result["payload"] = resp;
+    return result;
+}
 
 function formatResults(resp, user_id) {
     let result = {};
