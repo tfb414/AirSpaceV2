@@ -1,5 +1,6 @@
 .quizBox {
     font-family: $copyfont;
+    color: $fontcolor;
     width: 90%;
     // height: 50%;
     display: flex;
@@ -7,11 +8,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.5);
+    // box-shadow: 10px 10px 30px rgba(0,0,0,.2);
+    box-shadow: 2px 2px 10px rgba(0,0,0,.2);
     font-family: $copyfont;
     border-radius: 2rem;
     @include respond-to(medium) {
-        width: 50%;
+        width: 30rem;
+    }
+    @include respond-to(large) {
+        width: 45rem;
     }
 }
 
@@ -37,6 +42,11 @@
     // justify-content: space-around;
 }
 
+.quizQuestionLine textarea {
+    width: 80%;
+    max-width: 80%;
+}
+
 .quizQuestionItem p {
     margin-bottom: 0;
 }
@@ -48,29 +58,34 @@
 .addQuizQues {
     margin-top: 1.6rem;
     margin-bottom: 1.6rem;
-    color: black;
-    border: 1px solid black;
+    color: $fontcolor;
+    // border: 1px solid black;
+    border: 1px solid $fontcolor;
     background-color: unset;
 }
 
 .addQuizQues:hover,
 .addQuizQues:focus {
     color: white;
-    background-color: black;
+    background-color: $fontcolor;
     border: white;
     transition: .2s background-color ease-in-out;
 }
 
 .submitQuiz {
-    background-color: black;
+    background-color: $newblue;
     color: white;
     border: none;
+    width: 5.5rem;
+    height: 2.4rem;
+    border-radius: 2rem;
     padding: 2rem;
 }
 
 .submitQuiz:hover,
 .submitQuiz:focus {
     background-color: #11C211;
+    // background-color: $darkerblue;
 }
 
 .subtractQuizQues {
@@ -108,7 +123,7 @@
 .addQoption:hover,
 .addQoption:focus {
     border: none;
-    background-color: black;
+    background-color: $fontcolor;
     color: white;
     transition: .2s background-color ease-in-out;
 }
@@ -117,6 +132,7 @@
     display: flex;
     align-self: flex-end;
     flex-direction: column;
+    padding-right: 4rem;
 }
 
 .quizOptionItem {
