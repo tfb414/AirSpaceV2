@@ -47,9 +47,9 @@ class GuestRenderSurvey extends Component {
             type: "RESULTSURVEY",
             sq_id: this.state.sq_id,
             payload: this.state.payload
-        }
+        };
 
-        console.log(payload)
+        this.props.sendMessage(JSON.stringify(payload));
     }
 }
 

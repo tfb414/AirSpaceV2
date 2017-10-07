@@ -34,7 +34,7 @@ class GuestRenderQuiz extends Component {
         let data = this.props.payload
         let quizForm = keys.map((key) => {
             let index = keys.indexOf(key)
-            return <RenderQuizQuestion RonChange={this.handleChangeRadio} index={index} option={data[key].option} question_number={data[key].question_number} text={data[key].text}/>
+            return <RenderQuizQuestion RonChange={this.handleChangeRadio} index={index} option={data[key].options} question_number={data[key].question_number} text={data[key].text}/>
         })
         return (
             <div>
@@ -51,8 +51,7 @@ class GuestRenderQuiz extends Component {
             sq_id: this.state.sq_id,
             payload: this.state.payload
         }
-
-        console.log(payload)
+        this.props.sendMessage(JSON.stringify(payload));        
     }
 }
 

@@ -71,6 +71,7 @@ class GuestRouter extends Component {
                                 payload={this.state.payload}
                                 sq_id={this.state.sq_id}
                                 sqtype={this.state.sqtype}
+                                sendMessage={this._sendMessage}
                             />
                         )}
                     />
@@ -91,7 +92,6 @@ class GuestRouter extends Component {
     }
 
     _createPayload = () => {
-        console.log('create payload')
         let payload = {
             type: "ADDGUESTTOHOST",
             host_id: this.state.host_id
@@ -100,12 +100,11 @@ class GuestRouter extends Component {
     }
 
     _sendMessage = (payload) => {
-        console.log('send message')
         this.connection.send(payload);
     }
 
     _receiveMessage = (parsedData) => {
-        console.log('we received a messaged' + parsedData.type)
+        console.log('we received a messaged ' + parsedData.type)
         if (parsedData.type === "CONNECTEDTOHOST") {
             console.log('connected to host')
             this.setState({

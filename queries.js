@@ -4,9 +4,6 @@ const db = require('./sequelize.js');
 //     return db.host.findAll();
 // }
 
-// function getHostById(host_id) {
-//     return db.host.findById(host_id);
-// }
 
 function upsertHost(host_id, first_name, last_name) {
     db.host.upsert({
@@ -43,21 +40,6 @@ function addHostGuest(host_id, guest_id) {
     });
 }
 
-//check if it's already in the host_guest db
-//then add to the host_guest table
-
-// // function findGuestsByHostId() {
-// //     db.host_guest.findAll({
-// //         attributes: [],
-// //         include: [{
-
-// //             model: db.guest,
-// //             required: true,
-// //             where: {guest_id: Sequelize.col('db.host_guest.guest_id')}
-// //         }]
-// //     })
-// // }
-
 function addSQ(sq_name, host_id, type) {
     return db.sq.create({
         sq_name,
@@ -85,6 +67,50 @@ function addSQQuestionOption(sq_id, question_id, option_id) {
         option_id,
         question_id,
         sq_id
+    })
+}
+
+function addGQRSurvey(guest_id, question_id, response) {
+    db.guest_question_response.findAll({
+        attributes: ['gqr_id'],
+        where: {guest_id, question_id},
+        raw: true,
+    }).then(resp => {
+        if (resp.length === 0) {
+            db.guest_question_response.create({
+                guest_id,
+                question_id,
+                response, 
+            })
+        } else {
+            db.guest_question_response.update({
+                response,
+                gqr_id: resp[0].gqr_id},
+                {where: {guest_id, question_id}}
+            )
+        }
+    })
+}
+
+function addGQRQuiz(guest_id, question_id, option_id) {
+    db.guest_question_response.findAll({
+        attributes: ['gqr_id'],
+        where: {guest_id, question_id},
+        raw: true,
+    }).then(resp => {
+        if (resp.length === 0) {
+            db.guest_question_response.create({
+                guest_id,
+                question_id,
+                option_id, 
+            })
+        } else {
+            db.guest_question_response.update({
+                option_id,
+                gqr_id: resp[0].gqr_id},
+                {where: {guest_id, question_id}}
+            )
+        }
     })
 }
 
@@ -137,82 +163,6 @@ function getSQ(sq_id) {
 // //     })
 // // }
 
-// // function addHostToDatabase(host_id, email, first_name, last_name){
-// //   return db.one(`
-// //     insert into host(host_id, email, first_name, last_name)
-// // 	    values ('${host_id}', '${email}', '${first_name}', '${last_name}')
-// // 	    returning host_id, email, first_name, last_name;
-// //     `).then((result) =>{
-
-// //     //   return result.host_id;
-// //     //put what we want to have returning here
-// //   }).catch(console.log);
-// // }
-
-// // function addSQToDatabase(sq_name)
-// //     return db.one(`
-// //         insert into sq(sq_name)
-// //             values ('${sq_name}')
-// //             returning sq_id, sq_name
-// //     `).then((result)=>{
-// //         //put what we want to return here
-// //     }).catch(console.log);
-
-// // function addQuestionToDatabase(question, question_number)
-// //     return db.one(`
-// //         insert into question(question, question_number)
-// //             values ('${question}}', '${question_number}')
-// //             returning question_id
-// //         `).then((result)=>{
-// //             //put what to return here
-// //         }).catch(console.log);
-
-// //         //q_id 5
-
-// // function addOptionToDatabase(option, option_value){
-// //     return db.one(`
-// //         insert into option(option, option_value)
-// //             values ('${option}', '${option_value}')
-// //             returning option, option_value, option_id
-// //     `).then((result)=> {
-// //         //put what to return here
-// //     }).catch(console.log);
-// // }
-
-// // //option_id: 7-11
-
-// // function addSQQuestionOptionToDatabase(sq_id, question_id, option_id ){
-// //     return db.one(`
-// //         insert into sq_question_option(sq_id, question_id, option_id )
-// //             values ('${sq_id}', '${question_id}', '${option_id}')
-// //             returning sq_id
-// //     `).((result) => {
-// //         //put what to return here
-// //     }).catch(console.log);
-// // }
-
-// // function addGuestToDatabase(guest_id, email, first_name, last_name){
-// //   return db.one(`
-// //     insert into guest(guest_id, email, first_name, last_name)
-// // 	    values ('${guest_id}', '${email}', '${first_name}', '${last_name}')
-// // 	    returning guest_id, email, first_name, last_name;
-// //     `).then((result) =>{
-
-// //     //   return result.guest_id;
-// //     //put what we want to have returning here
-// //   }).catch(console.log);
-// // }
-
-// // function hostGuestToDatabase(host_id, guest_id){
-// //     return db.one(`
-// //         insert into host_guest(host_id, guest_id)
-// //             values ('${host_id}', '${guest_id}')
-// //             returning host_id, guest_id
-// //     `).then((results)=>{
-// //         //put what we want to return here
-// //     }).catch(console.log)
-// // }
-
 // // function guestQuestionResponse(guest_id, question_id, response){
 // //     return db.one(`
 // //         insert into guest_question_response(guest_id, question_id, response)
@@ -234,18 +184,6 @@ function getSQ(sq_id) {
 // //     }).catch(console.log);
 // // }
 
-// module.exports = {
-//     getHostById, 
-//     addHost, 
-//     addGuest, 
-//     addSQ, 
-//     addQuestion, 
-//     addOption, 
-//     addSQQuestionOption,
-//     addHostGuest,
-//     findGuestsByHostId
-// };
-
 module.exports = {
     upsertHost,
     upsertGuest,
@@ -256,8 +194,15 @@ module.exports = {
     addHostGuest, 
     getSQResultsHost,
     getSQList,
-    getSQ
+    getSQ,
+    addGQRQuiz,
+    addGQRSurvey
 };
 
 
 
+// db.sequelize.query(`insert into guest_question_response (guest_id, response, question_id)
+//         values ('${guest_id}', '${response}', '${question_id}')
+//         on conflict (guest_id, question_id)
+//         do update set (response) = ('${response}')
+//         where guest_question_response.guest_id = '${guest_id}' and guest_question_response.question_id = '${question_id}';`, { type: db.sequelize.QueryTypes.INSERT});
