@@ -48,7 +48,7 @@ class HostDashboard extends Component {
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
                 <Switch>
                     <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} type="survey"/>} />
-                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} type="quiz"/>} />
+                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} type="quiz"/>} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                     <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />}/>
                     <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage}connection={this.connection} match={match} host_id={this.state.host_id} />}/>
@@ -65,14 +65,6 @@ class HostDashboard extends Component {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
                 host_id: parsedData.user_id
-            })
-        } else if (parsedData.type === 'DISPLAYSURVEY' && parsedData.id === this.state.host_id) {
-            this.setState({
-                surveyResults: parsedData.payload.payload
-            })
-        } else if (parsedData.type === 'DISPLAYQUIZ' && parsedData.id === this.state.host_id) {
-            this.setState({
-                quizResults: parsedData.payload.payload
             })
         }
 

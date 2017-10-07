@@ -125,6 +125,7 @@ function formatSQList(resp, user_id) {
     result["type"] = "DISPLAYSQLIST";
     result["host_id"] = user_id;
     result["payload"] = resp;
+    return result;
 }
 
 function formatResults(resp, user_id) {

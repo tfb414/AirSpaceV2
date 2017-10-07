@@ -12,15 +12,18 @@ class HostRenderSurvey extends Component {
     }
 
     componentWillMount() {
-        let value = this.props.match.url.slice(11);
-        console.log(value);
         let payload = { type: "REQUESTSQLIST", value: this.props.type };
         this.props.sendMessage(JSON.stringify(payload));
-        // if (this.props.payload != false) {
-        //     this.setState({
-        //         waitingOnData: false
-        //     })
-        // }
+   
+        this.props.connection.onmessage = event => {
+            let parsedData = JSON.parse(event.data);
+            let results = this._receiveMessage(parsedData);
+            console.log(results);
+            this.setState({
+                waitingOnData: false,
+                results: results
+            })
+        }
     }
 
     render() {
@@ -31,10 +34,10 @@ class HostRenderSurvey extends Component {
             </div>
             )
         }
-        let surveys = this.props.payload.map((data) => {
+        let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <h1>{data.text}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
+                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
                 </div>    
             )
         })
@@ -72,6 +75,13 @@ class HostRenderSurvey extends Component {
         }
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
+    }
+
+     _receiveMessage = (parsedData) => {
+        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
+            return parsedData.payload;
+        }
+
     }
 
 }
