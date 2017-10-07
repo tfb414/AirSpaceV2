@@ -107,6 +107,7 @@ function getSQResultsHost(sq_id, host_id) {
   
 }
 
+// Gets list of all surveys or quizzes for a given host
 function getSQList(host_id, type) {
     return db.sq.findAll({
         attributes: ['sq_id', 'sq_name'],
@@ -115,6 +116,7 @@ function getSQList(host_id, type) {
     })
 }
 
+// Gets survey name, id, questions, question id, options, option id, and option value from database for given sq_id
 function getSQ(sq_id) {
     return db.sequelize.query(`select sqqo.sq_id, sq.sq_name, q.question, q.question_number, q.question_id, o.option_text, o.option_id, o.option_value
     from sq_question_option sqqo

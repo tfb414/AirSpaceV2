@@ -102,8 +102,13 @@ function init() {
                         })
                     }
 
-                    if (parsedData.type === 'ACTIVATESURVEY') {
-                        
+                    if (parsedData.type === 'ACTIVATESQ') {
+                        query.getSQ(parsedData.sq_id).then(resp => {
+                            let payload = formatSQList(resp, parsedData.host_id, parsedData.sqtype);
+                            wss.clients.forEach(function each(client) {
+                                client.send(JSON.stringify(payload));
+                            })
+                        })
                     }
                 });
             })
@@ -111,20 +116,16 @@ function init() {
     })
 }
 
-// type:"DISPLAYRESULTS"
-// host_id: "aarontsosa@gmail.com",
-// title="Survey 1" ,
-// payload={
-// email: { first_name: "Aaron", 
-// last_name: "Sosa", 
-// question: [{ 
-// text: "Do you like Dogs or cats?", response: "Dogs" }, 
-// { text: "Are you happy?", response: "Yes"}]}, 
-// { first_name: "Tim", 
-// last_name: "Brady", 
-// question: [
-// { text: "Do you like Dogs or cats?", response: "Cats" }, 
-// { text: "Are you happy?", response: "Yes"}}
+// "title": "This is a survey",
+//                 "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
+
+function formatSQ(resp, host_id) {
+    console.log(resp);
+    let result = {};
+    result["type"] = "DISPLAYACTIVESQ";
+    result["host_id"] = host_id;
+    result["payload"] = resp;
+}
 
 function formatSQList(resp, user_id) {
     let result = {};
@@ -134,6 +135,7 @@ function formatSQList(resp, user_id) {
     return result;
 }
 
+// Formats payload for results of survey
 function formatResults(resp, user_id) {
     let result = {};
     result["type"] = "DISPLAYRESULTS";
