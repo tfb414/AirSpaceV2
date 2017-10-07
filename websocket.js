@@ -88,7 +88,7 @@ function init() {
 
                     if (parsedData.type === 'ACTIVATESQ') {
                         query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQ(resp, parsedData.host_id, parsedData.sqtype); 
+                            let payload = formatSQ(resp, user_id, parsedData.sqtype); 
                             console.log(payload);
                             sendPayload(payload, wss);
                         })
@@ -166,7 +166,7 @@ function quizPayload(resp) {
         let option = {};
         option.option_id = question.option_id;
         option.text = question.option_text;
-        option.option_value = question.option_value;
+        option.value = question.option_value;
         result[question_id].options.push(option);
     })
     return result;
