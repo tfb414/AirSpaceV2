@@ -12,7 +12,7 @@ class HostRenderSurvey extends Component {
     }
 
     componentWillMount() {
-        let payload = { type: "REQUESTSQLIST", value: this.props.type };
+        let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
         this.props.sendMessage(JSON.stringify(payload));
    
         this.props.connection.onmessage = event => {
@@ -44,33 +44,24 @@ class HostRenderSurvey extends Component {
         return (
             <div>
                 {surveys}
-                {/* <Switch>
-                    <Route path="/Host/Your Surveys/:id" render={() => { <HostRenderResults />}}/>
-                    <Route path="/Host/Your Quizzes/:id" render={() => { <HostRenderResults />}}/>
-                </Switch> */}
             </div>
         );
     }
 
     _viewResults = (event) => {
         console.log('hello')
-        if (this.props.type === 'survey') {
+        if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
-        } else if (this.props.type === 'quiz') {
+        } else if (this.props.sqtype === 'quiz') {
             this.props.history.push(`/Host/Your Quizzes/${event.target.value}`)
         }
 
     }
 
     _createSurveyPayload = (event) => {
-        let payloadType;
-        if (this.props.type === 'survey') {
-            payloadType = "ACTIVATESURVEY"
-        } else if (this.props.type === 'quiz') {
-            payloadType = "ACTIVATEQUIZ"
-        }
         let payload = {
-            type: payloadType,
+            type: "ACTIVATESQ",
+            sqtype: this.props.sqtype,
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);

@@ -38,13 +38,15 @@ function init() {
                     // console.log(data);
                     let parsedData = JSON.parse(data);
                     console.log(parsedData.type);
-                    if (parsedData.type === 'ACTIVATESURVEY') {
+                    if (parsedData.type === 'ACTIVATESQ') {
                         console.log("we're in activate survey in websockets")
                         let pulledData = {
-                            "type": 'ACTIVATESURVEY',
+                            "type": 'DISPLAYACTIVESQ',
+                            "sqtype": "quiz",
+                            "sq_id": "18",
                             "host_id": 'tfb414@gmail.com',
-                            "title": "Tim's survey",
-                            "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
+                            "title": "Tim's quiz",
+                            "payload": { '1': { 'question_number': '1', 'question_id': '1', 'text': "derp derp derp ", "option": [{ 'text': 'derp', 'option_id': '1' }, { 'text': 'derp derp', 'option_id': '2' }] }, '2': { 'question_number': '2', 'question_id': '2', 'text': "trees or air", "option": [{ 'text': 'air', 'option_id': '3' }, { 'text': 'trees', 'option_id': '4' }] }, '3': { 'question_number': '3', 'question_id': '3', 'text': "mountains or oceans", "option": [{ 'text': 'mountain', 'option_id': '5' }, { 'text': 'ocean', 'option_id': '6' }] } }
                         }
                         ActivateSurvey(pulledData, wss)
 
@@ -94,7 +96,7 @@ function init() {
                     }
 
                     if (parsedData.type === 'REQUESTSQLIST') {
-                        query.getSQList(user_id, parsedData.value).then(resp => {
+                        query.getSQList(user_id, parsedData.sqtype).then(resp => {
                             let payload = formatSQList(resp, user_id);
                             wss.clients.forEach(function each(client) {
                                 client.send(JSON.stringify(payload));

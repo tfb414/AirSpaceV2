@@ -13,7 +13,9 @@ class GuestRouter extends Component {
             host_id: '',
             guest_id: '',
             message: '',
-            title: ""
+            title: "",
+            sqtype: "",
+            sq_id: ""
         }
 
     }
@@ -67,6 +69,8 @@ class GuestRouter extends Component {
                                 host_id={this.state.host_id}
                                 title={this.state.title}
                                 payload={this.state.payload}
+                                sq_id={this.state.sq_id}
+                                sqtype={this.state.sqtype}
                             />
                         )}
                     />
@@ -124,12 +128,23 @@ class GuestRouter extends Component {
                 guest_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'ACTIVATESURVEY') {
-            console.log('we got a message called activateSurvey')
-            this.setState({
-                "title": "This is a survey",
-                "payload": [{ "question_number": 1, "text": "derp derp derp " }, { "question_number": 2, "text": "trees or air" }, { "question_number": 3, "text": "mountains or oceans" }]
+        if (parsedData.type === 'DISPLAYACTIVESQ') {
+            if (parsedData.sqtype === 'survey') {
+                this.setState({
+                sqtype: parsedData.sqtype,
+                sq_id: parsedData.sq_id,
+                title: parsedData.title,
+                payload: parsedData.payload
             })
+            } else if (parsedData.sqtype === 'quiz') {
+                this.setState({
+                    sqtype: parsedData.sqtype,
+                    sq_id: parsedData.sq_id,
+                    title: parsedData.title,
+                    payload: parsedData.payload
+                })
+            }
+            
         }
     }
 }
