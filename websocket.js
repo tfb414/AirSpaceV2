@@ -80,7 +80,7 @@ function init() {
                     }
 
                     if (parsedData.type === 'REQUESTSQLIST') {
-                        query.getSQList(user_id, parsedData.value).then(resp => {
+                        query.getSQList(user_id, parsedData.sqtype).then(resp => {
                             let payload = formatSQList(resp, user_id);
                             sendPayload(payload, wss);
                         })

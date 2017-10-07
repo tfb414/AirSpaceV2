@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 import GuestRenderSurvey from './GuestRenderSurvey'
+import GuestRenderQuiz from './GuestRenderQuiz'
 
 class GuestWaitingRoom extends Component {
     constructor(props) {
@@ -14,10 +15,17 @@ class GuestWaitingRoom extends Component {
 
     render() {
         if (this.props.title !== "") {
-            console.log('here')
-            return (
-                <GuestRenderSurvey payload={this.props.payload} sq_id={18} title={this.props.title} />
+            if (this.props.sqtype === "survey") {
+                return (
+                    <GuestRenderSurvey {... this.props}/>
             )
+            } else if (this.props.sqtype === "quiz") {
+                console.log('quiz')
+                return (
+                    <GuestRenderQuiz {... this.props}/>
+                )
+            }
+            
         }
         return (
             <div>
