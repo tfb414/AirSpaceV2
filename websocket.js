@@ -106,6 +106,13 @@ function init() {
                             query.addGQRSurvey(user_id, result.question_id, result.response);
                         })
                     }
+                    if (parsedData.type === "REQUESTEDITSQ") {
+                        query.getSQ(parsedData.sq_id).then(resp => {
+                            let payload = formatSQ(resp, user_id, parsedData.sqtype);
+                            console.log(payload);
+                            sendPayload(payload, wss);
+                        })
+                    }
                 });
             })
         })
@@ -131,6 +138,7 @@ function formatSQ(resp, host_id, sqtype) {
     result["type"] = "DISPLAYACTIVESQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
+    result["title"] = resp[0]["sq_name"]
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
