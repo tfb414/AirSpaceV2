@@ -101,6 +101,10 @@ function init() {
                             })
                         })
                     }
+
+                    if (parsedData.type === 'ACTIVATESURVEY') {
+                        
+                    }
                 });
             })
         })
