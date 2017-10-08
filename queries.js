@@ -208,7 +208,7 @@ function deleteAllQuestions(sq_id) {
     FROM question q  
     USING sq_question_option sqqo 
     WHERE q.question_id = sqqo.question_id AND
-    sqqo.sq_id = '36';`)
+    sqqo.sq_id = '${sq_id}';`)
 }
 
 function deleteAllGQR(sq_id) {
@@ -217,6 +217,22 @@ function deleteAllGQR(sq_id) {
         USING sq_question_option sqqo 
     WHERE gqr.question_id = sqqo.question_id AND
         sqqo.sq_id = '${sq_id}';`)
+}
+
+function deleteQuestionGQR(question_id) {
+    db.guest_question_response.destroy({
+        where: {
+            question_id
+        }
+    })
+}
+
+function deleteOptionGQR(option_id) {
+    db.guest_question_response.destroy({
+        where: {
+            option_id
+        }
+    })
 }
 
 function deleteAllSQQO(sq_id) {
@@ -269,7 +285,12 @@ module.exports = {
     getSQ,
     addGQRQuiz,
     addGQRSurvey,
-    deleteAllOptions
+    deleteAllOptions,
+    deleteQuestion,
+    deleteSQQOQuestion,
+    deleteAllOptionsForQuestion,
+    deleteQuestionGQR,
+    deleteOptionGQR
 };
 
 

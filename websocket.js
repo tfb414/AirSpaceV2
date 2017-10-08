@@ -117,11 +117,17 @@ function init() {
                     if (parsedData.type === "EDITSQ") {
                         console.log(parsedData);
                         if ("deleted_questions" in parsedData) {
-
+                            parsedData.deleted_questions.forEach(question_id => {
+                                query.deleteAllOptionsForQuestion(question_id);
+                                query.deleteSQQOQuestion(question_id);
+                                query.deleteQuestion(question_id);
+                            })
                         }
 
                         if ("deleted_options" in parsedData) {
-                            
+                            parsedData.deleted_options.forEach(option_id => {
+                                query
+                            })
                         }
                     }
                 });
