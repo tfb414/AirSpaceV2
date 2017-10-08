@@ -155,6 +155,21 @@ function getSQ(sq_id) {
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
+function upsertOption(option_id, option_text, option_value) {
+    db.option.upsert({
+        option_text,
+        option_value,
+        option_id
+    })   
+}
+
+function upsertQuestion(question_id, text, question_number) {
+    db.option.update({
+        text,
+        question_number,
+        question_id})   
+}
+
 function deleteOption(option_id) {
    db.option.destroy({
         where: {
@@ -292,7 +307,9 @@ module.exports = {
     deleteAllOptionsForQuestion,
     deleteQuestionGQR,
     deleteOptionGQR,
-    deleteOption
+    deleteOption,
+    upsertQuestion,
+    upsertOption
 };
 
 

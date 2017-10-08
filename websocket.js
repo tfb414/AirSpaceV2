@@ -132,6 +132,17 @@ function init() {
                                 query.deleteOption(option_id);
                             })
                         }
+
+                        if (parsedData.payload.length !== 0) {
+                            parsedData.payload.forEach(question => {
+                                if (question.options !== undefined) {
+                                    question.options.forEach(option => {
+                                        query.upsertOption(option.option_id, option.text, option.value);
+                                    })
+                                }
+                                query.upsertQuestion
+                            })
+                        }
                     }
                 });
             })
