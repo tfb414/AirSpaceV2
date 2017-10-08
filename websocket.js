@@ -108,7 +108,7 @@ function init() {
                     }
                     if (parsedData.type === "REQUESTEDITSQ") {
                         query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQ(resp, user_id, parsedData.sqtype);
+                            let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                             console.log(payload);
                             sendPayload(payload, wss);
                         })
@@ -136,6 +136,21 @@ function init() {
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
     result["type"] = "DISPLAYACTIVESQ";
+    result["host_id"] = host_id;
+    result["sq_id"] = resp[0]["sq_id"];
+    result["title"] = resp[0]["sq_name"]
+    result["sqtype"] = sqtype;
+    if (sqtype === 'survey') {
+        result["payload"] = surveyPayload(resp);
+    } else if (sqtype === 'quiz') {
+        result["payload"] = quizPayload(resp);
+    }
+    return result;   
+}
+
+function formatSQEdit(resp, host_id, sqtype) {
+    let result = {};
+    result["type"] = "DISPLAYEDITSQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
     result["title"] = resp[0]["sq_name"]

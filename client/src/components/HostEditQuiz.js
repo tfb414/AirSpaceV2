@@ -20,10 +20,11 @@ export default class HostEditQuiz extends Component {
             let parsedData = JSON.parse(event.data);
             let results = this._receiveMessage(parsedData);
             console.log(results)
-            let keys = Object.keys(results)
+            let keys = Object.keys(results.payload)
             let new_form = keys.map((key) => {
-                console.log(results[key])
-                return { question_number: results[key].question_number, question_id: results[key].question_id, text: results[key].text, options: results[key].options }                     // adding the new object to this.state.question
+                console.log(key)
+                console.log(results.payload[key])
+                return { question_number: results.payload[key].question_number, question_id: results.payload[key].question_id, text: results.payload[key].text, options: results.payload[key].options }                     // adding the new object to this.state.question
             })
             this.setState({
                 title: results.title,
@@ -180,8 +181,8 @@ export default class HostEditQuiz extends Component {
 
     }
     _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  parsedData.host_id === this.props.host_id) {
-                return parsedData.payload;
+        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'quiz' &&  parsedData.host_id === this.props.host_id) {
+                return parsedData;
         } 
     }
 }
