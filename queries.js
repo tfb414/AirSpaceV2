@@ -132,11 +132,6 @@ function getSQResultsHost(sq_id, host_id) {
     where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT});
   
 }
-// DELETE 
-// FROM question q  
-//      USING sq_question_option sqqo 
-// WHERE q.question_id = sqqo.question_id AND
-//       sqqo.sq_id = '36';
 
 // Gets list of all surveys or quizzes for a given host
 function getSQList(host_id, sqtype) {
@@ -169,7 +164,11 @@ function deleteAllOptions(sq_id) {
 }
 
 function deleteAllQuestions(sq_id) {
-
+    return db.sequelize.query(`DELETE 
+    FROM question q  
+    USING sq_question_option sqqo 
+    WHERE q.question_id = sqqo.question_id AND
+    sqqo.sq_id = '36';`)
 }
 
 function deleteAllGQR(sq_id) {
