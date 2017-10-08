@@ -180,16 +180,32 @@ function deleteAllGQR(sq_id) {
 }
 
 function deleteAllSQQO(sq_id) {
-    return db.sequelize.query(`DELETE 
-    FROM sq_question_option
-    WHERE sq_id = '${sq_id}';`)
+    db.sq_question_option.destroy({
+        where: {
+            sq_id
+        }
+    })
 }
 
 function deleteSQ(sq_id) {
-    return db.sequelize.query(`DELETE 
-    FROM sq
-    WHERE sq_id = '${sq_id}';`)
+    db.sq.destroy({
+        where: {
+            sq_id
+        }
+    })
 }
+
+// function deleteAllSQQO(sq_id) {
+//     return db.sequelize.query(`DELETE 
+//     FROM sq_question_option
+//     WHERE sq_id = '${sq_id}';`)
+// }
+
+// function deleteSQ(sq_id) {
+//     return db.sequelize.query(`DELETE 
+//     FROM sq
+//     WHERE sq_id = '${sq_id}';`)
+// }
 
 
 // // function getGuestsForHost(host_id) {
