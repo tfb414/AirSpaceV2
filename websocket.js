@@ -116,6 +116,13 @@ function init() {
 
                     if (parsedData.type === "EDITSQ") {
                         console.log(parsedData);
+                        if ("deleted_questions" in parsedData) {
+
+                        }
+
+                        if ("deleted_options" in parsedData) {
+                            
+                        }
                     }
                 });
             })

@@ -171,6 +171,14 @@ function deleteQuestion(question_id) {
     }) 
 }
 
+function deleteAllOptionsForQuestion(question_id) {
+    return db.sequelize.query(`DELETE 
+    FROM options o  
+        USING sq_question_option sqqo 
+    WHERE o.option_id = sqqo.option_id AND
+        sqqo.question_id = '${question_id}';`)
+}
+
 function deleteSQQOQuestion(question_id) {
     db.sq_question_option.destroy({
         where: {
