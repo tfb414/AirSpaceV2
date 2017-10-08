@@ -171,6 +171,22 @@ function deleteQuestion(question_id) {
     }) 
 }
 
+function deleteSQQOQuestion(question_id) {
+    db.sq_question_option.destroy({
+        where: {
+            question_id
+        }
+    })
+}
+
+function deleteSQQOQuestion(option_id) {
+    db.sq_question_option.destroy({
+        where: {
+            option_id
+        }
+    })
+}
+
 function deleteAllOptions(sq_id) {
     return db.sequelize.query(`DELETE 
     FROM options o  
