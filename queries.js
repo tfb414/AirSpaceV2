@@ -187,7 +187,7 @@ function deleteSQQOQuestion(question_id) {
     })
 }
 
-function deleteSQQOQuestion(option_id) {
+function deleteSQQOOption(option_id) {
     db.sq_question_option.destroy({
         where: {
             option_id
@@ -288,9 +288,11 @@ module.exports = {
     deleteAllOptions,
     deleteQuestion,
     deleteSQQOQuestion,
+    deleteSQQOOption,
     deleteAllOptionsForQuestion,
     deleteQuestionGQR,
-    deleteOptionGQR
+    deleteOptionGQR,
+    deleteOption
 };
 
 
