@@ -229,9 +229,7 @@ function formatResults(resp, user_id) {
         }
         result.payload[email].question.push(question_obj);
     })
-    console.log(result);
     return result;
-
 }
 
 function addQuizQuestionsAnswers(parsedData, host_id) {
