@@ -221,12 +221,15 @@ function formatResults(resp, user_id) {
         let question_obj = {};
         question_obj["text"] = person.question;
         question_obj["response"] = person.response;
-        if (person.response === null) {
+        if (person.response === null && person.option_value !== null) {
             question_obj["response"] = person.option_text;
             question_obj["value"] = person.option_value;
+        } else if (person.response === null) {
+            question_obj["response"] = "No response";
         }
         result.payload[email].question.push(question_obj);
     })
+    console.log(result);
     return result;
 
 }

@@ -127,7 +127,7 @@ function getSQResultsHost(sq_id, host_id) {
     on q.question_id = sqqo.question_id
     left outer join guest_question_response gqr
     on gqr.question_id = q.question_id and gqr.guest_id = hg.guest_id
-    inner join options o
+    full outer join options o
     on o.option_id = gqr.option_id
     where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT});
   
