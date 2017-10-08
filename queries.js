@@ -179,6 +179,12 @@ function deleteAllGQR(sq_id) {
         sqqo.sq_id = '${sq_id}';`)
 }
 
+function deleteAllSQQO(sq_id) {
+    return db.sequelize.query(`DELETE 
+    FROM sq_question_option
+    WHERE sq_id = '${sq_id}';`)
+}
+
 
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
