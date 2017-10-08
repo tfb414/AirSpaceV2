@@ -185,6 +185,12 @@ function deleteAllSQQO(sq_id) {
     WHERE sq_id = '${sq_id}';`)
 }
 
+function deleteSQ(sq_id) {
+    return db.sequelize.query(`DELETE 
+    FROM sq
+    WHERE sq_id = '${sq_id}';`)
+}
+
 
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
