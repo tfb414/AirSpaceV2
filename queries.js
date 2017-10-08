@@ -155,6 +155,22 @@ function getSQ(sq_id) {
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
+function deleteOption(option_id) {
+   db.option.destroy({
+        where: {
+            option_id
+        }
+    }) 
+}
+
+function deleteQuestion(question_id) {
+   db.question.destroy({
+        where: {
+            question_id
+        }
+    }) 
+}
+
 function deleteAllOptions(sq_id) {
     return db.sequelize.query(`DELETE 
     FROM options o  
