@@ -10,9 +10,9 @@ function upsertHost(host_id, first_name, last_name) {
         host_id,
         first_name,
         last_name
-    }).catch((err) => {
+    }).catch(Sequelize.ValidationError, function (err) {
         console.log(err);
-    })
+    });
 }
 
 function upsertGuest(guest_id, first_name, last_name) {
@@ -20,9 +20,9 @@ function upsertGuest(guest_id, first_name, last_name) {
         guest_id,
         first_name,
         last_name
-    }).catch((err) => {
+    }).catch(Sequelize.ValidationError, function (err) {
         console.log(err);
-    })
+    });
 }
 
 function addHostGuest(host_id, guest_id) {
@@ -35,8 +35,8 @@ function addHostGuest(host_id, guest_id) {
             })
         }
         return count;
-    }).catch((err) => {
-        return err;
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
     });
 }
 
@@ -44,30 +44,46 @@ function addSQ(sq_name, host_id, type) {
     return db.sq.create({
         sq_name,
         host_id,
-        type
-    })
+        type,
+        createdAt: new Date(), 
+        updatedAt: new Date()
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function addQuestion(question_text, question_number) {
     return db.question.create({
         question: question_text,
-        question_number
-    })
+        question_number,
+        createdAt: new Date(), 
+        updatedAt: new Date()
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function addOption(option_text, option_value) {
     return db.option.create({
         option_text,
-        option_value
-    })
+        option_value,
+        createdAt: new Date(), 
+        updatedAt: new Date()
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function addSQQuestionOption(sq_id, question_id, option_id) {
     db.sq_question_option.create({
         option_id,
         question_id,
-        sq_id
-    })
+        sq_id,
+        createdAt: new Date(), 
+        updatedAt: new Date()
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function addGQRSurvey(guest_id, question_id, response) {
@@ -80,16 +96,21 @@ function addGQRSurvey(guest_id, question_id, response) {
             db.guest_question_response.create({
                 guest_id,
                 question_id,
-                response, 
+                response,
+                createdAt: new Date(), 
+                updatedAt: new Date() 
             })
         } else {
             db.guest_question_response.update({
                 response,
-                gqr_id: resp[0].gqr_id},
+                gqr_id: resp[0].gqr_id,
+                updatedAt: new Date()},
                 {where: {guest_id, question_id}}
             )
         }
-    })
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function addGQRQuiz(guest_id, question_id, option_id) {
@@ -102,16 +123,21 @@ function addGQRQuiz(guest_id, question_id, option_id) {
             db.guest_question_response.create({
                 guest_id,
                 question_id,
-                option_id, 
+                option_id,
+                createdAt: new Date(), 
+                updatedAt: new Date() 
             })
         } else {
             db.guest_question_response.update({
                 option_id,
-                gqr_id: resp[0].gqr_id},
+                gqr_id: resp[0].gqr_id,
+                updatedAt: new Date()},
                 {where: {guest_id, question_id}}
             )
         }
-    })
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function getSQResultsHost(sq_id, host_id) {
@@ -129,7 +155,9 @@ function getSQResultsHost(sq_id, host_id) {
     on gqr.question_id = q.question_id and gqr.guest_id = hg.guest_id
     full outer join options o
     on o.option_id = gqr.option_id
-    where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT});
+    where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT}).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
   
 }
 
@@ -139,7 +167,9 @@ function getSQList(host_id, sqtype) {
         attributes: ['sq_id', 'sq_name'],
         where: {host_id, type: sqtype},
         raw: true,
-    })
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 // Gets survey name, id, questions, question id, options, option id, and option value from database for given sq_id
@@ -152,25 +182,33 @@ function getSQ(sq_id) {
     on q.question_id = sqqo.question_id
     full outer join options o
     on o.option_id = sqqo.option_id
-    where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
+    where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT}).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function updateOption(option_id, option_text, option_value) {
     return db.option.update({
     option_text,
     option_value,
-    option_id}, {
+    option_id,
+    updatedAt: new Date()}, {
     where: {},
-    returning: true})
+    returning: true}).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function updateQuestion(question_id, question, question_number) {
     return db.question.update({
     question,
     question_number,
-    question_id},
+    question_id,
+    updatedAt: new Date()},
     {where: {},
-    returning: true})
+    returning: true}).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function deleteOption(option_id) {
@@ -178,7 +216,9 @@ function deleteOption(option_id) {
         where: {
             option_id
         }
-    }) 
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    }); 
 }
 
 function deleteQuestion(question_id) {
@@ -186,7 +226,9 @@ function deleteQuestion(question_id) {
         where: {
             question_id
         }
-    }) 
+    }).catch(Sequelize.ValidationError, function (err) {
+        console.log(err);
+    });
 }
 
 function deleteAllOptionsForQuestion(question_id) {

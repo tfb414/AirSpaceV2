@@ -299,8 +299,7 @@ function editSQ(parsedData) {
                 }
             } else {
                 query.addQuestion(question.text, question.question_number).then(resp => {
-                    console.log(resp);
-                    question_id =           resp.dataValues.question_id
+                    question_id = resp.dataValues.question_id;
                     if (question['options'] !== undefined) {
                         addOptions(question, parsedData.sq_id, question_id);
                     } else {
