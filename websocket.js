@@ -131,8 +131,6 @@ function init() {
     })
 }
 
-// {"type":"EDITSQ","sqtype":"quiz","title":"Hands?","payload":[{"question_number":1,"question_id":80,"text":"Do you have hands?","options":[{"option_id":8,"text":"False","value":false},{"option_id":7,"text":"True","value":true}]},{"question_number":2,"question_id":81,"text":"Are they hot?","options":[{"option_id":9,"text":"Yes","value":false},{"option_id":10,"text":"No","value":true}]},{"question_number":3,"question_id":82,"text":"Are they clammy?","options":[{"option_id":12,"text":"Yes","value":false},{"option_id":11,"text":"No","value":true}]}]}
-
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
     result["type"] = "DISPLAYACTIVESQ";

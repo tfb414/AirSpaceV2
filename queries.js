@@ -1,8 +1,5 @@
 const db = require('./sequelize.js');
-
-// function getAllHosts() {
-//     return db.host.findAll();
-// }
+const Sequelize = require('sequelize');
 
 
 function upsertHost(host_id, first_name, last_name) {
@@ -35,8 +32,8 @@ function addHostGuest(host_id, guest_id) {
             })
         }
         return count;
-    }).catch(Sequelize.ValidationError, function (err) {
-        console.log(err);
+    }).catch((err) => {
+        return err;
     });
 }
 
@@ -191,9 +188,8 @@ function updateOption(option_id, option_text, option_value) {
     return db.option.update({
     option_text,
     option_value,
-    option_id,
     updatedAt: new Date()}, {
-    where: {},
+    where: {option_id},
     returning: true}).catch(Sequelize.ValidationError, function (err) {
         console.log(err);
     });
@@ -203,9 +199,8 @@ function updateQuestion(question_id, question, question_number) {
     return db.question.update({
     question,
     question_number,
-    question_id,
     updatedAt: new Date()},
-    {where: {},
+    {where: {question_id},
     returning: true}).catch(Sequelize.ValidationError, function (err) {
         console.log(err);
     });
