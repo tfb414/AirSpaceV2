@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router'
-import HostRenderResults from './HostRenderResults'
 
 class HostRenderSurvey extends Component {
     constructor(props) {
@@ -11,7 +9,7 @@ class HostRenderSurvey extends Component {
     }
 
     componentWillMount() {
-        let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
+        let payload = { type: "REQUESTGUESTS" };
         this.props.sendMessage(JSON.stringify(payload));
    
         this.props.connection.onmessage = event => {
