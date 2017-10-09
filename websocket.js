@@ -37,10 +37,12 @@ function init() {
                     console.log("WE GOT A MESSAGE");
                     // console.log(data);
                     let parsedData = JSON.parse(data);
+                    console.log(parsedData);
                     switch(parsedData.type) {
                         case 'CREATESURVEYQUIZ':
                             addQuizQuestionsAnswers(parsedData, user_id);
-                
+                            break;
+
                         case 'ADDGUESTTOHOST':
                             addGuestToHost(parsedData, user_id).then((resp) => {
 
@@ -59,6 +61,8 @@ function init() {
                                     })
                                 }
                             });
+                            break;
+
                         case 'GETUSERID':
                             wss.clients.forEach(function each(client) {
                                 let payload = {
@@ -68,6 +72,7 @@ function init() {
                                 }
                                 client.send(JSON.stringify(payload));
                             })
+                            break;
 
                         case 'REQUESTRESULTS':
                             query.getSQResultsHost(parsedData.sq_id, user_id)
@@ -75,38 +80,46 @@ function init() {
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
                                 })
+                            break;
 
                         case 'REQUESTSQLIST':
                             query.getSQList(user_id, parsedData.sqtype).then(resp => {
                                 let payload = formatSQList(resp, user_id);
                                 sendPayload(payload, wss);
                             })
+                            break;
 
                         case 'ACTIVATESQ':
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 let payload = formatSQ(resp, user_id, parsedData.sqtype); 
                                 sendPayload(payload, wss);
                             })
+                            break;
+
                         case 'RESULTQUIZ':
                             parsedData.payload.forEach(result => {
                                 query.addGQRQuiz(user_id, result.question_id, result.option_id);
                             })
+                            break;
 
                         case 'RESULTSURVEY':
                             parsedData.payload.forEach(result => {
                                 query.addGQRSurvey(user_id, result.question_id, result.response);
                             })
+                            break;
         
                         case parsedData.type === "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                                 sendPayload(payload, wss);
                             })
+                            break;
 
                         case "REQUESTGUESTS":
                             query.getGuestsForHost(user_id).then(resp => {
                                 let payload = formatGuests(resp, user_id);
                             })
+                            break;
 
                         case "DELETESQ":
                             query.deleteAllGQR(parsedData.sq_id);
@@ -114,10 +127,13 @@ function init() {
                             query.deleteAllQuestions(parsedData.sq_id);
                             query.deleteSQ(parsedData.sq_id);
                             query.deleteAllSQQO(parsedData.sq_id);
+                            break;
 
                         case "EDITSQ":
-                            editSQ(parsedData);
-                        
+                            let payload = editSQ(parsedData);
+                            sendPayload(payload, wss);
+                            break;
+
                         default:
                             break;
                     }
@@ -127,11 +143,22 @@ function init() {
     })
 }
 
+// [ { first_name: 'Sarah',
+//     last_name: 'A',
+//     guest_id: 'sabbey37@gmail.com' },
+//   { first_name: 'Aaron',
+//     last_name: 'Sosa',
+//     guest_id: 'aarontsosa@gmail.com' },
+//   { first_name: 'Tim',
+//     last_name: 'Brady',
+//     guest_id: 'tfb414@gmail.com' } ]
+
 function formatGuests(resp, host_id) {
     console.log(resp);
     let result = {};
     result["type"] = "DISPLAYGUESTS";
     result["host_id"] = host_id;
+    result["payload"] = resp;
 }
 
 function formatSQ(resp, host_id, sqtype) {
