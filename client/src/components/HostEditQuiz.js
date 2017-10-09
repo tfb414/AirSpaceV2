@@ -27,6 +27,7 @@ export default class HostEditQuiz extends Component {
                 return { question_number: results.payload[key].question_number, question_id: results.payload[key].question_id, text: results.payload[key].text, options: results.payload[key].options }                     // adding the new object to this.state.question
             })
             this.setState({
+                sq_id: results.sq_id,
                 title: results.title,
                 waitingOnData: false,
                 question: new_form
@@ -173,6 +174,7 @@ export default class HostEditQuiz extends Component {
         let payload = {
             type: 'EDITSQ',
             sqtype: 'quiz',
+            sq_id: this.state.sq_id,
             title: this.state.title,
             payload: question_object
         }

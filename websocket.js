@@ -113,25 +113,44 @@ function init() {
                             sendPayload(payload, wss);
                         })
                     }
+
+                    if (parsedData.type === "EDITSQ") {
+                        console.log(parsedData);
+                        if ("deleted_questions" in parsedData) {
+                            parsedData.deleted_questions.forEach(question_id => {
+                                query.deleteQuestionGQR(question_id);
+                                query.deleteAllOptionsForQuestion(question_id);
+                                query.deleteSQQOQuestion(question_id);
+                                query.deleteQuestion(question_id);
+                            })
+                        }
+
+                        if ("deleted_options" in parsedData) {
+                            parsedData.deleted_options.forEach(option_id => {
+                                query.deleteOptionGQR(option_id);
+                                query.deleteSQQOOption(option_id);
+                                query.deleteOption(option_id);
+                            })
+                        }
+
+                        if (parsedData.payload.length !== 0) {
+                            parsedData.payload.forEach(question => {
+                                query.upsertQuestion(question.question_id, question.text, question.question_number);
+                                if (question.options !== undefined) {
+                                    question.options.forEach(option => {
+                                        query.upsertOption(option.option_id, option.text, option.value);
+                                    })
+                                }
+                            })
+                        }
+                    }
                 });
             })
         })
     })
 }
 
-// {type: "RESULTSURVEY", sq_id: 19, payload: Array(3)}
-// payload
-// :
-// Array(3)
-// 0
-// :
-// {question_id: 53, response: "Yes"}
-// 1
-// :
-// {question_id: 54, response: "Maybz"}
-// 2
-// :
-// {question_id: 55, response: "IDK"}
+// {"type":"EDITSQ","sqtype":"quiz","title":"Hands?","payload":[{"question_number":1,"question_id":80,"text":"Do you have hands?","options":[{"option_id":8,"text":"False","value":false},{"option_id":7,"text":"True","value":true}]},{"question_number":2,"question_id":81,"text":"Are they hot?","options":[{"option_id":9,"text":"Yes","value":false},{"option_id":10,"text":"No","value":true}]},{"question_number":3,"question_id":82,"text":"Are they clammy?","options":[{"option_id":12,"text":"Yes","value":false},{"option_id":11,"text":"No","value":true}]}]}
 
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
@@ -221,14 +240,15 @@ function formatResults(resp, user_id) {
         let question_obj = {};
         question_obj["text"] = person.question;
         question_obj["response"] = person.response;
-        if (person.response === null) {
+        if (person.response === null && person.option_value !== null) {
             question_obj["response"] = person.option_text;
             question_obj["value"] = person.option_value;
+        } else if (person.response === null) {
+            question_obj["response"] = "No response";
         }
         result.payload[email].question.push(question_obj);
     })
     return result;
-
 }
 
 function addQuizQuestionsAnswers(parsedData, host_id) {

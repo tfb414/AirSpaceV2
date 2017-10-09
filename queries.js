@@ -127,7 +127,7 @@ function getSQResultsHost(sq_id, host_id) {
     on q.question_id = sqqo.question_id
     left outer join guest_question_response gqr
     on gqr.question_id = q.question_id and gqr.guest_id = hg.guest_id
-    inner join options o
+    full outer join options o
     on o.option_id = gqr.option_id
     where sqqo.sq_id='${sq_id}' and hg.host_id='${host_id}';`, { type: db.sequelize.QueryTypes.SELECT});
   
@@ -155,33 +155,136 @@ function getSQ(sq_id) {
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
+function upsertOption(option_id, option_text, option_value) {
+    db.option.upsert({
+        option_text,
+        option_value,
+        option_id
+    })
+}
+
+function upsertQuestion(question_id, question, question_number) {
+    db.question.upsert({
+        question,
+        question_number,
+        question_id})
+}
+
+function deleteOption(option_id) {
+   db.option.destroy({
+        where: {
+            option_id
+        }
+    }) 
+}
+
+function deleteQuestion(question_id) {
+   db.question.destroy({
+        where: {
+            question_id
+        }
+    }) 
+}
+
+function deleteAllOptionsForQuestion(question_id) {
+    return db.sequelize.query(`DELETE 
+    FROM options o  
+        USING sq_question_option sqqo 
+    WHERE o.option_id = sqqo.option_id AND
+        sqqo.question_id = '${question_id}';`)
+}
+
+function deleteSQQOQuestion(question_id) {
+    db.sq_question_option.destroy({
+        where: {
+            question_id
+        }
+    })
+}
+
+function deleteSQQOOption(option_id) {
+    db.sq_question_option.destroy({
+        where: {
+            option_id
+        }
+    })
+}
+
+function deleteAllOptions(sq_id) {
+    return db.sequelize.query(`DELETE 
+    FROM options o  
+        USING sq_question_option sqqo 
+    WHERE o.option_id = sqqo.option_id AND
+        sqqo.sq_id = '${sq_id}';`)
+}
+
+function deleteAllQuestions(sq_id) {
+    return db.sequelize.query(`DELETE 
+    FROM question q  
+    USING sq_question_option sqqo 
+    WHERE q.question_id = sqqo.question_id AND
+    sqqo.sq_id = '${sq_id}';`)
+}
+
+function deleteAllGQR(sq_id) {
+    return db.sequelize.query(`DELETE 
+    FROM guest_question_response gqr  
+        USING sq_question_option sqqo 
+    WHERE gqr.question_id = sqqo.question_id AND
+        sqqo.sq_id = '${sq_id}';`)
+}
+
+function deleteQuestionGQR(question_id) {
+    db.guest_question_response.destroy({
+        where: {
+            question_id
+        }
+    })
+}
+
+function deleteOptionGQR(option_id) {
+    db.guest_question_response.destroy({
+        where: {
+            option_id
+        }
+    })
+}
+
+function deleteAllSQQO(sq_id) {
+    db.sq_question_option.destroy({
+        where: {
+            sq_id
+        }
+    })
+}
+
+function deleteSQ(sq_id) {
+    db.sq.destroy({
+        where: {
+            sq_id
+        }
+    })
+}
+
+// function deleteAllSQQO(sq_id) {
+//     return db.sequelize.query(`DELETE 
+//     FROM sq_question_option
+//     WHERE sq_id = '${sq_id}';`)
+// }
+
+// function deleteSQ(sq_id) {
+//     return db.sequelize.query(`DELETE 
+//     FROM sq
+//     WHERE sq_id = '${sq_id}';`)
+// }
+
+
 // // function getGuestsForHost(host_id) {
 // //     host_guest.findAll({
 // //         include: [{
 // //             model: 
 // //         }]
 // //     })
-// // }
-
-// // function guestQuestionResponse(guest_id, question_id, response){
-// //     return db.one(`
-// //         insert into guest_question_response(guest_id, question_id, response)
-// //             values ('${guest_id}', '${question_id}', '${response}')
-// //             returning guest_id, question_id, response
-
-// //     `).then((results)=>{
-// //         //put what we want to return here
-// //     }).catch(console.log)
-// // } 
-
-// // function submitGuestResponse(guest_id, question_id, response){
-// //     return db.one(`
-// //         insert into guest_question_response(guest_id, question_id, response)
-// //             values ('${guest_id}', '${question_id}', '${response}')
-// //             returning guest_id, question_id, response
-// //     `).then((results)=>{
-// //         //put what you want to return here
-// //     }).catch(console.log);
 // // }
 
 module.exports = {
@@ -196,7 +299,17 @@ module.exports = {
     getSQList,
     getSQ,
     addGQRQuiz,
-    addGQRSurvey
+    addGQRSurvey,
+    deleteAllOptions,
+    deleteQuestion,
+    deleteSQQOQuestion,
+    deleteSQQOOption,
+    deleteAllOptionsForQuestion,
+    deleteQuestionGQR,
+    deleteOptionGQR,
+    deleteOption,
+    upsertQuestion,
+    upsertOption
 };
 
 
