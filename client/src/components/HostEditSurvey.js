@@ -7,7 +7,8 @@ export default class HostEditSurvey extends Component {
         this.state = {
             waitingOnData: true,
             title: "",
-            question: []
+            question: [],
+            deleted_questions: []
         }
     }
 
@@ -89,7 +90,9 @@ export default class HostEditSurvey extends Component {
     _RemoveQuestion = (event) => {                              // Removes a Question Form
         let index = event.target.getAttribute('target') - 1
         let object = this.state.question
+        let new_deleted_questions = this.state.deleted_questions
         let new_object = object.splice(index, 1);
+        new_deleted_questions.push(new_object.question_id)
         var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number
             if (key > index + 1) {
@@ -100,7 +103,8 @@ export default class HostEditSurvey extends Component {
             return data
         })
         this.setState({
-            question: formated_object
+            question: formated_object,
+            deleted_questions: new_deleted_questions
         })
     }
 
@@ -117,7 +121,8 @@ export default class HostEditSurvey extends Component {
             type: 'EDITSQ',
             sqtype: 'survey',
             title: this.state.title,
-            payload: question_object
+            payload: question_object,
+            deleted_questions: this.state.deleted_questions
         }
         return JSON.stringify(payload);
 
