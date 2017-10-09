@@ -355,7 +355,8 @@ module.exports = {
     deleteOption,
     deleteAllGQR,
     updateQuestion,
-    updateOption
+    updateOption,
+    getGuestsForHost
 };
 
 

@@ -104,7 +104,9 @@ function init() {
                             })
 
                         case "REQUESTGUESTS":
-                            
+                            query.getGuestsForHost(user_id).then(resp => {
+                                let payload = formatGuests(resp, user_id);
+                            })
 
                         case "DELETESQ":
                             query.deleteAllGQR(parsedData.sq_id);
@@ -123,6 +125,13 @@ function init() {
             })
         })
     })
+}
+
+function formatGuests(resp, host_id) {
+    console.log(resp);
+    let result = {};
+    result["type"] = "DISPLAYGUESTS";
+    result["host_id"] = host_id;
 }
 
 function formatSQ(resp, host_id, sqtype) {
