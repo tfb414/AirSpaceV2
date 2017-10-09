@@ -114,6 +114,10 @@ function init() {
                         })
                     }
 
+                    if (parsedData.type === "DELETESQ") {
+                        
+                    }
+
                     if (parsedData.type === "EDITSQ") {
                         console.log(parsedData);
                         if ("deleted_options" in parsedData) {
@@ -139,17 +143,12 @@ function init() {
                                 } else {
                                     query.addQuestion(question, question_number).then(resp => {
                                         let question_id =           resp.dataValues.question_id
-                                    if (question['options'] !== undefined) {
-                                        addOptions(question, sq_id, question_id);
-                                    } else {
-                                        query.addSQQuestionOption(sq_id, question_id, null);
-                                    }
-                                    })
+                                if (question['options'] !== undefined) {
+                                    addOptions(question, sq_id, question_id);
+                                } else {
+                                    query.addSQQuestionOption(sq_id, question_id, null);
                                 }
-                                if (question.options !== undefined) {
-                                    question.options.forEach(option => {
-                                        query.upsertOption(option.option_id, option.text, option.value);
-                                    })
+                                })
                                 }
                             })
                         }
