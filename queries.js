@@ -302,6 +302,9 @@ module.exports = {
     addGQRQuiz,
     addGQRSurvey,
     deleteAllOptions,
+    deleteAllQuestions,
+    deleteSQ,
+    deleteAllSQQO,
     deleteQuestion,
     deleteSQQOQuestion,
     deleteSQQOOption,
@@ -309,6 +312,7 @@ module.exports = {
     deleteQuestionGQR,
     deleteOptionGQR,
     deleteOption,
+    deleteAllGQR,
     updateQuestion,
     updateOption
 };

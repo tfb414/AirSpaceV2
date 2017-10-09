@@ -115,21 +115,24 @@ function init() {
                     }
 
                     if (parsedData.type === "DELETESQ") {
-                        
+                        query.deleteAllGQR(parsedData.sq_id);
+                        query.deleteAllOptions(parsedData.sq_id);
+                        query.deleteAllQuestions(parsedData.sq_id);
+                        query.deleteSQ(parsedData.sq_id);
+                        query.deleteAllSQQO(parsedData.sq_id);
                     }
 
                     if (parsedData.type === "EDITSQ") {
                         console.log(parsedData);
+                        query.deleteAllGQR(parsedData.sq_id);
                         if ("deleted_options" in parsedData) {
                             parsedData.deleted_options.forEach(option_id => {
-                                query.deleteOptionGQR(option_id);
                                 query.deleteSQQOOption(option_id);
                                 query.deleteOption(option_id);
                             })
                         }
                         if ("deleted_questions" in parsedData) {
                             parsedData.deleted_questions.forEach(question_id => {
-                                query.deleteQuestionGQR(question_id);
                                 query.deleteAllOptionsForQuestion(question_id);
                                 query.deleteSQQOQuestion(question_id);
                                 query.deleteQuestion(question_id);
