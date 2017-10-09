@@ -31,7 +31,7 @@ AirSpace is an audience response platform that allows audience members to provid
 * [2. Initial Planning](#2-initial-planning)
 * [3. Database Architecture](#3-database-architecture)
 * [4 Backend Structure](#4-backend-structure)
-* [5. Frontend: React and CSS](#5-frontend:-react-and-css)
+* [5. Frontend: React and CSS](#5-frontend-react-and-css)
 
 ### 1. Concept
 
@@ -57,6 +57,18 @@ In this second iteration of AirSpace, we're specifically developing for use by t
           - Add linking table
 
 ### 3. Database Architecture
+
+Our database contained five primary tables:
+* host
+* guest
+* question
+* options
+* sq (survey/quiz)
+
+And three linking tables:
+* host\_guest
+* guest\_question\_response
+* sq\_question\_option
 
 ### 4. Backend Structure
 
