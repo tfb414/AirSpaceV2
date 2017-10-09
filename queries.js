@@ -160,9 +160,7 @@ function upsertOption(option_id, option_text, option_value) {
         option_text,
         option_value,
         option_id
-    }).then(resp => {
-        console.log(resp);
-    })   
+    })
 }
 
 function upsertQuestion(question_id, question, question_number) {
