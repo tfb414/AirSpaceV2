@@ -7,7 +7,7 @@ function upsertHost(host_id, first_name, last_name) {
         host_id,
         first_name,
         last_name
-    }).catch(Sequelize.ValidationError, function (err) {
+    }).catch(err => {
         console.log(err);
     });
 }
