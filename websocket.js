@@ -123,38 +123,7 @@ function init() {
                     }
 
                     if (parsedData.type === "EDITSQ") {
-                        console.log(parsedData);
-                        query.deleteAllGQR(parsedData.sq_id);
-                        if ("deleted_options" in parsedData) {
-                            parsedData.deleted_options.forEach(option_id => {
-                                query.deleteSQQOOption(option_id);
-                                query.deleteOption(option_id);
-                            })
-                        }
-                        if ("deleted_questions" in parsedData) {
-                            parsedData.deleted_questions.forEach(question_id => {
-                                query.deleteAllOptionsForQuestion(question_id);
-                                query.deleteSQQOQuestion(question_id);
-                                query.deleteQuestion(question_id);
-                            })
-                        }
-
-                        if (parsedData.payload.length !== 0) {
-                            parsedData.payload.forEach(question => {
-                                if (question_id !== null) {
-                                    query.updateQuestion(question_id, question, question_number);
-                                } else {
-                                    query.addQuestion(question, question_number).then(resp => {
-                                        let question_id =           resp.dataValues.question_id
-                                if (question['options'] !== undefined) {
-                                    addOptions(question, sq_id, question_id);
-                                } else {
-                                    query.addSQQuestionOption(sq_id, question_id, null);
-                                }
-                                })
-                                }
-                            })
-                        }
+                        editSQ(parsedData);
                     }
                 });
             })
@@ -300,6 +269,47 @@ function addGuestToHost(parsedData, guest_id) {
         return resp;
     }
     );
+}
+
+function editSQ(parsedData) {
+    query.deleteAllGQR(parsedData.sq_id);
+    if ("deleted_options" in parsedData) {
+        parsedData.deleted_options.forEach(option_id => {
+            query.deleteSQQOOption(option_id);
+            query.deleteOption(option_id);
+        })
+    }
+    if ("deleted_questions" in parsedData) {
+        parsedData.deleted_questions.forEach(question_id => {
+            query.deleteAllOptionsForQuestion(question_id);
+            query.deleteSQQOQuestion(question_id);
+            query.deleteQuestion(question_id);
+        })
+    }
+
+    if (parsedData.payload.length !== 0) {
+        parsedData.payload.forEach(question => {
+            let question_id = question.question_id;
+            if (question_id !== null) {
+                query.updateQuestion(question_id, question.text, question.question_number);
+                if (question['options'] !== undefined) {
+                    addOptions(question, parsedData.sq_id, question_id);
+                } else {
+                    query.addSQQuestionOption(parsedData.sq_id, question_id, null);
+                }
+            } else {
+                query.addQuestion(question.text, question.question_number).then(resp => {
+                    console.log(resp);
+                    question_id =           resp.dataValues.question_id
+                    if (question['options'] !== undefined) {
+                        addOptions(question, parsedData.sq_id, question_id);
+                    } else {
+                        query.addSQQuestionOption(parsedData.sq_id, question_id, null);
+                    }
+                })
+            }
+        })
+    }
 }
 
 function sendPayload(payload, wss) {

@@ -159,8 +159,9 @@ function updateOption(option_id, option_text, option_value) {
     return db.option.update({
     option_text,
     option_value,
-    option_id},
-    {returning: true})
+    option_id}, {
+    where: {},
+    returning: true})
 }
 
 function updateQuestion(question_id, question, question_number) {
@@ -168,7 +169,8 @@ function updateQuestion(question_id, question, question_number) {
     question,
     question_number,
     question_id},
-    {returning: true})
+    {where: {},
+    returning: true})
 }
 
 function deleteOption(option_id) {
