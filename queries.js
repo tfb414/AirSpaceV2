@@ -37,6 +37,17 @@ function addHostGuest(host_id, guest_id) {
     });
 }
 
+function getGuestsForHost(host_id) {
+    return db.sequelize.query(`Select g.first_name, g.last_name, g.guest_id
+    from guest g
+    inner join host_guest hg
+    on hg.guest_id = g.guest_id
+    where hg.host_id = '${host_id}';`, 
+    { type: db.sequelize.QueryTypes.SELECT}).catch(err => {
+        console.log(err);
+    });
+}
+
 function addSQ(sq_name, host_id, type) {
     return db.sq.create({
         sq_name,
@@ -317,15 +328,6 @@ function deleteSQ(sq_id) {
 //     FROM sq
 //     WHERE sq_id = '${sq_id}';`)
 // }
-
-
-// // function getGuestsForHost(host_id) {
-// //     host_guest.findAll({
-// //         include: [{
-// //             model: 
-// //         }]
-// //     })
-// // }
 
 module.exports = {
     upsertHost,

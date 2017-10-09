@@ -104,7 +104,7 @@ function init() {
                             })
 
                         case "REQUESTGUESTS":
-                            return;
+                            
 
                         case "DELETESQ":
                             query.deleteAllGQR(parsedData.sq_id);
