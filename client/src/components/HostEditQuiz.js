@@ -7,12 +7,13 @@ export default class HostEditQuiz extends Component {
         this.state = {
             waitingOnData: true,
             title: "",
-            question: []
+            question: [],
+            deleted_questions: [],
+            deleted_options: []
         }
     }
 
     componentWillMount() {
-        console.log(this.props.match.match.params.id)
         let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
         this.props.sendMessage(JSON.stringify(payload));
    
@@ -22,8 +23,6 @@ export default class HostEditQuiz extends Component {
             console.log(results)
             let keys = Object.keys(results.payload)
             let new_form = keys.map((key) => {
-                console.log(key)
-                console.log(results.payload[key])
                 return { question_number: results.payload[key].question_number, question_id: results.payload[key].question_id, text: results.payload[key].text, options: results.payload[key].options }                     // adding the new object to this.state.question
             })
             this.setState({
@@ -130,20 +129,25 @@ export default class HostEditQuiz extends Component {
 
     _RemoveOption = (event) => {
         let new_form = this.state.question
+        let new_deleted_options = this.state.deleted_options
         let index = Number(event.target.getAttribute('target') - 1)
         if (new_form[index].options.length === 2) {
             return
         }
-        new_form[index].options.pop()
+        let old_object = new_form[index].options.pop()
+        new_deleted_options.push(old_object.option_id)
         this.setState({
-            question: new_form
+            question: new_form,
+            deleted_options: new_deleted_options
         })
     }
 
     _RemoveQuestion = (event) => {                              // Removes a Question Form
         let index = event.target.getAttribute('target') - 1
         let object = this.state.question
+        let new_deleted_questions = this.state.deleted_questions
         let new_object = object.splice(index, 1);
+        new_deleted_questions.push(new_object.question_id)
         var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number
             if (key > index + 1) {
@@ -153,15 +157,13 @@ export default class HostEditQuiz extends Component {
             }
             return data
         })
-        console.log(formated_object)
         this.setState({
-            question: formated_object
+            question: formated_object,
+            deleted_questions: new_deleted_questions
         })
     }
 
     _submitSurvey = () => {
-        console.log(this._createPayload());
-        console.log(this.props);
         this.props.sendMessage(this._createPayload());
 
     }
@@ -174,7 +176,9 @@ export default class HostEditQuiz extends Component {
             type: 'EDITSQ',
             sqtype: 'quiz',
             title: this.state.title,
-            payload: question_object
+            payload: question_object,
+            deleted_questions: this.state.deleted_questions,
+            deleted_options: this.state.deleted_options
         }
         return JSON.stringify(payload);
 
