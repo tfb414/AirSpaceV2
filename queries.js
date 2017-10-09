@@ -160,14 +160,16 @@ function upsertOption(option_id, option_text, option_value) {
         option_text,
         option_value,
         option_id
+    }).then(resp => {
+        console.log(resp);
     })   
 }
 
-function upsertQuestion(question_id, text, question_number) {
-    db.option.update({
-        text,
+function upsertQuestion(question_id, question, question_number) {
+    db.question.upsert({
+        question,
         question_number,
-        question_id})   
+        question_id})
 }
 
 function deleteOption(option_id) {

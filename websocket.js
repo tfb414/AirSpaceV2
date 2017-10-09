@@ -135,12 +135,12 @@ function init() {
 
                         if (parsedData.payload.length !== 0) {
                             parsedData.payload.forEach(question => {
+                                query.upsertQuestion(question.question_id, question.text, question.question_number);
                                 if (question.options !== undefined) {
                                     question.options.forEach(option => {
                                         query.upsertOption(option.option_id, option.text, option.value);
                                     })
                                 }
-                                query.upsertQuestion
                             })
                         }
                     }
