@@ -155,19 +155,34 @@ function getSQ(sq_id) {
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
-function upsertOption(option_id, option_text, option_value) {
-    db.option.upsert({
+function updateOption(option_id, option_text, option_value) {
+    if (option_id === null) {
+        return db.option.create({
+        option_text,
+        option_value},
+        {returning: true})
+    } else {
+        return db.option.update({
         option_text,
         option_value,
-        option_id
-    })
+        option_id},
+        {returning: true})
+    }
 }
 
-function upsertQuestion(question_id, question, question_number) {
-    db.question.upsert({
+function updateQuestion(question_id, question, question_number) {
+    if (question_id === null) {
+        return db.question.create({
+        question,
+        question_number},
+        {returning: true})
+    } else {
+        return db.question.update({
         question,
         question_number,
-        question_id})
+        question_id},
+        {returning: true})
+    }
 }
 
 function deleteOption(option_id) {
@@ -308,8 +323,8 @@ module.exports = {
     deleteQuestionGQR,
     deleteOptionGQR,
     deleteOption,
-    upsertQuestion,
-    upsertOption
+    updateQuestion,
+    updateOption
 };
 
 
