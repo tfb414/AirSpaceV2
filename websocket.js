@@ -134,7 +134,18 @@ function init() {
 
                         if (parsedData.payload.length !== 0) {
                             parsedData.payload.forEach(question => {
-                                query.upsertQuestion(question.question_id, question.text, question.question_number);
+                                if (question_id !== null) {
+                                    query.updateQuestion(question_id, question, question_number);
+                                } else {
+                                    query.addQuestion(question, question_number).then(resp => {
+                                        let question_id =           resp.dataValues.question_id
+                                    if (question['options'] !== undefined) {
+                                        addOptions(question, sq_id, question_id);
+                                    } else {
+                                        query.addSQQuestionOption(sq_id, question_id, null);
+                                    }
+                                    })
+                                }
                                 if (question.options !== undefined) {
                                     question.options.forEach(option => {
                                         query.upsertOption(option.option_id, option.text, option.value);
@@ -272,9 +283,13 @@ function addQuestionsAndAnswers(questions, sq_id) {
 
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
-        query.addOption(option.text, option.value).then(resp => {
-            query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
-        })
+        if (option.option_id !== null) {
+            query.updateOption(option.option_id, option.text, option.value);
+        } else {
+            query.addOption(option.text, option.value).then(resp => {
+                query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
+            })
+        }
     })
 }
 

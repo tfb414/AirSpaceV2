@@ -156,33 +156,19 @@ function getSQ(sq_id) {
 }
 
 function updateOption(option_id, option_text, option_value) {
-    if (option_id === null) {
-        return db.option.create({
-        option_text,
-        option_value},
-        {returning: true})
-    } else {
-        return db.option.update({
-        option_text,
-        option_value,
-        option_id},
-        {returning: true})
-    }
+    return db.option.update({
+    option_text,
+    option_value,
+    option_id},
+    {returning: true})
 }
 
 function updateQuestion(question_id, question, question_number) {
-    if (question_id === null) {
-        return db.question.create({
-        question,
-        question_number},
-        {returning: true})
-    } else {
-        return db.question.update({
-        question,
-        question_number,
-        question_id},
-        {returning: true})
-    }
+    return db.question.update({
+    question,
+    question_number,
+    question_id},
+    {returning: true})
 }
 
 function deleteOption(option_id) {
