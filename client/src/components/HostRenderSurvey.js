@@ -37,7 +37,7 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button>
+                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._editSQ}>Delete</button>
                 </div>    
             )
         })
@@ -62,6 +62,20 @@ class HostRenderSurvey extends Component {
             this.props.history.push(`/Host/Your Surveys/Edit/${event.target.value}`)
         } else if (this.props.sqtype === 'quiz') {
             this.props.history.push(`/Host/Your Quizzes/Edit/${event.target.value}`)
+        }
+    }
+
+    _deleteSQ = (event) => {
+        let payload = {
+            type: "DELETESQ",
+            sq_id: event.target.value
+        }
+        payload = JSON.stringify(payload);
+        this.props.sendMessage(payload);
+        if (this.props.sqtype === 'survey') {
+            this.props.history.push(`/Host/Your Surveys`)
+        } else if (this.props.sqtype === 'quiz') {
+            this.props.history.push(`/Host/Your Quizzes`)
         }
     }
 
