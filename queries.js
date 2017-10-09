@@ -155,19 +155,20 @@ function getSQ(sq_id) {
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT})
 }
 
-function upsertOption(option_id, option_text, option_value) {
-    db.option.upsert({
-        option_text,
-        option_value,
-        option_id
-    })
+function updateOption(option_id, option_text, option_value) {
+    return db.option.update({
+    option_text,
+    option_value,
+    option_id},
+    {returning: true})
 }
 
-function upsertQuestion(question_id, question, question_number) {
-    db.question.upsert({
-        question,
-        question_number,
-        question_id})
+function updateQuestion(question_id, question, question_number) {
+    return db.question.update({
+    question,
+    question_number,
+    question_id},
+    {returning: true})
 }
 
 function deleteOption(option_id) {
@@ -301,6 +302,9 @@ module.exports = {
     addGQRQuiz,
     addGQRSurvey,
     deleteAllOptions,
+    deleteAllQuestions,
+    deleteSQ,
+    deleteAllSQQO,
     deleteQuestion,
     deleteSQQOQuestion,
     deleteSQQOOption,
@@ -308,8 +312,9 @@ module.exports = {
     deleteQuestionGQR,
     deleteOptionGQR,
     deleteOption,
-    upsertQuestion,
-    upsertOption
+    deleteAllGQR,
+    updateQuestion,
+    updateOption
 };
 
 
