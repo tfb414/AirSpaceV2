@@ -37,93 +37,87 @@ function init() {
                     console.log("WE GOT A MESSAGE");
                     // console.log(data);
                     let parsedData = JSON.parse(data);
+                    switch(parsedData.type) {
+                        case 'CREATESURVEYQUIZ':
+                            addQuizQuestionsAnswers(parsedData, user_id);
+                
+                        case 'ADDGUESTTOHOST':
+                            addGuestToHost(parsedData, user_id).then((resp) => {
 
-                    if (parsedData.type === 'CREATESURVEYQUIZ') {
-                        addQuizQuestionsAnswers(parsedData, user_id);
-                    }
-                    if (parsedData.type === 'ADDGUESTTOHOST') {
-                        addGuestToHost(parsedData, user_id).then((resp) => {
+                                if (resp.name === "SequelizeForeignKeyConstraintError") {
+                                    wss.clients.forEach(function each(client) {
 
-                            if (resp.name === "SequelizeForeignKeyConstraintError") {
-                                wss.clients.forEach(function each(client) {
+                                        client.send(JSON.stringify({ 'type': 'ERROR' }))
 
-                                    client.send(JSON.stringify({ 'type': 'ERROR' }))
-
-                                    // }
-                                });
-                            } else {
-                                wss.clients.forEach(function each(client) {
-                                    client.send(JSON.stringify({
-                                        'type': 'CONNECTEDTOHOST',
-                                    }))
-                                })
-                            }
-                        });
-                    }
-                    if (parsedData.type === 'GETUSERID') {
-                        wss.clients.forEach(function each(client) {
-                            let payload = {
-                                type: 'RETURNUSERID',
-                                user_id: user_id,
-                                id: parsedData.id
-                            }
-                            client.send(JSON.stringify(payload));
-                        })
-                    }
-
-                    if (parsedData.type === 'REQUESTRESULTS') {
-                        query.getSQResultsHost(parsedData.sq_id, user_id)
-                            .then((resp) => {
-                                let payload = formatResults(resp, user_id);
-                                sendPayload(payload, wss)
+                                        // }
+                                    });
+                                } else {
+                                    wss.clients.forEach(function each(client) {
+                                        client.send(JSON.stringify({
+                                            'type': 'CONNECTEDTOHOST',
+                                        }))
+                                    })
+                                }
+                            });
+                        case 'GETUSERID':
+                            wss.clients.forEach(function each(client) {
+                                let payload = {
+                                    type: 'RETURNUSERID',
+                                    user_id: user_id,
+                                    id: parsedData.id
+                                }
+                                client.send(JSON.stringify(payload));
                             })
-                    }
 
-                    if (parsedData.type === 'REQUESTSQLIST') {
-                        query.getSQList(user_id, parsedData.sqtype).then(resp => {
-                            let payload = formatSQList(resp, user_id);
-                            sendPayload(payload, wss);
-                        })
-                    }
+                        case 'REQUESTRESULTS':
+                            query.getSQResultsHost(parsedData.sq_id, user_id)
+                                .then((resp) => {
+                                    let payload = formatResults(resp, user_id);
+                                    sendPayload(payload, wss)
+                                })
 
-                    if (parsedData.type === 'ACTIVATESQ') {
-                        query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQ(resp, user_id, parsedData.sqtype); 
-                            console.log(payload);
-                            sendPayload(payload, wss);
-                        })
-                    }
-                    if (parsedData.type === 'RESULTQUIZ') {
-                        console.log(parsedData);
-                        parsedData.payload.forEach(result => {
-                            query.addGQRQuiz(user_id, result.question_id, result.option_id);
-                        })
-                    }
+                        case 'REQUESTSQLIST':
+                            query.getSQList(user_id, parsedData.sqtype).then(resp => {
+                                let payload = formatSQList(resp, user_id);
+                                sendPayload(payload, wss);
+                            })
 
-                    if (parsedData.type === 'RESULTSURVEY') {
-                        console.log(parsedData);
-                        parsedData.payload.forEach(result => {
-                            query.addGQRSurvey(user_id, result.question_id, result.response);
-                        })
-                    }
-                    if (parsedData.type === "REQUESTEDITSQ") {
-                        query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
-                            console.log(payload);
-                            sendPayload(payload, wss);
-                        })
-                    }
+                        case 'ACTIVATESQ':
+                            query.getSQ(parsedData.sq_id).then(resp => {
+                                let payload = formatSQ(resp, user_id, parsedData.sqtype); 
+                                sendPayload(payload, wss);
+                            })
+                        case 'RESULTQUIZ':
+                            parsedData.payload.forEach(result => {
+                                query.addGQRQuiz(user_id, result.question_id, result.option_id);
+                            })
 
-                    if (parsedData.type === "DELETESQ") {
-                        query.deleteAllGQR(parsedData.sq_id);
-                        query.deleteAllOptions(parsedData.sq_id);
-                        query.deleteAllQuestions(parsedData.sq_id);
-                        query.deleteSQ(parsedData.sq_id);
-                        query.deleteAllSQQO(parsedData.sq_id);
-                    }
+                        case 'RESULTSURVEY':
+                            parsedData.payload.forEach(result => {
+                                query.addGQRSurvey(user_id, result.question_id, result.response);
+                            })
+        
+                        case parsedData.type === "REQUESTEDITSQ":
+                            query.getSQ(parsedData.sq_id).then(resp => {
+                                let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
+                                sendPayload(payload, wss);
+                            })
 
-                    if (parsedData.type === "EDITSQ") {
-                        editSQ(parsedData);
+                        case "REQUESTGUESTS":
+                            return;
+
+                        case "DELETESQ":
+                            query.deleteAllGQR(parsedData.sq_id);
+                            query.deleteAllOptions(parsedData.sq_id);
+                            query.deleteAllQuestions(parsedData.sq_id);
+                            query.deleteSQ(parsedData.sq_id);
+                            query.deleteAllSQQO(parsedData.sq_id);
+
+                        case "EDITSQ":
+                            editSQ(parsedData);
+                        
+                        default:
+                            break;
                     }
                 });
             })
@@ -314,13 +308,6 @@ function sendPayload(payload, wss) {
         client.send(JSON.stringify(payload));
     });
 }
-
-
-
-
-// function sendToWebSocket(message) {
-//     socket.send(JSON.stringify(message));
-// }
 
 module.exports = {
     init
