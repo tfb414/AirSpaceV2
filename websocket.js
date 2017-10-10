@@ -118,6 +118,7 @@ function init() {
                         case "REQUESTGUESTS":
                             query.getGuestsForHost(user_id).then(resp => {
                                 let payload = formatGuests(resp, user_id);
+                                sendPayload(payload, wss);
                             })
                             break;
 
@@ -130,8 +131,7 @@ function init() {
                             break;
 
                         case "EDITSQ":
-                            let payload = editSQ(parsedData);
-                            sendPayload(payload, wss);
+                            editSQ(parsedData);
                             break;
 
                         default:

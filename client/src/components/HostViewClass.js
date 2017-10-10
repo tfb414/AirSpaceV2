@@ -35,7 +35,7 @@ class HostViewClass extends Component {
 
 
      _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
+        if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
             return parsedData.payload;
         }
 
