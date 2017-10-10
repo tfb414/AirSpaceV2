@@ -127,7 +127,7 @@ class GuestRouter extends Component {
                 guest_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'DISPLAYACTIVESQ') {
+        if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.id === this.state.host_id) {
             if (parsedData.sqtype === 'survey') {
                 this.setState({
                 sqtype: parsedData.sqtype,

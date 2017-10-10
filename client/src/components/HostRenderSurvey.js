@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router'
 import HostRenderResults from './HostRenderResults'
+import ActivateSurvey from './ActivateSurvey.js'
 
 class HostRenderSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            waitingOnData: true,
+            activatedMessage: "",
+            waitingOnData: true
         }
     }
 
@@ -16,12 +18,7 @@ class HostRenderSurvey extends Component {
    
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            console.log(results);
-            this.setState({
-                waitingOnData: false,
-                results: results
-            })
+            this._receiveMessage(parsedData);
         }
     }
 
@@ -36,6 +33,7 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
+                    <ActivateSurvey message={this.state.activatedMessage} />
                     <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
                 </div>    
             )
@@ -45,6 +43,13 @@ class HostRenderSurvey extends Component {
                 {surveys}
             </div>
         );
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setState({
+            activatedMessage: ""
+        }) }, 2000)
     }
 
     _viewResults = (event) => {
@@ -90,7 +95,24 @@ class HostRenderSurvey extends Component {
 
      _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
-            return parsedData.payload;
+            let results = parsedData.payload;
+            console.log(results);
+            this.setState({
+                waitingOnData: false,
+                results: results
+            })
+        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
+            let results = parsedData.payload;
+            console.log(results)
+            if (results.error === null) {
+                this.setState({
+                    activatedMessage: `${results.title} has been successfully activated`
+                })
+            } else if (results.error === "no questions found") {
+                this.setState({
+                    activatedMessage: 'Could not activate. No questions found for that survey'
+                })
+            }
         }
 
     }
