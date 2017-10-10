@@ -131,7 +131,9 @@ function init() {
                             break;
                         
                         case "DELETEGUEST":
-                            console.log(parsedData);
+                            query.deleteGQRForHost(parsedData.host_guest_id, user_id).then(resp => {
+                                query.deleteHG(parsedData.host_guest_id);
+                            })
                             break;
 
                         case "EDITSQ":

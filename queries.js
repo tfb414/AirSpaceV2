@@ -301,11 +301,13 @@ function deleteAllGQR(sq_id) {
 }
 
 function deleteGQRForHost(host_guest_id, host_id) {
-    return db.sequelize.query(`DELETE 
-    FROM guest_question_response gqr  
-        USING sq_question_option sqqo 
-    WHERE gqr.question_id = sqqo.question_id AND
-        sqqo.sq_id = '${sq_id}';`)
+    return db.sequelize.query(`DELETE FROM guest_question_response gqr
+    WHERE gqr.question_id IN (SELECT sqqo.question_id
+		FROM sq_question_option sqqo
+		INNER JOIN sq
+		ON sqqo.sq_id = sq.sq_id
+		INNER JOIN host_guest hg ON gqr.guest_id = hg.guest_id
+		WHERE hg.host_guest_id = '${host_guest_id}' AND sq.host_id = '${host_id}');`)
 }
 
 function deleteQuestionGQR(question_id) {
@@ -379,7 +381,9 @@ module.exports = {
     deleteAllGQR,
     updateQuestion,
     updateOption,
-    getGuestsForHost
+    getGuestsForHost,
+    deleteGQRForHost,
+    deleteHG
 };
 
 
