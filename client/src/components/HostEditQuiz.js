@@ -47,7 +47,6 @@ export default class HostEditQuiz extends Component {
         let target = event.target.getAttribute('target')
         let new_question = this.state.question
         let old_options = new_question[Number(target[0])].options
-        console.log(old_options)
         let new_options = []
         for (let x = 0; x < old_options.length; x++) {
             if (x === Number(target[1])) {
@@ -184,7 +183,6 @@ export default class HostEditQuiz extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'quiz' &&  parsedData.host_id === this.props.host_id) {
             let results = parsedData;
-            console.log(results)
             if (results.error === null) {
                 let keys = Object.keys(results.payload);
                 let new_form = keys.map((key) => {

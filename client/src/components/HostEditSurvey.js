@@ -14,7 +14,6 @@ export default class HostEditSurvey extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.match.match.params.id)
         let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
         this.props.sendMessage(JSON.stringify(payload));
    
@@ -106,7 +105,6 @@ export default class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
-        console.log(this._createPayload())
         this.props.sendMessage(this._createPayload());
     }
 

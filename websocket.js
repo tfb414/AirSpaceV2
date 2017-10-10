@@ -35,12 +35,9 @@ function init() {
 
                 ws.on('message', function incoming(data) {
                     console.log("WE GOT A MESSAGE");
-                    // console.log(data);
                     let parsedData = JSON.parse(data);
-                    console.log(parsedData);
                     switch(parsedData.type) {
                         case 'CREATESQ':
-                            console.log(parsedData);
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
 
@@ -77,7 +74,6 @@ function init() {
 
                         case 'REQUESTRESULTS':
                             query.getSQResultsHost(parsedData.sq_id, user_id).then((resp) => {
-                                console.log(resp);
                                 if (resp.length !== 0) {
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
@@ -142,7 +138,6 @@ function init() {
         
                         case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
-                                console.log(resp);
                                 if (resp.length !== 0) {
                                     let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                                     sendPayload(payload, wss);
@@ -335,7 +330,6 @@ function addQuestionsAndAnswers(questions, sq_id) {
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
         let id = option.option_id;
-        console.log(id);
         if (id !== null) {
             query.updateOption(id, option.text, option.value);
         } else {
