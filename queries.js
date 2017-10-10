@@ -254,7 +254,7 @@ function deleteSQQOQuestion(question_id) {
 }
 
 function deleteHG(host_guest_id) {
-    db.sq_question_option.destroy({
+    db.host_guest.destroy({
         where: {
             host_guest_id
         }
