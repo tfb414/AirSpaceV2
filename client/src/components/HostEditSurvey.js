@@ -19,16 +19,7 @@ export default class HostEditSurvey extends Component {
    
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            console.log(results)
-            let new_form = results.payload.map((data) => {
-                return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
-            })
-            this.setState({
-                title: results.title,
-                waitingOnData: false,
-                question: new_form
-            })
+            this._receiveMessage(parsedData);
         }
     }
 
@@ -50,8 +41,13 @@ export default class HostEditSurvey extends Component {
                     <h3>Waiting on Survey...</h3>
                 </div>
             )
-        }
-        else if (this.state.waitingOnData === false) {
+        } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
+            return (
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
+            )
+        } else if (this.state.waitingOnData === false) {
             let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
             return <SurveyQuestionInput num={data.question_number} value={data.text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
 
@@ -131,6 +127,23 @@ export default class HostEditSurvey extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  parsedData.host_id === this.props.host_id) {
                 return parsedData;
+                let results = parsedData;
+                console.log(results)
+                if (results.error === null) {
+                    console.log(results)
+                    let new_form = results.payload.map((data) => {
+                        return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
+                    })
+                    this.setState({
+                        title: results.title,
+                        waitingOnData: false,
+                        question: new_form
+                    })
+                } else {
+                    this.setState({
+                        activatedMessage: results.error
+                    })
+                }
         } 
     }
 }

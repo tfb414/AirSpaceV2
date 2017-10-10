@@ -135,14 +135,14 @@ function init() {
                                 console.log(resp);
                                 if (resp.length !== 0) {
                                     let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
-                                sendPayload(payload, wss);
+                                    sendPayload(payload, wss);
                                 } else {
                                     let hostpayload = {
                                         type: "DISPLAYEDITSQ",
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
-                                        error: "No questions found for this survey"
+                                        error: `No questions found for this ${parsedData.sqtype}`
                                     };
                                     sendPayload(hostpayload, wss);
                                 }

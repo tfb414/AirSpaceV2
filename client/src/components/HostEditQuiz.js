@@ -74,8 +74,7 @@ export default class HostEditQuiz extends Component {
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
-        }
-        else if (this.state.waitingOnData === false) { 
+        } else if (this.state.waitingOnData === false) { 
             let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
             return <QuizQuestionInput num={data.question_number} RonChange={this.handleChangeRadio} Qvalue={data.text} option={data.options} addOption={this._addOption} removeOption={this._RemoveOption} QonChange={this.handleChangeQuestion} OonChange={this.handleChangeOption} remove={this._RemoveQuestion} />
 
