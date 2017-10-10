@@ -1,12 +1,16 @@
 import React from 'react'
 
-const ActivateSurvey = (props) => {
-
-    return (
-        <button onClick={props.onClick}>
-            derp
-        </button>
-    )
+const ActivateSurvey = ({ message }) => {
+    if (message === "") {
+        return (
+        <span></span>
+        )
+    } else {
+        return (
+            <span>{ message }</span>
+        )
+    }
+    
 }
 
 export default ActivateSurvey

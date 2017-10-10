@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import RenderQuizQuestion from './RenderQuizQuestion'
+import RenderQuizQuestion from './RenderQuizQuestion';
+import { withRouter } from 'react-router';
 
 class GuestRenderQuiz extends Component {
     constructor(props) {
@@ -51,8 +52,9 @@ class GuestRenderQuiz extends Component {
             sq_id: this.state.sq_id,
             payload: this.state.payload
         }
-        this.props.sendMessage(JSON.stringify(payload));        
+        this.props.sendMessage(JSON.stringify(payload));
+        this.props.history.push('/Guest/Waiting/');
     }
 }
 
-export default GuestRenderQuiz;
+export default withRouter(GuestRenderQuiz);
