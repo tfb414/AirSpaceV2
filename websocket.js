@@ -95,7 +95,7 @@ function init() {
                                     let payload = formatSQ(resp, user_id, parsedData.sqtype); 
                                     sendPayload(payload, wss);
                                     let hostpayload = {
-                                        type: "ACTIVATEDSURVEY",
+                                        type: "ACTIVATEDSQ",
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
@@ -104,7 +104,7 @@ function init() {
                                     sendPayload(hostpayload, wss);
                                 } else {
                                     let hostpayload = {
-                                        type: "ACTIVATEDSURVEY",
+                                        type: "ACTIVATEDSQ",
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
