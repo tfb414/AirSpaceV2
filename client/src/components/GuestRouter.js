@@ -47,7 +47,7 @@ class GuestRouter extends Component {
 
     render() {
 
-
+        console.log(this.state.guest_id);
         return (
             <div>
                 <Switch>
@@ -104,7 +104,7 @@ class GuestRouter extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-        console.log('we received a messaged ' + parsedData.type)
+        console.log(parsedData);
         if (parsedData.type === "CONNECTEDTOHOST") {
             console.log('connected to host')
             this.setState({
@@ -127,7 +127,7 @@ class GuestRouter extends Component {
                 guest_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'DISPLAYACTIVESQ') {
+        if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.id === this.state.host_id) {
             if (parsedData.sqtype === 'survey') {
                 this.setState({
                     sqtype: parsedData.sqtype,

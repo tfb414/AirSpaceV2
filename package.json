@@ -20,7 +20,7 @@
     "node-sass-chokidar": "^0.0.3",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
-    "pg": "^7.3.0",
+    "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "react": "^16.0.0",
     "sequelize": "^4.11.1",

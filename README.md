@@ -22,22 +22,24 @@ AirSpace is an audience response platform that allows audience members to provid
 * Express
 * WebSockets
 * JavaScript ES6
-* jQuery 3.2.1
+* jQuery
 * HTML5/CSS3
+* Sass
 
 ## Development Process
 * [1. Concept](#1-concept)
 * [2. Initial Planning](#2-initial-planning)
 * [3. Database Architecture](#3-database-architecture)
-* [4. Challenges and Successes](#4-challenges-and-successes)
+* [4 Backend Structure](#4-backend-structure)
+* [5. Frontend: React and CSS](#5-frontend-react-and-css)
 
 ### 1. Concept
 
-We developed AirSpace with the intention of creating a multipurpose space where host users could poll other users and send information back and forth instantly.
+We developed AirSpace with the intention of creating a multipurpose space where host users could poll an audience, sending information back and forth instantly.
 
-We had seen digital audience response systems like this in videogames (like popular party quiz games) and lecture halls (using "clickers"), but not in the form of a portable app that could be easily accessed on mobile, without requiring any kind of extra hardware or software installation.
+We had seen digital audience response systems like this in videogames (such as Jackbox.tv) and lecture halls (using "clickers"), but not in the form of an easily accessible mobile app that wouldn't require extra hardware software installation.
 
-In this iteration, we're working to specifically develop for use by teachers and students in order to facilitate an open and collaborative classroom environment.
+In this second iteration of AirSpace, we're specifically developing for use by teachers and students in order to facilitate an open and collaborative classroom environment.
 
 ### 2. Initial Planning
 
@@ -53,156 +55,21 @@ In this iteration, we're working to specifically develop for use by teachers and
           - Add question - return id
           - Add options - return id
           - Add linking table
-          
-#### Scratch Query Examples
-
-``` javascript
-createSurvey(sq_id) => {
-  // add question
-  // add linking table
-}
-
-createQuiz(sq_id) => {
-  // add question
-  // add options
-  // add linking table
-}
-```
-
-#### Git Flow Notes
-
-*Local*
-``` git
-git checkout master
-git pull origin master
-...(yarn build)
-...(cp build/*public/...)
-git checkout -b deploy/v1.1.1
-git add public/*
-git commit ....
-git push origin deploy
-```
-
-*EC2*
-``` git
-git fetch
-git checkout deploy
-git pull origin deploy
-pm2 restart all or node bin/www
-```
 
 ### 3. Database Architecture
 
-#### Running Through Our Queries with Dummy Data
+Our database contained five primary tables:
+* host
+* guest
+* question
+* options
+* sq (survey/quiz)
 
-``` SQL
-insert into question(question)
-      values('yarp?')
-      returning question_id
-```
+And three linking tables:
+* host\_guest
+* guest\_question\_response
+* sq\_question\_option
 
-``` SQL
-insert into sq_question_option(sq_id, question_id, option_id)
-      value('${sq_id}', '${question_id}', '${option_id}')
-      returning sq_id
-```
+### 4. Backend Structure
 
-For adding a guest to the database:
-``` SQL
-insert into host(host_id, email, first_name, last_name)
-      values('${guest_id}, '${email}', '${first_name}', '${last_name}')
-      returning guest_id, email, first_name, last_name;
-```
-
-``` SQL
-insert into guest_question_response(guest_id, question_id, response)
-      values('123abc', '2', 'Dog')
-      returning guest_id, question_id, response
-```
-
-Grabbing all questions and all responses:
-``` SQL
-select * from sq_question_option
-      where sq_id = '12'
-```
-
-``` SQL
-insert into guest_question_response(guest_id, question_id, response)
-      from ('123abc', '4', 'pickle rick')
-      returning guest_id, question_id, response
-```
-
-Trying to pull response and optionValue (whether their answer is true or false).
-Want just one person's questions, answers, and making sure it comes from the same survey.
-``` SQL
-select r.response, o.option_value
-      from guest_question_respone gqr
-      inner join sq_question_option sqqo
-      on sqqo.question_id = gqr.question_id
-      inner join option o
-      on sqqo.gqr
-```
-
-#### Figuring out system to check 'correctness' of multiple choice answer
-
-Guest table.
-
-Tim - Dog - Rick
-
-We have an options table.
-
-1 - dog - true
-
-2 - cat - false
-
-We also have a linking table.
-
-`sq_id` - `q_id` - `o_id`
-
-12 - 1 - 2
-
-Another linking table.
-
-`guest_id` - `q_id` - `response`
-
-1 - 1- cat
-
-g_id = 1
-
-s_id = 12
-
-^ we interlink this to question id. these, and the guest id's match up. So now using the question_id, and then for the option_id's, we link this into option id.
-
-Response is only survey questions. Otherwise null.
-
-### 4. Challenges and Successes
-
-Challenge 1:
-      - With the following query, duplicate key values are inserted into the table at `Key (option_id)=(11)`:
-      
-``` SQL
-insert into sq_question_option(sq_id, question_id, option_id)
-      values('12', '5', '11')
-      returning sq_id, question_id, option_id
-```
-      
-      - Solution: Make option_id unique because that's the only thing that will be different all the time..
-
-Success:
-Creates linking table between `question` and `option`:
-Whenever a guest receives a survey, it generates the survey for them. So this is pulling all questions, all options to display on page.
-
-```SQL
-select q.question, o.option,
-      sq_question_option
-      inner join option o
-      on o.option_id = sqqo.option_id
-      inner join question q
-      on q.question_id = sqqo.question_id
-      where sqqo.sq_id = '${sq_id}'
-```
-
-Challenge 2:
-
-(Trying to match up option value with response value-- wouldn't work out because not the same text.
-"What if for example, we have to look at q number too, because if a teacher wanted to make multiple options-- 1, 2, 3, but same option value for each one..." Need to add another `option_id` column to response table.)
+### 5. Frontend: React and SCSS

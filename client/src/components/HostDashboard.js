@@ -4,13 +4,13 @@ import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
-import HostRenderSurvey from './HostRenderSurvey'
+import HostRenderSurvey from './HostRenderSurvey';
 import guid from 'guid';
 import HostRenderResults from './HostRenderResults';
-import ActivateSurvey from './ActivateSurvey'
-import HostEditSurvey from './HostEditSurvey'
-import HostEditQuiz from './HostEditQuiz'
-
+import ActivateSurvey from './ActivateSurvey';
+import HostEditSurvey from './HostEditSurvey';
+import HostEditQuiz from './HostEditQuiz';
+import HostViewClass from './HostViewClass';
 
 
 class HostDashboard extends Component {
@@ -48,6 +48,7 @@ class HostDashboard extends Component {
 
     }
 
+<<<<<<< HEAD
     componentDidMount() {
         setInterval(() => {
             let payload = {
@@ -71,13 +72,22 @@ class HostDashboard extends Component {
                 </div>
             )
         })
+=======
+    render() {
+>>>>>>> 754b53baa47be5f1726ee4b836f96621a22b969c
         return (
 
             <div className="hostDash">
-                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
+                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
                 <Switch>
+<<<<<<< HEAD
                     <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey" />} />
                     <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
+=======
+                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
+                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey"/>} />
+                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz"/>} />
+>>>>>>> 754b53baa47be5f1726ee4b836f96621a22b969c
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
                     <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey" />} />
                     <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz" />} />

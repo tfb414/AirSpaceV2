@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import SurveyQuestionInput from './SurveyQuestionInput.js'
+import SurveyQuestionInput from './SurveyQuestionInput.js';
+import RequiredFillOutMessage from './RequiredFillOutMessage';
+import { withRouter } from 'react-router';
 
-export default class CreateSurvey extends Component {
+class CreateSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +13,8 @@ export default class CreateSurvey extends Component {
                     question_number: 1,
                     text: ""
                 },
-            ]
+            ],
+            filledOut: true
         }
     }
 
@@ -44,6 +47,7 @@ export default class CreateSurvey extends Component {
                         <button className='addSq' onClick={this._addQuestion}>Add Question + </button>
                         <button className='submitSurvey' onClick={this._submitSurvey}>Submit</button>
                     </div>
+                    <RequiredFillOutMessage filledOut={this.state.filledOut} />
                 </div>
             </div >
         )
@@ -79,8 +83,27 @@ export default class CreateSurvey extends Component {
     }
 
     _submitSurvey = () => {
-        console.log(this._createPayload())
-        this.props.sendMessage(this._createPayload());
+        let questionList = this.state.question
+        let formIsFilled = true
+        questionList.forEach((data) => {
+            if (data.text === "") {
+                formIsFilled = false
+            }
+        })
+        if (this.state.title === "") {
+            formIsFilled = false
+        }
+        this.setState({
+            filledOut: formIsFilled
+        }, () => { 
+            if (this.state.filledOut === true) {
+            console.log(this._createPayload())
+            this.props.sendMessage(this._createPayload());
+            setTimeout(() => { 
+                this.props.history.push('/Host/Your Surveys/')
+            }, 100)    
+        }
+        })
     }
 
     _createPayload = () => {
@@ -98,3 +121,5 @@ export default class CreateSurvey extends Component {
 
     }
 }
+
+export default withRouter(CreateSurvey);
