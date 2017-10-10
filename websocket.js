@@ -34,9 +34,18 @@ function init() {
                 // });
 
                 ws.on('message', function incoming(data) {
-                    console.log("WE GOT A MESSAGE");
-                    // console.log(data);
+
                     let parsedData = JSON.parse(data);
+
+                    if (parsedData.type === "HEARTBEAT") {
+                        sendHeartbeat(wss, parsedData, user_id)
+
+                    }
+
+                    if (parsedData.type === "GUESTHEARTBEAT") {
+                        sendHeartbeatToHost(wss, parsedData)
+
+                    }
 
                     if (parsedData.type === 'CREATESURVEYQUIZ') {
                         addQuizQuestionsAnswers(parsedData, user_id);
@@ -88,7 +97,7 @@ function init() {
 
                     if (parsedData.type === 'ACTIVATESQ') {
                         query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQ(resp, user_id, parsedData.sqtype); 
+                            let payload = formatSQ(resp, user_id, parsedData.sqtype);
                             console.log(payload);
                             sendPayload(payload, wss);
                         })
@@ -106,6 +115,7 @@ function init() {
                             query.addGQRSurvey(user_id, result.question_id, result.response);
                         })
                     }
+
                     if (parsedData.type === "REQUESTEDITSQ") {
                         query.getSQ(parsedData.sq_id).then(resp => {
                             let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
@@ -145,13 +155,13 @@ function init() {
                                     query.updateQuestion(question_id, question, question_number);
                                 } else {
                                     query.addQuestion(question, question_number).then(resp => {
-                                        let question_id =           resp.dataValues.question_id
-                                if (question['options'] !== undefined) {
-                                    addOptions(question, sq_id, question_id);
-                                } else {
-                                    query.addSQQuestionOption(sq_id, question_id, null);
-                                }
-                                })
+                                        let question_id = resp.dataValues.question_id
+                                        if (question['options'] !== undefined) {
+                                            addOptions(question, sq_id, question_id);
+                                        } else {
+                                            query.addSQQuestionOption(sq_id, question_id, null);
+                                        }
+                                    })
                                 }
                             })
                         }
@@ -176,7 +186,7 @@ function formatSQ(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function formatSQEdit(resp, host_id, sqtype) {
@@ -191,7 +201,7 @@ function formatSQEdit(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function surveyPayload(resp) {
@@ -307,6 +317,27 @@ function sendPayload(payload, wss) {
         client.send(JSON.stringify(payload));
     });
 }
+
+function sendHeartbeat(wss, parsedData, user_id) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'RECEIVEHEARTBEAT',
+            "host_id": user_id
+        }))
+    })
+}
+function sendHeartbeatToHost(wss, parsedData) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'GUESTHEARTBEATTOHOST',
+            "host_id": parsedData.host_id,
+            "guest_id": parsedData.guest_id
+        }))
+    })
+}
+
+
+
 
 
 

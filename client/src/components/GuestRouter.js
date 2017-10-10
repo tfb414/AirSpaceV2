@@ -130,11 +130,11 @@ class GuestRouter extends Component {
         if (parsedData.type === 'DISPLAYACTIVESQ') {
             if (parsedData.sqtype === 'survey') {
                 this.setState({
-                sqtype: parsedData.sqtype,
-                sq_id: parsedData.sq_id,
-                title: parsedData.title,
-                payload: parsedData.payload
-            })
+                    sqtype: parsedData.sqtype,
+                    sq_id: parsedData.sq_id,
+                    title: parsedData.title,
+                    payload: parsedData.payload
+                })
             } else if (parsedData.sqtype === 'quiz') {
                 this.setState({
                     sqtype: parsedData.sqtype,
@@ -143,7 +143,16 @@ class GuestRouter extends Component {
                     payload: parsedData.payload
                 })
             }
-            
+
+        }
+
+        if (parsedData.type === 'RECEIVEHEARTBEAT') {
+            console.log('we got recieve heartbeat and we sent it back')
+            this.connection.send(JSON.stringify({
+                type: "GUESTHEARTBEAT",
+                guest_id: this.state.guest_id,
+                host_id: this.state.host_id
+            }))
         }
     }
 }

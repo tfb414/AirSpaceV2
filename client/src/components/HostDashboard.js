@@ -19,7 +19,8 @@ class HostDashboard extends Component {
         this.state = {
             host_id: "",
             surveyResults: [{ text: "Survey 1", sq_id: "" }, { text: "Survey 2", sq_id: "2" }],
-            quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }]
+            quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }],
+            currentlyConnected: [],
         }
         this.connection = new WebSocket(env);
     }
@@ -34,27 +35,53 @@ class HostDashboard extends Component {
         })
         this.connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
+
             this.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
 
+
             };
         }
+
+
+
     }
 
-    render() {
+    componentDidMount() {
+        setInterval(() => {
+            let payload = {
+                type: "HEARTBEAT",
+            }
+            let JSONpayload = JSON.stringify(payload);
+            this.connection.send(JSONpayload);
+            this._manageActiveUsers();
 
+
+        }, 1000);
+    }
+
+
+
+    render() {
+        let displayConnected = this.state.currentlyConnected.map((guest) => {
+            return (
+                <div>
+                    {guest[0]} Timer: {guest[1]}
+                </div>
+            )
+        })
         return (
 
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
                 <Switch>
-                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey"/>} />
-                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz"/>} />
+                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey" />} />
+                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
-                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey"/>}/>
-                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz"/>}/>
-                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />}/>
+                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey" />} />
+                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz" />} />
+                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
                     <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
                 </Switch>
             </div>
@@ -65,17 +92,65 @@ class HostDashboard extends Component {
         this.connection.send(payload);
     }
 
+    _requestHeartbeat = () => {
+        console.log('heartbeat')
+        let payload = {
+            type: "HEARTBEAT",
+        }
+        this._sendMessage(payload)
+    }
+
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
+            console.log(parsedData);
             this.setState({
                 host_id: parsedData.user_id
             })
+        }
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
+            this._receivedGuestHeartbeat(parsedData)
         }
 
     }
 
 
+    _createArrayOfFirstThings = (array, number) => {
+        return array.map((thing) => {
+            return thing[number];
+        })
+    }
+
+    _manageActiveUsers = () => {
+        let currentCount = this.state.currentlyConnected.filter((guest) => {
+            guest[1] -= 1;
+            console.log(guest[1] > 0)
+            console.log(guest)
+            return guest[1] > 0
+        })
+        console.log(currentCount)
+        this.setState({
+            currentlyConnected: currentCount
+        })
+    }
+
+    _receivedGuestHeartbeat(parsedData) {
+        var currentlyConnected = this.state.currentlyConnected
+        let arrayOfFirstThings = this._createArrayOfFirstThings(currentlyConnected, 0)
+        if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
+            currentlyConnected.push([parsedData.guest_id, 3])
+            this.setState({
+                currentlyConnected: currentlyConnected
+            })
+        }
+        else {
+            currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = 3
+            this.setState({
+                currentlyConnected: currentlyConnected
+            })
+        }
+    }
+
 }
 
 export default HostDashboard;
-   {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}
+{/* <button onClick={this._createSurveyPayload}>Activate survey</button> */ }
