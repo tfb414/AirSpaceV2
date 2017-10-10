@@ -37,7 +37,7 @@ class HostViewClass extends Component {
                     <td>{person.first_name}</td>
                     <td>{person.last_name}</td>
                     <td>{person.guest_id}</td>
-                    <td><button value={person.host_guest_id} onClick={(e)=> console.log(e.target)}>Delete</button></td>
+                    <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
                 </tr>
             )
         })
@@ -52,10 +52,17 @@ class HostViewClass extends Component {
                     {classList} 
                 </tbody>
             </table>    
-            )
-        );
+        )
     }
 
+    _deleteGuest = (event) => {
+        let payload = {
+            type: "DELETEGUEST",
+            host_guest_id: event.target.value
+        }
+        payload = JSON.stringify(payload);
+        this.props.sendMessage(payload);
+    }
 
      _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {

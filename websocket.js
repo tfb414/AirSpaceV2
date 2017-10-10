@@ -129,6 +129,9 @@ function init() {
                             query.deleteSQ(parsedData.sq_id);
                             query.deleteAllSQQO(parsedData.sq_id);
                             break;
+                        
+                        case "DELETEGUEST":
+                            console.log(parsedData);
 
                         case "EDITSQ":
                             editSQ(parsedData);
