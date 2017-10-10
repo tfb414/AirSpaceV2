@@ -43,7 +43,7 @@ class HostDashboard extends Component {
     }
 
     render() {
-
+        console.log(this.state.host_id);
         return (
 
             <div className="hostDash">
@@ -72,11 +72,8 @@ class HostDashboard extends Component {
                 host_id: parsedData.user_id
             })
         }
-
     }
-
 
 }
 
 export default HostDashboard;
-   {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}
