@@ -132,6 +132,7 @@ function init() {
                         
                         case "DELETEGUEST":
                             console.log(parsedData);
+                            break;
 
                         case "EDITSQ":
                             editSQ(parsedData);
