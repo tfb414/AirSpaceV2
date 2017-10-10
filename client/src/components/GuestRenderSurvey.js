@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import RenderSurveyQuestion from './RenderSurveyQuestion'
+import { withRouter } from 'react-router';
 
 class GuestRenderSurvey extends Component {
     constructor(props) {
@@ -50,7 +51,8 @@ class GuestRenderSurvey extends Component {
         };
 
         this.props.sendMessage(JSON.stringify(payload));
+        this.props.history.push('/Guest/Waiting/');
     }
 }
 
-export default GuestRenderSurvey;
+export default withRouter(GuestRenderSurvey);

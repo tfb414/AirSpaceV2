@@ -47,7 +47,7 @@ class GuestRouter extends Component {
 
     render() {
 
-
+        console.log(this.state.guest_id);
         return (
             <div>
                 <Switch>
@@ -104,7 +104,7 @@ class GuestRouter extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-        console.log('we received a messaged ' + parsedData.type)
+        console.log(parsedData);
         if (parsedData.type === "CONNECTEDTOHOST") {
             console.log('connected to host')
             this.setState({
@@ -127,14 +127,14 @@ class GuestRouter extends Component {
                 guest_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'DISPLAYACTIVESQ') {
+        if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.id === this.state.host_id) {
             if (parsedData.sqtype === 'survey') {
                 this.setState({
-                sqtype: parsedData.sqtype,
-                sq_id: parsedData.sq_id,
-                title: parsedData.title,
-                payload: parsedData.payload
-            })
+                    sqtype: parsedData.sqtype,
+                    sq_id: parsedData.sq_id,
+                    title: parsedData.title,
+                    payload: parsedData.payload
+                })
             } else if (parsedData.sqtype === 'quiz') {
                 this.setState({
                     sqtype: parsedData.sqtype,
@@ -143,7 +143,16 @@ class GuestRouter extends Component {
                     payload: parsedData.payload
                 })
             }
-            
+
+        }
+
+        if (parsedData.type === 'RECEIVEHEARTBEAT') {
+            console.log('we got recieve heartbeat and we sent it back')
+            this.connection.send(JSON.stringify({
+                type: "GUESTHEARTBEAT",
+                guest_id: this.state.guest_id,
+                host_id: this.state.host_id
+            }))
         }
     }
 }

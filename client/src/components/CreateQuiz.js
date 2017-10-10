@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import QuizQuestionInput from './QuizQuestionInput.js'
+import { withRouter } from 'react-router';
+import QuizQuestionInput from './QuizQuestionInput.js';
+import RequiredFillOutMessage from './RequiredFillOutMessage';
 
-export default class CreateQuiz extends Component {
+class CreateQuiz extends Component {
     constructor(props) {
         super(props);
         this.state = {
             title: "",
+            filledOut: true,
             question: [
                 {
                     question_number: 1,
@@ -73,6 +76,7 @@ export default class CreateQuiz extends Component {
                             <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
                             <button className='submitQuiz' onClick={this._submitSurvey}>Submit</button>
                         </div>
+                        <RequiredFillOutMessage filledOut={this.state.filledOut} />
                     </div>
                 </div>
             </div>
@@ -133,18 +137,31 @@ export default class CreateQuiz extends Component {
     }
 
     _submitSurvey = () => {
-        console.log(this._createPayload());
-        console.log(this.props);
-        this.props.sendMessage(this._createPayload());
+        let questionList = this.state.question
+        let formIsFilled = true
+        questionList.forEach((data) => {
+            if (data.text === "") {
+                formIsFilled = false
+            }
+            data.options.forEach((option) => {
+                if (option.text === "") {
+                    formIsFilled = false
+                }
+            })
+        })
+        if (this.state.title === "") {
+            formIsFilled = false
+        }
         this.setState({
-            title: "",
-            question: [
-                {
-                    question_number: 1,
-                    text: "",
-                    options: [{ text: "", value: true }, { text: "", value: false }],
-                },
-            ]
+            filledOut: formIsFilled
+        }, () => { 
+            if (this.state.filledOut === true) {
+            console.log(this._createPayload())
+            this.props.sendMessage(this._createPayload());
+            setTimeout(() => { 
+                this.props.history.push('/Host/Your Quizzes/')
+            }, 100)    
+        }
         })
 
     }
@@ -164,3 +181,5 @@ export default class CreateQuiz extends Component {
 
     }
 }
+
+export default withRouter(CreateQuiz);

@@ -34,127 +34,141 @@ function init() {
                 // });
 
                 ws.on('message', function incoming(data) {
-                    console.log("WE GOT A MESSAGE");
-                    // console.log(data);
+
                     let parsedData = JSON.parse(data);
 
-                    if (parsedData.type === 'CREATESURVEYQUIZ') {
-                        addQuizQuestionsAnswers(parsedData, user_id);
-                    }
-                    if (parsedData.type === 'ADDGUESTTOHOST') {
-                        addGuestToHost(parsedData, user_id).then((resp) => {
+                    switch (parsedData.type) {
+                        case 'CREATESURVEYQUIZ':
+                            addQuizQuestionsAnswers(parsedData, user_id);
+                            break;
 
-                            if (resp.name === "SequelizeForeignKeyConstraintError") {
-                                wss.clients.forEach(function each(client) {
 
-                                    client.send(JSON.stringify({ 'type': 'ERROR' }))
+                        case 'ADDGUESTTOHOST':
+                            addGuestToHost(parsedData, user_id).then((resp) => {
 
-                                    // }
-                                });
-                            } else {
-                                wss.clients.forEach(function each(client) {
-                                    client.send(JSON.stringify({
-                                        'type': 'CONNECTEDTOHOST',
-                                    }))
-                                })
-                            }
-                        });
-                    }
-                    if (parsedData.type === 'GETUSERID') {
-                        wss.clients.forEach(function each(client) {
-                            let payload = {
-                                type: 'RETURNUSERID',
-                                user_id: user_id,
-                                id: parsedData.id
-                            }
-                            client.send(JSON.stringify(payload));
-                        })
-                    }
+                                if (resp.name === "SequelizeForeignKeyConstraintError") {
+                                    wss.clients.forEach(function each(client) {
 
-                    if (parsedData.type === 'REQUESTRESULTS') {
-                        query.getSQResultsHost(parsedData.sq_id, user_id)
-                            .then((resp) => {
-                                let payload = formatResults(resp, user_id);
-                                sendPayload(payload, wss)
-                            })
-                    }
+                                        client.send(JSON.stringify({ 'type': 'ERROR' }))
 
-                    if (parsedData.type === 'REQUESTSQLIST') {
-                        query.getSQList(user_id, parsedData.sqtype).then(resp => {
-                            let payload = formatSQList(resp, user_id);
-                            sendPayload(payload, wss);
-                        })
-                    }
-
-                    if (parsedData.type === 'ACTIVATESQ') {
-                        query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQ(resp, user_id, parsedData.sqtype); 
-                            console.log(payload);
-                            sendPayload(payload, wss);
-                        })
-                    }
-                    if (parsedData.type === 'RESULTQUIZ') {
-                        console.log(parsedData);
-                        parsedData.payload.forEach(result => {
-                            query.addGQRQuiz(user_id, result.question_id, result.option_id);
-                        })
-                    }
-
-                    if (parsedData.type === 'RESULTSURVEY') {
-                        console.log(parsedData);
-                        parsedData.payload.forEach(result => {
-                            query.addGQRSurvey(user_id, result.question_id, result.response);
-                        })
-                    }
-                    if (parsedData.type === "REQUESTEDITSQ") {
-                        query.getSQ(parsedData.sq_id).then(resp => {
-                            let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
-                            console.log(payload);
-                            sendPayload(payload, wss);
-                        })
-                    }
-
-                    if (parsedData.type === "DELETESQ") {
-                        query.deleteAllGQR(parsedData.sq_id);
-                        query.deleteAllOptions(parsedData.sq_id);
-                        query.deleteAllQuestions(parsedData.sq_id);
-                        query.deleteSQ(parsedData.sq_id);
-                        query.deleteAllSQQO(parsedData.sq_id);
-                    }
-
-                    if (parsedData.type === "EDITSQ") {
-                        console.log(parsedData);
-                        query.deleteAllGQR(parsedData.sq_id);
-                        if ("deleted_options" in parsedData) {
-                            parsedData.deleted_options.forEach(option_id => {
-                                query.deleteSQQOOption(option_id);
-                                query.deleteOption(option_id);
-                            })
-                        }
-                        if ("deleted_questions" in parsedData) {
-                            parsedData.deleted_questions.forEach(question_id => {
-                                query.deleteAllOptionsForQuestion(question_id);
-                                query.deleteSQQOQuestion(question_id);
-                                query.deleteQuestion(question_id);
-                            })
-                        }
-
-                        if (parsedData.payload.length !== 0) {
-                            parsedData.payload.forEach(question => {
-                                if (question_id !== null) {
-                                    query.updateQuestion(question_id, question, question_number);
+                                        // }
+                                    });
                                 } else {
-                                    query.addQuestion(question, question_number).then(resp => {
-                                        let question_id =           resp.dataValues.question_id
-                                if (question['options'] !== undefined) {
-                                    addOptions(question, sq_id, question_id);
-                                } else {
-                                    query.addSQQuestionOption(sq_id, question_id, null);
+                                    wss.clients.forEach(function each(client) {
+                                        client.send(JSON.stringify({
+                                            'type': 'CONNECTEDTOHOST',
+                                        }))
+                                    })
                                 }
+                            });
+                            break;
+
+                        case "HEARTBEAT":
+                            sendHeartbeat(wss, parsedData, user_id);
+                            break;
+
+                        case "GUESTHEARTBEAT":
+                            sendHeartbeatToHost(wss, parsedData);
+                            break;
+
+                        case 'GETUSERID':
+                            wss.clients.forEach(function each(client) {
+                                let payload = {
+                                    type: 'RETURNUSERID',
+                                    user_id: user_id,
+                                    id: parsedData.id
+                                }
+                                client.send(JSON.stringify(payload));
+                            })
+                            break;
+
+                        case 'REQUESTRESULTS':
+                            query.getSQResultsHost(parsedData.sq_id, user_id)
+                                .then((resp) => {
+                                    let payload = formatResults(resp, user_id);
+                                    sendPayload(payload, wss)
                                 })
+                            break;
+
+                        case 'REQUESTSQLIST':
+                            query.getSQList(user_id, parsedData.sqtype).then(resp => {
+                                let payload = formatSQList(resp, user_id);
+                                sendPayload(payload, wss);
+                            })
+                            break;
+
+                        case 'ACTIVATESQ':
+                            query.getSQ(parsedData.sq_id).then(resp => {
+                                if (resp.length !== 0) {
+                                    let payload = formatSQ(resp, user_id, parsedData.sqtype);
+                                    sendPayload(payload, wss);
+                                    let hostpayload = {
+                                        type: "ACTIVATEDSQ",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: null
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                } else {
+                                    let hostpayload = {
+                                        type: "ACTIVATEDSQ",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: "No questions found"
+                                    };
+                                    sendPayload(hostpayload, wss);
                                 }
                             })
-                        }
+                            break;
+
+                        case 'RESULTQUIZ':
+                            parsedData.payload.forEach(result => {
+                                query.addGQRQuiz(user_id, result.question_id, result.option_id);
+                            })
+                            break;
+
+                        case 'RESULTSURVEY':
+                            parsedData.payload.forEach(result => {
+                                query.addGQRSurvey(user_id, result.question_id, result.response);
+                            })
+                            break;
+
+                        case parsedData.type === "REQUESTEDITSQ":
+                            query.getSQ(parsedData.sq_id).then(resp => {
+                                let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
+                                sendPayload(payload, wss);
+                            })
+                            break;
+
+                        case "REQUESTGUESTS":
+                            query.getGuestsForHost(user_id).then(resp => {
+                                let payload = formatGuests(resp, user_id);
+                                sendPayload(payload, wss);
+                            })
+                            break;
+
+                        case "DELETESQ":
+                            query.deleteAllGQR(parsedData.sq_id);
+                            query.deleteAllOptions(parsedData.sq_id);
+                            query.deleteAllQuestions(parsedData.sq_id);
+                            query.deleteSQ(parsedData.sq_id);
+                            query.deleteAllSQQO(parsedData.sq_id);
+                            break;
+
+                        case "DELETEGUEST":
+                            query.deleteGQRForHost(parsedData.host_guest_id, user_id).then(resp => {
+                                query.deleteHG(parsedData.host_guest_id);
+                            })
+                            break;
+
+                        case "EDITSQ":
+                            editSQ(parsedData);
+                            break;
+
+                        default:
+                            break;
                     }
                 });
             })
@@ -162,7 +176,26 @@ function init() {
     })
 }
 
-// {"type":"EDITSQ","sqtype":"quiz","title":"Hands?","payload":[{"question_number":1,"question_id":80,"text":"Do you have hands?","options":[{"option_id":8,"text":"False","value":false},{"option_id":7,"text":"True","value":true}]},{"question_number":2,"question_id":81,"text":"Are they hot?","options":[{"option_id":9,"text":"Yes","value":false},{"option_id":10,"text":"No","value":true}]},{"question_number":3,"question_id":82,"text":"Are they clammy?","options":[{"option_id":12,"text":"Yes","value":false},{"option_id":11,"text":"No","value":true}]}]}
+
+
+
+// [ { first_name: 'Sarah',
+//     last_name: 'A',
+//     guest_id: 'sabbey37@gmail.com' },
+//   { first_name: 'Aaron',
+//     last_name: 'Sosa',
+//     guest_id: 'aarontsosa@gmail.com' },
+//   { first_name: 'Tim',
+//     last_name: 'Brady',
+//     guest_id: 'tfb414@gmail.com' } ]
+
+function formatGuests(resp, host_id) {
+    let result = {};
+    result["type"] = "DISPLAYGUESTS";
+    result["host_id"] = host_id;
+    result["payload"] = resp;
+    return result;
+}
 
 function formatSQ(resp, host_id, sqtype) {
     let result = {};
@@ -176,7 +209,7 @@ function formatSQ(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function formatSQEdit(resp, host_id, sqtype) {
@@ -191,7 +224,7 @@ function formatSQEdit(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function surveyPayload(resp) {
@@ -302,11 +335,72 @@ function addGuestToHost(parsedData, guest_id) {
     );
 }
 
+function editSQ(parsedData) {
+    query.deleteAllGQR(parsedData.sq_id);
+    if ("deleted_options" in parsedData) {
+        parsedData.deleted_options.forEach(option_id => {
+            query.deleteSQQOOption(option_id);
+            query.deleteOption(option_id);
+        })
+    }
+    if ("deleted_questions" in parsedData) {
+        parsedData.deleted_questions.forEach(question_id => {
+            query.deleteAllOptionsForQuestion(question_id);
+            query.deleteSQQOQuestion(question_id);
+            query.deleteQuestion(question_id);
+        })
+    }
+
+    if (parsedData.payload.length !== 0) {
+        parsedData.payload.forEach(question => {
+            let question_id = question.question_id;
+            if (question_id !== null) {
+                query.updateQuestion(question_id, question.text, question.question_number);
+                if (question['options'] !== undefined) {
+                    addOptions(question, parsedData.sq_id, question_id);
+                } else {
+                    query.addSQQuestionOption(parsedData.sq_id, question_id, null);
+                }
+            } else {
+                query.addQuestion(question.text, question.question_number).then(resp => {
+                    question_id = resp.dataValues.question_id;
+                    if (question['options'] !== undefined) {
+                        addOptions(question, parsedData.sq_id, question_id);
+                    } else {
+                        query.addSQQuestionOption(parsedData.sq_id, question_id, null);
+                    }
+                })
+            }
+        })
+    }
+}
+
 function sendPayload(payload, wss) {
     wss.clients.forEach(function each(client) {
         client.send(JSON.stringify(payload));
     });
 }
+
+function sendHeartbeat(wss, parsedData, user_id) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'RECEIVEHEARTBEAT',
+            "host_id": user_id
+        }))
+    })
+}
+function sendHeartbeatToHost(wss, parsedData) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'GUESTHEARTBEATTOHOST',
+            "host_id": parsedData.host_id,
+            "guest_id": parsedData.guest_id
+        }))
+    })
+}
+
+
+
 
 
 
