@@ -130,7 +130,7 @@ function init() {
                             })
                             break;
         
-                        case parsedData.type === "REQUESTEDITSQ":
+                        case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                                 sendPayload(payload, wss);
@@ -311,8 +311,10 @@ function addQuestionsAndAnswers(questions, sq_id) {
 
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
-        if (option.option_id !== null) {
-            query.updateOption(option.option_id, option.text, option.value);
+        let id = option.option_id;
+        console.log(id);
+        if (id !== null) {
+            query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {
                 query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
