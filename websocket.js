@@ -91,6 +91,7 @@ function init() {
 
                         case 'ACTIVATESQ':
                             query.getSQ(parsedData.sq_id).then(resp => {
+                                console.log(resp);
                                 let payload = formatSQ(resp, user_id, parsedData.sqtype); 
                                 sendPayload(payload, wss);
                             })
