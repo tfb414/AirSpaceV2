@@ -34,12 +34,14 @@ function init() {
                 // });
 
                 ws.on('message', function incoming(data) {
+
                     console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
                     switch(parsedData.type) {
                         case 'CREATESQ':
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
+
 
                         case 'ADDGUESTTOHOST':
                             addGuestToHost(parsedData, user_id).then((resp) => {
@@ -59,6 +61,14 @@ function init() {
                                     })
                                 }
                             });
+                            break;
+
+                        case "HEARTBEAT":
+                            sendHeartbeat(wss, parsedData, user_id);
+                            break;
+
+                        case "GUESTHEARTBEAT":
+                            sendHeartbeatToHost(wss, parsedData);
                             break;
 
                         case 'GETUSERID':
@@ -100,7 +110,7 @@ function init() {
                         case 'ACTIVATESQ':
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 if (resp.length !== 0) {
-                                    let payload = formatSQ(resp, user_id, parsedData.sqtype); 
+                                    let payload = formatSQ(resp, user_id, parsedData.sqtype);
                                     sendPayload(payload, wss);
                                     let hostpayload = {
                                         type: "ACTIVATEDSQ",
@@ -135,6 +145,7 @@ function init() {
                                 query.addGQRSurvey(user_id, result.question_id, result.response);
                             })
                             break;
+
         
                         case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
@@ -168,7 +179,7 @@ function init() {
                             query.deleteSQ(parsedData.sq_id);
                             query.deleteAllSQQO(parsedData.sq_id);
                             break;
-                        
+
                         case "DELETEGUEST":
                             query.deleteGQRForHost(parsedData.host_guest_id, user_id).then(resp => {
                                 query.deleteHG(parsedData.host_guest_id);
@@ -187,6 +198,9 @@ function init() {
         })
     })
 }
+
+
+
 
 // [ { first_name: 'Sarah',
 //     last_name: 'A',
@@ -218,7 +232,7 @@ function formatSQ(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function formatSQEdit(resp, host_id, sqtype) {
@@ -234,7 +248,7 @@ function formatSQEdit(resp, host_id, sqtype) {
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function surveyPayload(resp) {
@@ -392,6 +406,34 @@ function sendPayload(payload, wss) {
         client.send(JSON.stringify(payload));
     });
 }
+
+function sendHeartbeat(wss, parsedData, user_id) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'RECEIVEHEARTBEAT',
+            "host_id": user_id
+        }))
+    })
+}
+function sendHeartbeatToHost(wss, parsedData) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'GUESTHEARTBEATTOHOST',
+            "host_id": parsedData.host_id,
+            "guest_id": parsedData.guest_id
+        }))
+    })
+}
+
+
+
+
+
+
+
+// function sendToWebSocket(message) {
+//     socket.send(JSON.stringify(message));
+// }
 
 module.exports = {
     init
