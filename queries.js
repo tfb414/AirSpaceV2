@@ -191,7 +191,7 @@ function getSQ(sq_id) {
     full outer join options o
     on o.option_id = sqqo.option_id
     where sqqo.sq_id = '${sq_id}';`, { type: db.sequelize.QueryTypes.SELECT}).catch(Sequelize.ValidationError, function (err) {
-        console.log(err);
+        return err;
     });
 }
 
