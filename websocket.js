@@ -94,15 +94,23 @@ function init() {
                                 if (resp.length !== 0) {
                                     let payload = formatSQ(resp, user_id, parsedData.sqtype); 
                                     sendPayload(payload, wss);
+                                    let hostpayload = {
+                                        type: "ACTIVATEDSURVEY",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: null
+                                    };
+                                    sendPayload(hostpayload, wss);
                                 } else {
-                                    let payload = {
+                                    let hostpayload = {
                                         type: "ACTIVATEDSURVEY",
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
                                         error: "No questions found"
                                     };
-                                    sendPayload(payload, wss);
+                                    sendPayload(hostpayload, wss);
                                 }
                             })
                             break;
