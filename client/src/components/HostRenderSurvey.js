@@ -15,7 +15,7 @@ class HostRenderSurvey extends Component {
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
         this.props.sendMessage(JSON.stringify(payload));
-   
+
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
@@ -25,16 +25,16 @@ class HostRenderSurvey extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
-            <div>
-                <h1>Searching for you Surveys and Quizzes</h1>
-            </div>
+                <div>
+                    <h1>Searching for you Surveys and Quizzes</h1>
+                </div>
             )
         }
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
                     <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
-                </div>    
+                </div>
             )
         })
         return (
@@ -48,8 +48,8 @@ class HostRenderSurvey extends Component {
     componentDidMount() {
         setTimeout(
             this.setState({
-            activatedMessage: ""
-        ) }, 2000)
+                activatedMessage: ""
+            }), 2000)
     }
 
     _viewResults = (event) => {
@@ -93,7 +93,7 @@ class HostRenderSurvey extends Component {
         this.props.sendMessage(payload);
     }
 
-     _receiveMessage = (parsedData) => {
+    _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
             let results = parsedData.payload;
             console.log(results);

@@ -36,7 +36,7 @@ function init() {
                 ws.on('message', function incoming(data) {
 
                     let parsedData = JSON.parse(data);
-                    console.log(parsedData);
+
                     switch (parsedData.type) {
                         case 'CREATESURVEYQUIZ':
                             addQuizQuestionsAnswers(parsedData, user_id);
