@@ -76,11 +76,21 @@ function init() {
                             break;
 
                         case 'REQUESTRESULTS':
-                            query.getSQResultsHost(parsedData.sq_id, user_id)
-                                .then((resp) => {
-                                    console.log(resp);
+                            query.getSQResultsHost(parsedData.sq_id, user_id).then((resp) => {
+                                console.log(resp);
+                                if (resp.length !== 0) {
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYRESULTS",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: `No results found for this ${parsedData.sqtype}`
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                                 })
                             break;
 

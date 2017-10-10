@@ -17,7 +17,8 @@ class HostRenderResults extends Component {
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
-            sq_id: this.props.match.match.params.id
+            sq_id: this.props.match.match.params.id,
+            sqtype: this.props.sqtype
         };
         let resultsReceived = false;
         this.props.connection.send(JSON.stringify(payload));
