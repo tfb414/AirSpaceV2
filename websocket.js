@@ -91,9 +91,19 @@ function init() {
 
                         case 'ACTIVATESQ':
                             query.getSQ(parsedData.sq_id).then(resp => {
-                                console.log(resp);
-                                let payload = formatSQ(resp, user_id, parsedData.sqtype); 
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatSQ(resp, user_id, parsedData.sqtype); 
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let payload = {
+                                        type: "ACTIVATEDSURVEY",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: "No questions found"
+                                    };
+                                    sendPayload(payload, wss);
+                                }
                             })
                             break;
 
