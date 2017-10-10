@@ -77,6 +77,7 @@ function init() {
                         case 'REQUESTRESULTS':
                             query.getSQResultsHost(parsedData.sq_id, user_id)
                                 .then((resp) => {
+                                    console.log(resp);
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
                                 })
@@ -96,6 +97,7 @@ function init() {
                                     sendPayload(payload, wss);
                                     let hostpayload = {
                                         type: "ACTIVATEDSQ",
+                                        title: resp[0]["sq_name"],
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
@@ -191,7 +193,7 @@ function formatSQ(resp, host_id, sqtype) {
     result["type"] = "DISPLAYACTIVESQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
@@ -263,6 +265,7 @@ function formatResults(resp, user_id) {
     result["host_id"] = user_id;
     result["title"] = resp[0]["sq_name"];
     result["payload"] = {};
+    result["error"] = null;
     resp.forEach((person) => {
         let email = person.guest_id;
         if (!(email in result.payload)) {

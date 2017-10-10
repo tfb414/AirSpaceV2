@@ -45,12 +45,12 @@ class HostRenderSurvey extends Component {
         );
     }
 
-    componentDidMount() {
-        setTimeout(
-            this.setState({
-            activatedMessage: ""
-        ) }, 2000)
-    }
+    // componentDidMount() {
+    //     setTimeout(
+    //         this.setState({
+    //         activatedMessage: ""
+    //     ) }, 2000)
+    // }
 
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
