@@ -4,13 +4,13 @@ import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
-import HostRenderSurvey from './HostRenderSurvey'
+import HostRenderSurvey from './HostRenderSurvey';
 import guid from 'guid';
 import HostRenderResults from './HostRenderResults';
-import ActivateSurvey from './ActivateSurvey'
-import HostEditSurvey from './HostEditSurvey'
-import HostEditQuiz from './HostEditQuiz'
-
+import ActivateSurvey from './ActivateSurvey';
+import HostEditSurvey from './HostEditSurvey';
+import HostEditQuiz from './HostEditQuiz';
+import HostViewClass from './HostViewClass';
 
 
 class HostDashboard extends Component {
@@ -43,12 +43,13 @@ class HostDashboard extends Component {
     }
 
     render() {
-
+        console.log(this.state.host_id);
         return (
 
             <div className="hostDash">
-                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes']} />
+                <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
                 <Switch>
+                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
                     <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey"/>} />
                     <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz"/>} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
@@ -71,11 +72,8 @@ class HostDashboard extends Component {
                 host_id: parsedData.user_id
             })
         }
-
     }
-
 
 }
 
 export default HostDashboard;
-   {/* <button onClick={this._createSurveyPayload}>Activate survey</button> */}

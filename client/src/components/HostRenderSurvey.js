@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router'
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import HostRenderResults from './HostRenderResults'
 
 class HostRenderSurvey extends Component {
@@ -37,7 +36,7 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._editSQ}>Delete</button>
+                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
                 </div>    
             )
         })
