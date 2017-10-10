@@ -5,6 +5,7 @@ export default class HostEditSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activatedMessage: "",
             waitingOnData: true,
             title: "",
             question: [],
@@ -35,7 +36,7 @@ export default class HostEditSurvey extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData === true) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage === "") {
             return (
                 <div>
                     <h3>Waiting on Survey...</h3>
@@ -126,11 +127,9 @@ export default class HostEditSurvey extends Component {
     }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  parsedData.host_id === this.props.host_id) {
-                return parsedData;
                 let results = parsedData;
                 console.log(results)
                 if (results.error === null) {
-                    console.log(results)
                     let new_form = results.payload.map((data) => {
                         return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
                     })
