@@ -6,25 +6,56 @@ class HostRenderResults extends Component {
         super(props);
         this.state = {
             host_id: this.props.host_id,
+            waitingOnData: true,
             results: {},
             nameList: [],
             questionList: {},
-            resultsReceived: false
+            activatedMessage: ""
         }
     }
 
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
-            sq_id: this.props.match.match.params.id
+            sq_id: this.props.match.match.params.id,
+            sqtype: this.props.sqtype
         };
         let resultsReceived = false;
         this.props.connection.send(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            resultsReceived = true;
-            if (resultsReceived) {
+            this._receiveMessage(parsedData);
+        }
+    }
+
+
+    render() {
+        // let questions=Object.keys(this.state.question)
+        if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            return (
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>{this.state.results.title}</h1>
+                    <RenderResultsTable name={this.state.nameList} question={this.state.questionList}/>
+                </div>
+            );
+        } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
+            return (
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
+            )
+        } else {
+            return (
+                <div className='resultBox'>
+                    <h1 className='resultTableName'>Waiting for results...</h1>
+                </div>
+            );
+        }
+    }
+    _receiveMessage = (parsedData) => {
+        if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
+            let results = parsedData;
+            if (results.error === null) {
                 let names = Object.keys(results.payload);
                 var new_nameList;
                 var new_questionList
@@ -51,36 +82,14 @@ class HostRenderResults extends Component {
                         nameList: new_nameList,
                         questionList: new_questionList,
                         results,
-                        resultsReceived: true
+                        waitingOnData: false
+                })
+            } else {
+                this.setState({
+                    activatedMessage: results.error
                 })
             }
         }
-    }
-
-
-    render() {
-        // let questions=Object.keys(this.state.question)
-        if (this.state.resultsReceived) {
-            return (
-                <div className='resultBox'>
-                    <h1 className='resultTableName'>{this.state.results.title}</h1>
-                    <RenderResultsTable name={this.state.nameList} question={this.state.questionList}/>
-                </div>
-            );
-        } else {
-            return (
-                <div className='resultBox'>
-                    <h1 className='resultTableName'>Waiting for results...</h1>
-                </div>
-            );
-        }
-    }
-    _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
-            console.log(parsedData);
-            return parsedData;
-        }
-
     }
 }
 

@@ -52,6 +52,7 @@ class HostRenderSurvey extends Component {
             }), 2000)
     }
 
+
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
