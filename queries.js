@@ -38,7 +38,7 @@ function addHostGuest(host_id, guest_id) {
 }
 
 function getGuestsForHost(host_id) {
-    return db.sequelize.query(`Select g.first_name, g.last_name, g.guest_id
+    return db.sequelize.query(`Select g.first_name, g.last_name, g.guest_id, hg.host_guest_id
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id

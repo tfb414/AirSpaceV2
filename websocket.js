@@ -154,11 +154,11 @@ function init() {
 //     guest_id: 'tfb414@gmail.com' } ]
 
 function formatGuests(resp, host_id) {
-    console.log(resp);
     let result = {};
     result["type"] = "DISPLAYGUESTS";
     result["host_id"] = host_id;
     result["payload"] = resp;
+    return result;
 }
 
 function formatSQ(resp, host_id, sqtype) {

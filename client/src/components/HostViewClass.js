@@ -27,10 +27,33 @@ class HostViewClass extends Component {
         if (this.state.waitingOnData) {
             return (
             <div>
-                <h1>Searching for you Surveys and Quizzes</h1>
+                <h1>Searching for your guests</h1>
             </div>
             )
         }
+        let classList = this.state.results.map((person) => {
+            return (
+                <tr>
+                    <td>{person.first_name}</td>
+                    <td>{person.last_name}</td>
+                    <td>{person.guest_id}</td>
+                    <td><button value={person.host_guest_id} onClick={(e)=> console.log(e.target)}>Delete</button></td>
+                </tr>
+            )
+        })
+        return (
+            <table>
+                <thead>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </thead>
+                <tbody>
+                    {classList} 
+                </tbody>
+            </table>    
+            )
+        );
     }
 
 
