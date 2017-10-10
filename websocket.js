@@ -132,8 +132,20 @@ function init() {
         
                         case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
-                                let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
+                                console.log(resp);
+                                if (resp.length !== 0) {
+                                    let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                                 sendPayload(payload, wss);
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYEDITSQ",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: "No questions found for this survey"
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                             })
                             break;
 
@@ -209,7 +221,8 @@ function formatSQEdit(resp, host_id, sqtype) {
     result["type"] = "DISPLAYEDITSQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
+    result["error"] = null;
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
