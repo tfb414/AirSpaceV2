@@ -33,23 +33,23 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             return (
                 <div>
-                    <ActivateSurvey message={this.state.activatedMessage} />
                     <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
                 </div>    
             )
         })
         return (
             <div>
+                <ActivateSurvey message={this.state.activatedMessage} />
                 {surveys}
             </div>
         );
     }
 
     componentDidMount() {
-        setTimeout(() => {
+        setTimeout(
             this.setState({
             activatedMessage: ""
-        }) }, 2000)
+        ) }, 2000)
     }
 
     _viewResults = (event) => {
@@ -102,13 +102,13 @@ class HostRenderSurvey extends Component {
                 results: results
             })
         } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
-            let results = parsedData.payload;
+            let results = parsedData;
             console.log(results)
             if (results.error === null) {
                 this.setState({
                     activatedMessage: `${results.title} has been successfully activated`
                 })
-            } else if (results.error === "no questions found") {
+            } else if (results.error === "No questions found") {
                 this.setState({
                     activatedMessage: 'Could not activate. No questions found for that survey'
                 })
