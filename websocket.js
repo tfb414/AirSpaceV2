@@ -39,7 +39,8 @@ function init() {
                     let parsedData = JSON.parse(data);
                     console.log(parsedData);
                     switch(parsedData.type) {
-                        case 'CREATESURVEYQUIZ':
+                        case 'CREATESQ':
+                            console.log(parsedData);
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
 

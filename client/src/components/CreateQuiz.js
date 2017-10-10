@@ -171,7 +171,7 @@ class CreateQuiz extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATESURVEYQUIZ',
+            type: 'CREATESQ',
             value: 'quiz',
             title: this.state.title,
             payload: question_object
