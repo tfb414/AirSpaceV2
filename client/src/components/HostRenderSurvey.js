@@ -16,7 +16,7 @@ class HostRenderSurvey extends Component {
 
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this.props.sendMessage(JSON.stringify(payload));
+        this._sendMessage(JSON.stringify(payload));
 
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
@@ -94,7 +94,13 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this.props.sendMessage(payload);
+        this._sendMessage(payload);
+    }
+
+    _sendMessage = (payload) => {
+        this.props.connection.onopen = () => {
+            this.props.connection.send(payload);
+        }
     }
 
     _receiveMessage = (parsedData) => {

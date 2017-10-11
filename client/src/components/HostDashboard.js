@@ -41,17 +41,15 @@ class HostDashboard extends Component {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
                 this._manageActiveUsers();
-
-
             };
         }
-        setInterval(() => {
-            let payload = {
-                type: "HEARTBEAT",
-            }
-            let JSONpayload = JSON.stringify(payload);
-            this.props.connection.send(JSONpayload);
-        }, 1000);
+        // setInterval(() => {
+        //     let payload = {
+        //         type: "HEARTBEAT",
+        //     }
+        //     let JSONpayload = JSON.stringify(payload);
+        //     this.props.connection.send(JSONpayload);
+        // }, 1000);
 
 
     }

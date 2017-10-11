@@ -16,6 +16,7 @@ var index = require('./routes/index');
 var host = require('./routes/host');
 var guest = require('./routes/guest');
 var websocket = require('./websocket');
+var query = require('./queries');
 
 var app = express();
 
@@ -40,11 +41,9 @@ passport.serializeUser(function (email, done) {
 
 passport.deserializeUser(function (email, done) {
     // could get entire profile during deserialization, right now just returning email
-    // db.one(`select * from users where email = '${email}'`)
-    //     .then((result) => {
-    //         done(null, result);
-    //     })
-    done(null, email);
+    query.retrieveHost(email).then((result) => {
+        done(null, result);
+    })
 });
 
 
