@@ -8,22 +8,24 @@ class GuestWaitingRoom extends Component {
         super(props);
         this.state = {
             host_id: props.host_id,
-            title: ""
-
+            title: props.title
         }
     }
 
     render() {
-        if (this.props.title !== "") {
+        console.log(this.state.title);
+        if (this.state.title !== null) {
             if (this.props.sqtype === "survey") {
                 return (
-                    <GuestRenderSurvey {... this.props}/>
+                    <GuestRenderSurvey onSubmit={() => {this.setState({title: null})}} {... this.props}/>
             )
             } else if (this.props.sqtype === "quiz") {
                 console.log('quiz')
                 return (
-                    <GuestRenderQuiz {... this.props}/>
+                    <GuestRenderQuiz onSubmit={() => {this.setState({title: null})}} {... this.props}/>
                 )
+            } else {
+
             }
             
         }
@@ -37,6 +39,12 @@ class GuestWaitingRoom extends Component {
 
         )
 
+    }
+
+    _onSubmit = () => {
+        this.setState({
+            title: ""
+        })
     }
 
 
