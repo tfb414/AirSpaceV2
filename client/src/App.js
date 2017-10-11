@@ -15,27 +15,22 @@ import HostRenderResults from './components/HostRenderResults'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      messages: ['hey']
-    }
   }
 
 
   render() {
     return (
       <div className="App">
-        {/* <div>
-          {this.state.messages.map((msg, idx) => <li key={'msg-' + idx}>{msg}</li>)}
-        </div> */}
         <BrowserRouter>
-          <div>
+        <div>
             <Switch>
-              <Route exact path="/" component={() => (<LandingPage />)} />
-              <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
-              <Route path="/Guest/" component={(match) => (<GuestRouter match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
+            <Route exact path="/" component={() => (<LandingPage />)} />
+            <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
+            <Route path="/Guest/" component={(match) => (<GuestRouter match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
             </Switch>
-          </div>
+        </div>
         </BrowserRouter>
+        </Provider>
       </div>
     );
   }

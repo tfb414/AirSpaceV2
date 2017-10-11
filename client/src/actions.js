@@ -1,6 +1,6 @@
-export const SETUSERID = 'GETUSERID';
+export const SETGUESTID = 'SETGUESTID';
 
-export function setUserId(user_id) {
-    type: SETUSERID,
-    user_id
+export function setGuestId(guest_id) {
+    type: SETGUESTID,
+    guest_id
 }
