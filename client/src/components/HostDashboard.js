@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
@@ -20,9 +22,10 @@ class HostDashboard extends Component {
             host_id: "",
             currentlyConnected: [],
         }
-        this.connection = new WebSocket(env);
     }
     componentWillMount() {
+        let connection = new WebSocket(env);
+        this.props.setConnection(connection);
         let id = guid.raw();
         let payload = {
             type: 'GETUSERID',
@@ -31,10 +34,10 @@ class HostDashboard extends Component {
         this.setState({
             host_id: id
         })
-        this.connection.onopen = () => {
+        this.props.connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
 
-            this.connection.onmessage = event => {
+            this.props.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
                 this._manageActiveUsers();
@@ -47,7 +50,7 @@ class HostDashboard extends Component {
                 type: "HEARTBEAT",
             }
             let JSONpayload = JSON.stringify(payload);
-            this.connection.send(JSONpayload);
+            this.props.connection.send(JSONpayload);
         }, 1000);
 
 
@@ -60,15 +63,15 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
                 <Switch>
-                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
-                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} sqtype="survey" />} />
-                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
+                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.props.connection} host_id={this.props.user.host_id} />} />
+                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} sqtype="survey" />} />
+                    <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.props.connection} host_id={this.props.user.host_id} payload={this.state.payload} sqtype="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
 
-                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey"/>}/>
-                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz"/>}/>
-                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey'/>}/>
-                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz'/>} />
+                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.props.connection} match={match} host_id={this.props.user.host_id} sqtype="survey"/>}/>
+                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.props.connection} match={match} host_id={this.props.user.host_id} sqtype="quiz"/>}/>
+                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.props.connection} match={match} host_id={this.props.user.host_id} sqtype='survey'/>}/>
+                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.props.connection} match={match} host_id={this.props.user.host_id} sqtype='quiz'/>} />
                 </Switch>
                 <div>
                     {this._displayConnected()}
@@ -78,7 +81,7 @@ class HostDashboard extends Component {
         )
     }
     _sendMessage = (payload) => {
-        this.connection.send(payload);
+        this.props.connection.send(payload);
     }
 
     _requestHeartbeat = () => {
@@ -149,18 +152,20 @@ class HostDashboard extends Component {
 
 }
 
-export default HostDashboard;
-
 const mapStateToProps = state => {
     return {
-    user: state.user
+    user: state.user,
+    connection: state.connection
     }
 };
 
 const mapDispatchToProps = dispatch => ({
     setHostId: (host_id) => {
-        dispatch(actions.setHostId(host_id))
+        dispatch(actions.setHostId(host_id));
+    },
+    setConnection: (connection) => {
+        dispatch(actions.setConnection(connection));
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HostDashboard));
+export default connect(mapStateToProps, mapDispatchToProps)(HostDashboard);

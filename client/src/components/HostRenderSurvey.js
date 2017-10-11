@@ -25,6 +25,7 @@ class HostRenderSurvey extends Component {
     }
 
     render() {
+        console.log(this.props.user.host_id);
         if (this.state.waitingOnData) {
             return (
                 <div>
@@ -97,14 +98,14 @@ class HostRenderSurvey extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
+        if (parsedData.type === 'DISPLAYSQLIST' && this.props.user.host_id === parsedData.host_id) {
             let results = parsedData.payload;
             console.log(results);
             this.setState({
                 waitingOnData: false,
                 results: results
             })
-        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
+        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.user.host_id === parsedData.host_id) {
             let results = parsedData;
             console.log(results)
             if (results.error === null) {
@@ -124,7 +125,8 @@ class HostRenderSurvey extends Component {
 
 const mapStateToProps = state => {
     return {
-    user: state.user
+    user: state.user,
+    connection: state.connection
     }
 };
 
