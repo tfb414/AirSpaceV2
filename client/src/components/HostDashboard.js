@@ -72,10 +72,11 @@ class HostDashboard extends Component {
                     <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey" />} />
                     <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
-                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey" />} />
-                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz" />} />
-                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
-                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
+
+                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey"/>}/>
+                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz"/>}/>
+                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey'/>}/>
+                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz'/>} />
                 </Switch>
                 <div>
                     {this._displayConnected()}

@@ -35,10 +35,10 @@ function init() {
 
                 ws.on('message', function incoming(data) {
 
+                    console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
-
-                    switch (parsedData.type) {
-                        case 'CREATESURVEYQUIZ':
+                    switch(parsedData.type) {
+                        case 'CREATESQ':
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
 
@@ -83,10 +83,20 @@ function init() {
                             break;
 
                         case 'REQUESTRESULTS':
-                            query.getSQResultsHost(parsedData.sq_id, user_id)
-                                .then((resp) => {
+                            query.getSQResultsHost(parsedData.sq_id, user_id).then((resp) => {
+                                if (resp.length !== 0) {
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYRESULTS",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: `No results found for this ${parsedData.sqtype}`
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                                 })
                             break;
 
@@ -104,6 +114,7 @@ function init() {
                                     sendPayload(payload, wss);
                                     let hostpayload = {
                                         type: "ACTIVATEDSQ",
+                                        title: resp[0]["sq_name"],
                                         sq_id: parsedData.sq_id,
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
@@ -135,10 +146,22 @@ function init() {
                             })
                             break;
 
-                        case parsedData.type === "REQUESTEDITSQ":
+        
+                        case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
-                                let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYEDITSQ",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: `No questions found for this ${parsedData.sqtype}`
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                             })
                             break;
 
@@ -202,7 +225,7 @@ function formatSQ(resp, host_id, sqtype) {
     result["type"] = "DISPLAYACTIVESQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
@@ -217,7 +240,8 @@ function formatSQEdit(resp, host_id, sqtype) {
     result["type"] = "DISPLAYEDITSQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
+    result["error"] = null;
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
@@ -274,6 +298,7 @@ function formatResults(resp, user_id) {
     result["host_id"] = user_id;
     result["title"] = resp[0]["sq_name"];
     result["payload"] = {};
+    result["error"] = null;
     resp.forEach((person) => {
         let email = person.guest_id;
         if (!(email in result.payload)) {
@@ -318,8 +343,9 @@ function addQuestionsAndAnswers(questions, sq_id) {
 
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
-        if (option.option_id !== null) {
-            query.updateOption(option.option_id, option.text, option.value);
+        let id = option.option_id;
+        if (id !== null) {
+            query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {
                 query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
