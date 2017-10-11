@@ -1,0 +1,46 @@
+.landingPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: url(https://testdrive-archive.azurewebsites.net/performance/chalkboard/Images/EmptyChalkboard.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.landingButton {
+    font-family: 'Raleway', sans-serif;
+    font-size: 3em;
+    border-radius: 5%;
+}
+
+.hostDash {
+    background-color: rgb(234, 231, 227);
+    background-blend-mode: normal;
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+}
+
+.SQComponent {
+    background-color: #eae7e3;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+}
+
+.btn-outline-primary {
+    margin-left: .7rem;
+}
+
+.branding {
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 8em;
+    text-align: center;
+    font-family: 'Homemade Apple', cursive;
+    /* font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    letter-spacing: 3px; */
+}

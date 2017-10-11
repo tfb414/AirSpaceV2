@@ -696,16 +696,38 @@ td {
 
 .hostDash > div:nth-child(1) {
   width: 45%;
+  font-family: 'Raleway', sans-serif;
   min-width: 4rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #6694ff;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); }
+  background-color: #9abcdd;
+  box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.2); }
   @media (min-width: 768px) {
     .hostDash > div:nth-child(1) {
       max-width: 15rem; } }
+
+.HostSQTable {
+  padding-left: 2rem; }
+
+.HostSQTable td {
+  border: none; }
+
+.SQTitle {
+  font-size: 1.3rem;
+  padding-bottom: 0rem;
+  padding-right: 15rem; }
+
+.HostSQRenderTitle {
+  font-size: 3em; }
+
+.SQComponent {
+  background-color: #eae7e3;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+  padding-left: 5.2rem;
+  padding-top: 1rem; }
 
 .HDNavButton {
   border: none;
@@ -844,15 +866,15 @@ td {
   align-items: center;
   justify-content: center;
   background: url(stylesheets/images/littleboard3.jpg);
-  background-size: cover;
+  background-size: contain;
   color: white; }
 
 .branding {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 4rem;
   text-align: center;
-  font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+  font-family: 'Homemade Apple', cursive; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }

@@ -97,6 +97,7 @@ function init() {
                                     let hostpayload = {
                                         type: "ACTIVATEDSQ",
                                         sq_id: parsedData.sq_id,
+                                        title: resp[0]["sq_name"],
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
                                         error: null
@@ -127,7 +128,7 @@ function init() {
                             })
                             break;
         
-                        case parsedData.type === "REQUESTEDITSQ":
+                        case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
                                 sendPayload(payload, wss);

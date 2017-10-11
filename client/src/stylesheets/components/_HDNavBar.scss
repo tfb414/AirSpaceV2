@@ -1,5 +1,6 @@
 .hostDash > div:nth-child(1) {
     width: 45%;
+    font-family: 'Raleway', sans-serif;
     min-width: 4rem;
     @include respond-to(medium) {
         max-width: 15rem;
@@ -12,6 +13,30 @@
     // align-items: flex-start;
     // justify-content: flex-start;
     // background-color: $othernav;
-    background-color: $bligblue;
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+    background-color: #9abcdd;
+    box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.2);
+}
+.HostSQTable{
+    padding-left: 2rem;
+}
+
+.HostSQTable td{
+    border: none;
+}
+.SQTitle{
+    font-size: 1.3rem;
+    padding-bottom: 0rem;
+    padding-right: 15rem;
+}
+
+.HostSQRenderTitle{
+    font-size: 3em
+}
+
+.SQComponent {
+    background-color: #eae7e3;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    padding-left: 5.2rem;
+    padding-top: 1rem;
 }

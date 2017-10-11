@@ -129,6 +129,7 @@ export default class HostEditSurvey extends Component {
 
     }
     _receiveMessage = (parsedData) => {
+        console.log(parsedData)
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  parsedData.host_id === this.props.host_id) {
                 return parsedData;
         } 
