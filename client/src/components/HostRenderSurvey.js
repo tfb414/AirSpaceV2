@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router'
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 import HostRenderResults from './HostRenderResults'
 import ActivateSurvey from './ActivateSurvey.js'
 
@@ -120,5 +122,21 @@ class HostRenderSurvey extends Component {
 
 }
 
+const mapStateToProps = state => {
+    return {
+    user: state.user
+    }
+};
 
-export default withRouter(HostRenderSurvey);
+const mapDispatchToProps = dispatch => ({
+    setHostId: (host_id) => {
+        dispatch(actions.setHostId(host_id))
+    }
+})
+
+const CounterContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Counter);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HostRenderSurvey));
