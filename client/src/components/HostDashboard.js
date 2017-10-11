@@ -39,38 +39,30 @@ class HostDashboard extends Component {
             this.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
+                this._manageActiveUsers();
 
 
             };
         }
-
-
-
-    }
-
-    componentDidMount() {
         setInterval(() => {
             let payload = {
                 type: "HEARTBEAT",
             }
             let JSONpayload = JSON.stringify(payload);
             this.connection.send(JSONpayload);
-            this._manageActiveUsers();
-
-
         }, 1000);
+
+
     }
+
+    // componentDidMount() {
+
+    // }
 
 
 
     render() {
-        let displayConnected = this.state.currentlyConnected.map((guest) => {
-            return (
-                <div>
-                    {guest[0]} Timer: {guest[1]}
-                </div>
-            )
-        })
+
         return (
 
             <div className="hostDash">
@@ -85,6 +77,9 @@ class HostDashboard extends Component {
                     <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
                     <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} />} />
                 </Switch>
+                <div>
+                    {this._displayConnected()}
+                </div>
             </div>
 
         )
@@ -147,6 +142,16 @@ class HostDashboard extends Component {
                 currentlyConnected: currentlyConnected
             })
         }
+    }
+
+    _displayConnected = () => {
+        return this.state.currentlyConnected.map((guest) => {
+            return (
+                <div>
+                    {guest[0]} Timer: {guest[1]}
+                </div>
+            )
+        })
     }
 
 }
