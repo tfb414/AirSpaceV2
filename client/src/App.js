@@ -24,9 +24,9 @@ class App extends Component {
         <BrowserRouter>
         <div>
             <Switch>
-            <Route exact path="/" component={() => (<LandingPage />)} />
-            <Route path="/Host/" component={(match) => (<HostDashboard match={match} sendMessage={this._sendMessage} />)} />
-            <Route path="/Guest/" component={(match) => (<GuestRouter match={match} sendMessage={this._sendMessage} message={this.state.messages} />)} />
+            <Route exact path="/" component={<LandingPage />} />
+            <Route path="/Host/" component={(match) => (<HostDashboard match={match} />)} />
+            <Route path="/Guest/" component={(match) => (<GuestRouter match={match} />)} />
             </Switch>
         </div>
         </BrowserRouter>
@@ -39,9 +39,3 @@ class App extends Component {
 }
 
 export default App;
-
-//  {this.state.hosts.map(host =>
-//           <div key={host.host_id}>{host.first_name} {host.last_name} {host.email}</div>
-//         )}
-
-// payload={[{ first_name: "Aaron", last_name: "Sosa", question: [{ text: "Do you like Dogs or cats?", response: "Dogs" }, { text: "Are you happy?", response: "Yes"}]}, { first_name: "Tim", last_name: "Brady", question: [{ text: "Do you like Dogs or cats?", response: "Cats" }, { text: "Are you happy?", response: "Yes"}]}]}
