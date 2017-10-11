@@ -8,19 +8,9 @@ const user = (state={}, action) => {
             newState["guest_id"] = action.guest_id;
             return newState;
 
-        case actions.DECREMENT:
+        case actions.SETHOSTID:
             newState = {...state};
-            newState[action.id].count -= 1;
-            return newState;
-
-        case actions.ADD_COUNTER:
-            newState = {...state};
-            newState[action.id] = {id: action.id, count: action.count }
-            return newState;
-        
-        case actions.REMOVE_COUNTER:
-            newState = {...state};
-            delete newState[action.id];
+            newState["host_id"] = action.host_id;
             return newState;
 
         default:

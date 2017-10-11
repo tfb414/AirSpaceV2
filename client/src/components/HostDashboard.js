@@ -18,8 +18,6 @@ class HostDashboard extends Component {
         super(props);
         this.state = {
             host_id: "",
-            surveyResults: [{ text: "Survey 1", sq_id: "" }, { text: "Survey 2", sq_id: "2" }],
-            quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }],
             currentlyConnected: [],
         }
         this.connection = new WebSocket(env);
