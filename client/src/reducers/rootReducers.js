@@ -17,3 +17,18 @@ const user = (state={}, action) => {
             return state;
     }
 }
+
+const connection = (state="", action) => {
+    switch(action.type) {
+        case actions.SETCONNECTION:
+            return connection;
+        default:
+            return state;
+    }
+}
+
+const rootReducer = combineReducers({
+    user
+})
+
+export default rootReducer;

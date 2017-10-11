@@ -53,12 +53,6 @@ class HostDashboard extends Component {
 
     }
 
-    // componentDidMount() {
-
-    // }
-
-
-
     render() {
 
         return (
@@ -67,7 +61,7 @@ class HostDashboard extends Component {
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
                 <Switch>
                     <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
-                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey" />} />
+                    <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} sqtype="survey" />} />
                     <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
 
@@ -97,7 +91,7 @@ class HostDashboard extends Component {
 
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
-            console.log(parsedData);
+            this.props.setHostId(parsedData.user_id);
             this.setState({
                 host_id: parsedData.user_id
             })
@@ -156,4 +150,17 @@ class HostDashboard extends Component {
 }
 
 export default HostDashboard;
-{/* <button onClick={this._createSurveyPayload}>Activate survey</button> */ }
+
+const mapStateToProps = state => {
+    return {
+    user: state.user
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    setHostId: (host_id) => {
+        dispatch(actions.setHostId(host_id))
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HostDashboard));

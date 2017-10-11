@@ -128,15 +128,10 @@ const mapStateToProps = state => {
     }
 };
 
-const mapDispatchToProps = dispatch => ({
-    setHostId: (host_id) => {
-        dispatch(actions.setHostId(host_id))
-    }
-})
+// const mapDispatchToProps = dispatch => ({
+//     setHostId: (host_id) => {
+//         dispatch(actions.setHostId(host_id))
+//     }
+// })
 
-const CounterContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Counter);
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HostRenderSurvey));
+export default connect(mapStateToProps)(withRouter(HostRenderSurvey));
