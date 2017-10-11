@@ -34,10 +34,10 @@ class HostDashboard extends Component {
         this.setState({
             host_id: id
         })
-        this.props.connection.onopen = () => {
+        connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
 
-            this.props.connection.onmessage = event => {
+            connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
                 this._manageActiveUsers();
@@ -85,7 +85,6 @@ class HostDashboard extends Component {
     }
 
     _requestHeartbeat = () => {
-        console.log('heartbeat')
         let payload = {
             type: "HEARTBEAT",
         }
@@ -117,7 +116,6 @@ class HostDashboard extends Component {
             guest[1] -= 1;
             return guest[1] > 0
         })
-        console.log(currentCount)
         this.setState({
             currentlyConnected: currentCount
         })

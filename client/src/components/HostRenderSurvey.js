@@ -79,7 +79,7 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this.props.sendMessage(payload);
+        this._sendMessage(payload);
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys`)
         } else if (this.props.sqtype === 'quiz') {
