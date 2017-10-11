@@ -23,7 +23,9 @@ function init() {
     wss.on('connection', function connection(ws, req) {
         sessionmanager.sharedSession(req, {}, function () {
             req.session.save(function () {
-                let user_id = req.session.passport.user;
+                let user_id = req.session.passport.user.email;
+                let first_name = req.session.passport.user.firstname;
+                let last_name = req.session.passport.user.lastname;
 
                 // wss.clients.forEach(function each(client) {
                 // if (client !== ws && client.readyState === WebSocket.OPEN) {

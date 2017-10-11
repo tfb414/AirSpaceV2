@@ -34,16 +34,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 /************************************************************* GOOGLE OAUTH *************/
-passport.serializeUser(function (email, done) {
+passport.serializeUser(function (user, done) {
     // saves user's email under req.session.passport.user
-    done(null, email);
+    done(null, user);
 });
 
-passport.deserializeUser(function (email, done) {
+passport.deserializeUser(function (user, done) {
     // could get entire profile during deserialization, right now just returning email
-    query.retrieveHost(email).then((result) => {
-        done(null, result);
-    })
+            done(null, user);
 });
 
 
@@ -59,7 +57,7 @@ passport.use('host', new GoogleStrategy({
         lastname = lastname.replace("'", "''");
         let email = profile.emails[0].value;
         queries.upsertHost(email, firstname, lastname);
-        done(null, email);
+        done(null, {email, firstname, lastname});
     }))
 
 passport.use('guest', new GoogleStrategy({
@@ -74,7 +72,7 @@ passport.use('guest', new GoogleStrategy({
         lastname = lastname.replace("'", "''");
         let email = profile.emails[0].value;
         queries.upsertGuest(email, firstname, lastname);
-        done(null, email);
+        done(null, {email, firstname, lastname});
     }))
 
 // Express and Passport Session
