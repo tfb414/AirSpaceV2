@@ -23,7 +23,7 @@ class HostRenderSurvey extends Component {
         }
         setInterval(() => {
             let counter = 1 + this.state.refresh
-            if (counter < 3) {
+            if (counter < 4) {
                 this.setState({
                 refresh: counter
             })
@@ -48,10 +48,11 @@ class HostRenderSurvey extends Component {
             return (
                 <tr className="SQFunctions">
                     <td className="SQTitle">
-                        <p>{data.sq_name}</p>  
+                        <p>{data.sq_name}</p>
+                        <hr />
                     </td>
                     <td>
-                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._viewResults}>View Results</button>
+                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._viewResults}>Results</button>
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._editSQ}>Edit</button>
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
@@ -63,8 +64,11 @@ class HostRenderSurvey extends Component {
         title = title.charAt(0).toUpperCase() + title.slice(1)
         return (
             <div className="SQComponent">
-                <h1 className="HostSQRenderTitle">{title}</h1>
-                <ActivateSurvey message={this.state.activatedMessage} />
+                <div className="HostSQRenderTitleActivate">
+                        <h1 className="HostSQRenderTitle">{title}</h1>
+                        <ActivateSurvey message={this.state.activatedMessage} /> 
+                </div> 
+                <hr className="TitleHR"/>
                 <table className="HostSQTable">
                     {surveys}
                 </table>

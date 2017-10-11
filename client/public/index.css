@@ -31,8 +31,12 @@
     font-family: 'Raleway', sans-serif;
 }
 
-.btn-outline-primary {
-    margin-left: .7rem;
+.btn-outline-secondary {
+    color: #fefdfb;
+    background-color: #97c2c1;
+    margin-right: .7rem;
+    background-image: none;
+    /* border-color: #97c2c1; */
 }
 
 .branding {

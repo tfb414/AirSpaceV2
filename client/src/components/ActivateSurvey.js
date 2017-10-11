@@ -1,15 +1,17 @@
 import React from 'react'
 
 const ActivateSurvey = ({ message }) => {
-    if (message === "") {
-        return (
-        <span></span>
-        )
+    let componentClasses = ["ActivateSurvey"]
+    if (message !== "") {
+        componentClasses.push('show')
     } else {
-        return (
-            <span>{ message }</span>
-        )
+        componentClasses.push('hidden')
     }
+
+    return (
+        <p className={componentClasses.join(' ')}>{ message }</p>
+    )
+    
     
 }
 
