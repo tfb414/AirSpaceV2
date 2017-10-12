@@ -9,6 +9,7 @@ export function createArrayOfFirstThings(array, number) {
 }
 
 export function manageActiveUsers() {
+    console.log('manageactiveusers')
     let currentCount = this.state.currentlyConnected.filter((guest) => {
         guest[1] -= 1;
         return guest[1] > 0
@@ -20,6 +21,8 @@ export function manageActiveUsers() {
 }
 
 export function receivedGuestHeartbeat(parsedData) {
+    console.log('recievedguestHeartbeat')
+    console.log(parsedData)
     var currentlyConnected = this.state.currentlyConnected
     let arrayOfFirstThings = this.createArrayOfFirstThings(currentlyConnected, 0)
     if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
@@ -37,22 +40,12 @@ export function receivedGuestHeartbeat(parsedData) {
 }
 
 export function displayConnected() {
-    let numberOfGuests = () => {
-        if (this.state.currentlyConnected) {
-            return 0;
-        }
-        else return this.state.currentlyConnected;
-    }
-    console.log(numberOfGuests());
-    // return (
-    //     <div>
-    //         Guests Connected: {numberOfGuests()}
-    //     </div>
-    // )
+    let numberOfGuests = this.state.currentlyConnected.length
+
+    return (
+        <div>
+            Guests Connected: {numberOfGuests}
+        </div>
+    )
 }
 
-export function multiply() {
-    this.setState({
-        statement: 'THIS IS A THING'
-    }, console.log(this.state.statement))
-}

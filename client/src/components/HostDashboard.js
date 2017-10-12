@@ -84,7 +84,7 @@ class HostDashboard extends Component {
                     <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey' />} />
                     <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz' />} />
                 </Switch>
-
+                {/* <div>{this.displayConnected()}</div> */}
             </div>
 
 

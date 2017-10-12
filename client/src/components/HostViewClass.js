@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
-
+import env from '../utility/env';
 
 class HostViewClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
             waitingOnData: true,
+            currentlyConnected: []
         }
+        this.connection = new WebSocket(env);
 
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
@@ -24,14 +26,26 @@ class HostViewClass extends Component {
             if (parsedData.type === "DISPLAYGUESTS") {
                 let results = this._receiveMessage(parsedData);
                 console.log(results);
-
                 this.setState({
                     waitingOnData: false,
-                    results: results
+                    results: results,
                 })
             }
 
+            this._receiveMessage(parsedData);
+            this.manageActiveUsers();
+
         }
+
+    }
+    componentDidMount() {
+        setInterval(() => {
+            let payload = {
+                type: "HEARTBEAT",
+            }
+            let JSONpayload = JSON.stringify(payload);
+            this.connection.send(JSONpayload);
+        }, 1000);
     }
 
     render() {
@@ -44,20 +58,31 @@ class HostViewClass extends Component {
         }
 
         let classList = this.state.results.map((person, idx) => {
-            let status = this.props.currentlyConnected.filter((status) => {
+            let onlineStatus = this.state.currentlyConnected.filter((status) => {
                 return person.guest_id === status[0]
             })
-            console.log(status);
-            console.log('THIS IS ' + status)
+            console.log(onlineStatus)
+            if (onlineStatus.length === 0) {
+                return (
+                    <tr>
+                        <td>offline</td>
+                        <td>{person.first_name}</td>
+                        <td>{person.last_name}</td>
+                        <td>{person.guest_id}</td>
+                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                    </tr>
+                )
+            }
             return (
                 <tr>
-                    <td>{status[0]}</td>
+                    <td>online</td>
                     <td>{person.first_name}</td>
                     <td>{person.last_name}</td>
                     <td>{person.guest_id}</td>
                     <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
                 </tr>
             )
+
         })
         return (
             <div>
@@ -87,9 +112,14 @@ class HostViewClass extends Component {
     }
 
     _receiveMessage = (parsedData) => {
+
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
             return parsedData.payload;
         }
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
+            this.receivedGuestHeartbeat(parsedData)
+        }
+
 
 
     }
