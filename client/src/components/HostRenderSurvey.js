@@ -19,36 +19,32 @@ class HostRenderSurvey extends Component {
 
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this.connection.onopen = () => {
-            this._sendMessage(JSON.stringify(payload));
+        this._sendMessage(JSON.stringify(payload));
 
-            this.connection.onmessage = event => {
-                let parsedData = JSON.parse(event.data);
-                this._receiveMessage(parsedData);
-            }
+        this.connection.onmessage = event => {
+            let parsedData = JSON.parse(event.data);
+            this._receiveMessage(parsedData);
         }
-        setInterval(() => {
-            let counter = 1 + this.state.refresh
-            if (counter < 4) {
-                this.setState({
-                refresh: counter
-            })
-            } else {
-                this.setState({
-                    refresh: counter,
-                    activatedMessage: ""
-                })
-            }
+        // setInterval(() => {
+        //     let counter = 1 + this.state.refresh
+        //     if (counter < 4) {
+        //         this.setState({
+        //         refresh: counter
+        //     })
+        //     } else {
+        //         this.setState({
+        //             refresh: counter,
+        //             activatedMessage: ""
+        //         })
+        //     }
             
-        }, 1000)
+        // }, 1000)
     }
 
     render() {
-        console.log(this.props.user.host_id);
-        console.log(this.props);
+        console.log(this.props.host_id);
         if (this.state.waitingOnData) {
             return (
-
             <div className="SQComponent">   
             </div>
             )
@@ -70,10 +66,11 @@ class HostRenderSurvey extends Component {
                 </tr>  
             )
         })
+        let title;
         if (this.props.sqtype === 'survey') {
-            let title = "Your Surveys"
+            title = "Your Surveys"
         } else {
-            let title = "Your Quizzes"
+            title = "Your Quizzes"
         }
         return (
             <div className="SQComponent">
@@ -87,6 +84,10 @@ class HostRenderSurvey extends Component {
                 </table>
             </div>
         );
+    }
+
+    _sendMessage = (payload) => {
+        this.connection.send(payload);
     }
 
     _viewResults = (event) => {
@@ -130,19 +131,15 @@ class HostRenderSurvey extends Component {
         this._sendMessage(payload);
     }
 
-    _sendMessage = (payload) => {
-        this.connection.send(payload);
-    }
-
     _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYSQLIST' && this.props.user.host_id === parsedData.host_id) {
+        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
             let results = parsedData.payload;
             console.log(results);
             this.setState({
                 waitingOnData: false,
                 results: results
             })
-        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.user.host_id === parsedData.host_id) {
+        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
             let results = parsedData;
             console.log(results)
             if (results.error === null) {
@@ -162,12 +159,15 @@ class HostRenderSurvey extends Component {
 
 }
 
-const mapStateToProps = state => {
-    return {
-    user: state.user,
-    connection: state.connection
-    }
-};
+
+export default withRouter(HostRenderSurvey);
+
+// const mapStateToProps = state => {
+//     return {
+//     user: state.user,
+//     connection: state.connection
+//     }
+// };
 
 // const mapDispatchToProps = dispatch => ({
 //     setHostId: (host_id) => {
@@ -175,4 +175,4 @@ const mapStateToProps = state => {
 //     }
 // })
 
-export default connect(mapStateToProps)(withRouter(HostRenderSurvey));
+// export default connect(mapStateToProps)(withRouter(HostRenderSurvey));
