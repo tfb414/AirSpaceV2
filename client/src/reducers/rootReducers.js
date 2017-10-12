@@ -18,7 +18,7 @@ const user = (state={}, action) => {
     }
 }
 
-const connection = (state= null, action) => {
+const connection = (state={}, action) => {
     switch(action.type) {
         case actions.SETCONNECTION:
             return action.connection;

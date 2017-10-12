@@ -9,24 +9,32 @@ import ActivateSurvey from './ActivateSurvey.js'
 class HostRenderSurvey extends Component {
     constructor(props) {
         super(props);
+        console.log('hay i am HostRenderSurvey');
         this.state = {
             activatedMessage: "",
             refresh: 0,
             waitingOnData: true
         }
-        this.connection = new WebSocket(env);
     }
 
-    componentWillMount() {
+
+    // this used to be componentWillMount
+    componentWillReceiveProps(nextProps){
+
+        console.log('running componentWillUpdate(nextProps)');
+        console.log(this.props.connection);
+            
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this.connection.onopen = () => {
+        // nextProps.connection.onopen = () => {
+            console.log('is this happening?')
             this._sendMessage(JSON.stringify(payload));
 
-            this.connection.onmessage = event => {
+            nextProps.connection.onmessage = event => {
+                console.log('are we getting messages?')
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
             }
-        }
+        // }
         setInterval(() => {
             let counter = 1 + this.state.refresh
             if (counter < 4) {
@@ -43,15 +51,16 @@ class HostRenderSurvey extends Component {
         }, 1000)
     }
 
-    componentWillUnmount() {
-        window.onbeforeunload = function() {
-            this.connection.onclose = function () {}; // disable onclose handler first
-            this.connection.close()
-        }
-    };
+    // componentWillUnmount() {
+    //     window.onbeforeunload = function() {
+    //         this.connection.onclose = function () {}; // disable onclose handler first
+    //         this.connection.close()
+    //     }
+    // };
 
     render() {
-        console.log(this.props.host_id);
+        console.log(this.props.derp);
+        console.log(this.props.user.host_id);
         if (this.state.waitingOnData) {
             return (
             <div className="SQComponent">   
@@ -96,7 +105,7 @@ class HostRenderSurvey extends Component {
     }
 
     _sendMessage = (payload) => {
-        this.connection.send(payload);
+        this.props.connection.send(payload);
     }
 
     _viewResults = (event) => {
@@ -141,14 +150,14 @@ class HostRenderSurvey extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
+        if (parsedData.type === 'DISPLAYSQLIST' && this.props.user.host_id === parsedData.host_id) {
             let results = parsedData.payload;
             console.log(results);
             this.setState({
                 waitingOnData: false,
                 results: results
             })
-        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
+        } else if (parsedData.type === "ACTIVATEDSQ" && this.props.user.host_id === parsedData.host_id) {
             let results = parsedData;
             console.log(results)
             if (results.error === null) {
@@ -172,9 +181,10 @@ class HostRenderSurvey extends Component {
 export default withRouter(HostRenderSurvey);
 
 // const mapStateToProps = state => {
+//     console.log('when does this run?')
 //     return {
-//     user: state.user,
-//     connection: state.connection
+//         user: state.user,
+//         connection: state.connection
 //     }
 // };
 
