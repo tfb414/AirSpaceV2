@@ -18,11 +18,13 @@ class HostRenderSurvey extends Component {
 
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this._sendMessage(JSON.stringify(payload));
+        this.connection.onopen = () => {
+            this._sendMessage(JSON.stringify(payload));
 
-        this.connection.onmessage = event => {
-            let parsedData = JSON.parse(event.data);
-            this._receiveMessage(parsedData);
+            this.connection.onmessage = event => {
+                let parsedData = JSON.parse(event.data);
+                this._receiveMessage(parsedData);
+            }
         }
     }
 
@@ -51,12 +53,12 @@ class HostRenderSurvey extends Component {
         );
     }
 
-    componentDidMount() {
-        setTimeout(
-            this.setState({
-                activatedMessage: ""
-            }), 2000)
-    }
+    // componentDidMount() {
+    //     setTimeout(
+    //         this.setState({
+    //             activatedMessage: ""
+    //         }), 2000)
+    // }
 
 
     _viewResults = (event) => {
