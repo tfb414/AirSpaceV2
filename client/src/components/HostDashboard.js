@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import env from '../utility/env';
+import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
@@ -12,7 +13,6 @@ import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
 
-
 class HostDashboard extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +23,12 @@ class HostDashboard extends Component {
             currentlyConnected: [],
         }
         this.connection = new WebSocket(env);
+
+        this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
+        this.manageActiveUsers = manageActiveUsers.bind(this);
+        this.receivedGuestHeartbeat = receivedGuestHeartbeat.bind(this);
+        this.displayConnected = displayConnected.bind(this);
+
     }
     componentWillMount() {
         let id = guid.raw();
@@ -39,11 +45,17 @@ class HostDashboard extends Component {
             this.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
-                this._manageActiveUsers();
+                this.manageActiveUsers();
 
 
             };
         }
+
+
+
+    }
+
+    componentDidMount() {
         setInterval(() => {
             let payload = {
                 type: "HEARTBEAT",
@@ -51,13 +63,7 @@ class HostDashboard extends Component {
             let JSONpayload = JSON.stringify(payload);
             this.connection.send(JSONpayload);
         }, 1000);
-
-
     }
-
-    // componentDidMount() {
-
-    // }
 
 
 
@@ -68,20 +74,21 @@ class HostDashboard extends Component {
             <div className="hostDash">
                 <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
                 <Switch>
-                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} />} />
+                    <Route exact path="/Host/Your Class/" component={() => <HostViewClass sendMessage={this._sendMessage} connection={this.connection} host_id={this.state.host_id} currentlyConnected={this.state.currentlyConnected} />} />
                     <Route exact path="/Host/Your Surveys/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} sqtype="survey" />} />
                     <Route exact path="/Host/Your Quizzes/" component={(match) => <HostRenderSurvey sendMessage={this._sendMessage} match={match} connection={this.connection} host_id={this.state.host_id} payload={this.state.payload} sqtype="quiz" />} />
                     <Route path="/Host/Create" component={() => <Create sendMessage={this._sendMessage} />} />
 
-                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey"/>}/>
-                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz"/>}/>
-                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey'/>}/>
-                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz'/>} />
+                    <Route exact path="/Host/Your Surveys/Edit/:id" component={(match) => <HostEditSurvey sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="survey" />} />
+                    <Route exact path="/Host/Your Quizzes/Edit/:id" component={(match) => <HostEditQuiz sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype="quiz" />} />
+                    <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey' />} />
+                    <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz' />} />
                 </Switch>
-                <div>
-                    {this._displayConnected()}
-                </div>
+                {/* <div>{this.displayConnected()}</div> */}
             </div>
+
+
+
 
         )
     }
@@ -105,55 +112,56 @@ class HostDashboard extends Component {
             })
         }
         if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
-            this._receivedGuestHeartbeat(parsedData)
+            this.receivedGuestHeartbeat(parsedData)
         }
 
     }
 
 
-    _createArrayOfFirstThings = (array, number) => {
-        return array.map((thing) => {
-            return thing[number];
-        })
-    }
 
-    _manageActiveUsers = () => {
-        let currentCount = this.state.currentlyConnected.filter((guest) => {
-            guest[1] -= 1;
-            return guest[1] > 0
-        })
-        console.log(currentCount)
-        this.setState({
-            currentlyConnected: currentCount
-        })
-    }
 
-    _receivedGuestHeartbeat(parsedData) {
-        var currentlyConnected = this.state.currentlyConnected
-        let arrayOfFirstThings = this._createArrayOfFirstThings(currentlyConnected, 0)
-        if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
-            currentlyConnected.push([parsedData.guest_id, 3])
-            this.setState({
-                currentlyConnected: currentlyConnected
-            })
-        }
-        else {
-            currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = 3
-            this.setState({
-                currentlyConnected: currentlyConnected
-            })
-        }
-    }
+    // _createArrayOfFirstThings = (array, number) => {
+    //     return array.map((thing) => {
+    //         return thing[number];
+    //     })
+    // }
 
-    _displayConnected = () => {
-        return this.state.currentlyConnected.map((guest) => {
-            return (
-                <div>
-                    {guest[0]} Timer: {guest[1]}
-                </div>
-            )
-        })
-    }
+    // _manageActiveUsers = () => {
+    //     let currentCount = this.state.currentlyConnected.filter((guest) => {
+    //         guest[1] -= 1;
+    //         return guest[1] > 0
+    //     })
+    //     console.log(currentCount)
+    //     this.setState({
+    //         currentlyConnected: currentCount
+    //     })
+    // }
+
+    // _receivedGuestHeartbeat(parsedData) {
+    //     var currentlyConnected = this.state.currentlyConnected
+    //     let arrayOfFirstThings = this._createArrayOfFirstThings(currentlyConnected, 0)
+    //     if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
+    //         currentlyConnected.push([parsedData.guest_id, 3])
+    //         this.setState({
+    //             currentlyConnected: currentlyConnected
+    //         })
+    //     }
+    //     else {
+    //         currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = 3
+    //         this.setState({
+    //             currentlyConnected: currentlyConnected
+    //         })
+    //     }
+    // }
+
+    // _displayConnected = () => {
+    //     let numberOfGuests = this.state.currentlyConnected.length;
+    //     return (
+    //         <div>
+    //             Guests Connected: {numberOfGuests}
+    //         </div>
+    //     )
+    // }
 
 }
 
