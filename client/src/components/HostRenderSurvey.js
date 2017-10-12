@@ -19,27 +19,36 @@ class HostRenderSurvey extends Component {
 
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this._sendMessage(JSON.stringify(payload));
+        this.connection.onopen = () => {
+            this._sendMessage(JSON.stringify(payload));
 
-        this.connection.onmessage = event => {
-            let parsedData = JSON.parse(event.data);
-            this._receiveMessage(parsedData);
+            this.connection.onmessage = event => {
+                let parsedData = JSON.parse(event.data);
+                this._receiveMessage(parsedData);
+            }
         }
-        // setInterval(() => {
-        //     let counter = 1 + this.state.refresh
-        //     if (counter < 4) {
-        //         this.setState({
-        //         refresh: counter
-        //     })
-        //     } else {
-        //         this.setState({
-        //             refresh: counter,
-        //             activatedMessage: ""
-        //         })
-        //     }
+        setInterval(() => {
+            let counter = 1 + this.state.refresh
+            if (counter < 4) {
+                this.setState({
+                refresh: counter
+            })
+            } else {
+                this.setState({
+                    refresh: counter,
+                    activatedMessage: ""
+                })
+            }
             
-        // }, 1000)
+        }, 1000)
     }
+
+    componentWillUnmount() {
+        window.onbeforeunload = function() {
+            this.connection.onclose = function () {}; // disable onclose handler first
+            this.connection.close()
+        }
+    };
 
     render() {
         console.log(this.props.host_id);

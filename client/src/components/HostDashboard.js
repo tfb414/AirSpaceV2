@@ -64,6 +64,13 @@ class HostDashboard extends Component {
 
     }
 
+    componentWillUnmount() {
+        window.onbeforeunload = function() {
+            this.connection.onclose = function () {}; // disable onclose handler first
+            this.connection.close()
+        }
+    };
+
     render() {
 
         return (
