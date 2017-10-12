@@ -1,13 +1,10 @@
 import React from 'react'
 
-
-
 export function createArrayOfFirstThings(array, number) {
     return array.map((thing) => {
         return thing[number];
     })
 }
-
 export function manageActiveUsers() {
     console.log('manageactiveusers')
     let currentCount = this.state.currentlyConnected.filter((guest) => {
@@ -19,7 +16,6 @@ export function manageActiveUsers() {
         currentlyConnected: currentCount
     })
 }
-
 export function receivedGuestHeartbeat(parsedData) {
     console.log('recievedguestHeartbeat')
     console.log(parsedData)
@@ -38,7 +34,6 @@ export function receivedGuestHeartbeat(parsedData) {
         })
     }
 }
-
 export function displayConnected() {
     let numberOfGuests = this.state.currentlyConnected.length
 

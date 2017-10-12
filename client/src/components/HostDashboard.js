@@ -111,7 +111,7 @@ class HostDashboard extends Component {
                 host_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST' && parsedData.id === this.state.host_id) {
             this.receivedGuestHeartbeat(parsedData)
         }
 

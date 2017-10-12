@@ -116,7 +116,7 @@ class HostViewClass extends Component {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
             return parsedData.payload;
         }
-        if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
             this.receivedGuestHeartbeat(parsedData)
         }
 
