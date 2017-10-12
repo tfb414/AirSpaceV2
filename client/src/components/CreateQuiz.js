@@ -13,7 +13,7 @@ class CreateQuiz extends Component {
                 {
                     question_number: 1,
                     text: "",
-                    options: [{ text: "", value: true }, { text: "", value: false }],
+                    options: [{ text: "", value: true, option_id: null }, { text: "", value: false, option_id: null }],
                 },
             ]
         }
@@ -87,7 +87,7 @@ class CreateQuiz extends Component {
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
         let new_form = this.state.question
         var new_num = new_form.length + 1
-        let new_object = { question_number: new_num, text: "", options: [{ text: "", value: true }, { text: "", value: false }] }                     // adding the new object to this.state.question
+        let new_object = { question_number: new_num, text: "", options: [{ text: "", value: true, option_id: null }, { text: "", value: false, option_id: null }] }                     // adding the new object to this.state.question
         new_form.push(new_object)
         this.setState({
             question: new_form
@@ -97,7 +97,7 @@ class CreateQuiz extends Component {
     _addOption = (event) => {
         let new_form = this.state.question
         let index = Number(event.target.getAttribute('target') - 1)
-        let new_object = { text: "", value: false }
+        let new_object = { text: "", value: false, option_id: null }
         new_form[index].options.push(new_object)
         this.setState({
             question: new_form
@@ -171,7 +171,7 @@ class CreateQuiz extends Component {
             return data
         }, {})
         let payload = {
-            type: 'CREATESURVEYQUIZ',
+            type: 'CREATESQ',
             value: 'quiz',
             title: this.state.title,
             payload: question_object

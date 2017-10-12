@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SurveyQuestionInput from './SurveyQuestionInput.js';
 import { withRouter } from 'react-router';
+import guid from 'guid';
 
 class HostEditSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activatedMessage: "",
             waitingOnData: true,
             title: "",
             question: [],
@@ -14,22 +16,23 @@ class HostEditSurvey extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.match.match.params.id)
-        let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
-        this.props.sendMessage(JSON.stringify(payload));
-   
-        this.props.connection.onmessage = event => {
-            let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            console.log(results)
-            let new_form = results.payload.map((data) => {
-                return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
-            })
-            this.setState({
-                title: results.title,
-                waitingOnData: false,
-                question: new_form
-            })
+        let id = guid.raw();
+        let payload = {
+            type: 'GETUSERID',
+            id: id
+        };
+        this.setState({
+            host_id: id
+        })
+        this.connection.onopen = () => {
+            this._sendMessage(JSON.stringify(payload));
+            let newpayload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
+            this._sendMessage(JSON.stringify(newpayload));
+            this.props.connection.onmessage = event => {
+                console.log(parsedData);
+                let parsedData = JSON.parse(event.data);
+                this._receiveMessage(parsedData);
+            }
         }
     }
 
@@ -45,14 +48,19 @@ class HostEditSurvey extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData === true) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage === "") {
             return (
                 <div>
                     <h3>Waiting on Survey...</h3>
                 </div>
             )
-        }
-        else if (this.state.waitingOnData === false) {
+        } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
+            return (
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
+            )
+        } else if (this.state.waitingOnData === false) {
             let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
             return <SurveyQuestionInput num={data.question_number} value={data.text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
 
@@ -76,6 +84,12 @@ class HostEditSurvey extends Component {
         }
         
 
+    }
+
+    _sendMessage = (payload) => {
+        this.props.connection.onopen = () => {
+            this.connection.send(payload);
+        }
     }
 
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
@@ -110,8 +124,9 @@ class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
+
         console.log(this._createPayload())
-        this.props.sendMessage(this._createPayload());
+        this._sendMessage(this._createPayload());
         setTimeout(() => { 
             this.props.history.push('/Host/Your Surveys/')
         }, 100)  
@@ -133,9 +148,31 @@ class HostEditSurvey extends Component {
 
     }
     _receiveMessage = (parsedData) => {
+
         console.log(parsedData)
-        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  parsedData.host_id === this.props.host_id) {
-                return parsedData;
+
+        if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
+            console.log(parsedData);
+            this.setState({
+                host_id: parsedData.user_id
+            })
+        }
+        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id || parsedData.host_id === this.state.host_id)) {
+            let results = parsedData;
+            if (results.error === null) {
+                let new_form = results.payload.map((data) => {
+                    return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
+                })
+                this.setState({
+                    title: results.title,
+                    waitingOnData: false,
+                    question: new_form
+                })
+            } else {
+                this.setState({
+                    activatedMessage: results.error
+                })
+            }
         } 
     }
 }

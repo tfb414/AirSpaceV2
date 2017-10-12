@@ -34,14 +34,14 @@ function init() {
                 // });
 
                 ws.on('message', function incoming(data) {
+
                     console.log("WE GOT A MESSAGE");
-                    // console.log(data);
                     let parsedData = JSON.parse(data);
-                    console.log(parsedData);
                     switch(parsedData.type) {
-                        case 'CREATESURVEYQUIZ':
+                        case 'CREATESQ':
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
+
 
                         case 'ADDGUESTTOHOST':
                             addGuestToHost(parsedData, user_id).then((resp) => {
@@ -63,6 +63,14 @@ function init() {
                             });
                             break;
 
+                        case "HEARTBEAT":
+                            sendHeartbeat(wss, parsedData, user_id);
+                            break;
+
+                        case "GUESTHEARTBEAT":
+                            sendHeartbeatToHost(wss, parsedData);
+                            break;
+
                         case 'GETUSERID':
                             wss.clients.forEach(function each(client) {
                                 let payload = {
@@ -75,10 +83,20 @@ function init() {
                             break;
 
                         case 'REQUESTRESULTS':
-                            query.getSQResultsHost(parsedData.sq_id, user_id)
-                                .then((resp) => {
+                            query.getSQResultsHost(parsedData.sq_id, user_id).then((resp) => {
+                                if (resp.length !== 0) {
                                     let payload = formatResults(resp, user_id);
                                     sendPayload(payload, wss)
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYRESULTS",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: `No results found for this ${parsedData.sqtype}`
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                                 })
                             break;
 
@@ -92,10 +110,11 @@ function init() {
                         case 'ACTIVATESQ':
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 if (resp.length !== 0) {
-                                    let payload = formatSQ(resp, user_id, parsedData.sqtype); 
+                                    let payload = formatSQ(resp, user_id, parsedData.sqtype);
                                     sendPayload(payload, wss);
                                     let hostpayload = {
                                         type: "ACTIVATEDSQ",
+                                        title: resp[0]["sq_name"],
                                         sq_id: parsedData.sq_id,
                                         title: resp[0]["sq_name"],
                                         host_id: user_id,
@@ -127,11 +146,23 @@ function init() {
                                 query.addGQRSurvey(user_id, result.question_id, result.response);
                             })
                             break;
+
         
                         case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
-                                let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatSQEdit(resp, user_id, parsedData.sqtype);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let hostpayload = {
+                                        type: "DISPLAYEDITSQ",
+                                        sq_id: parsedData.sq_id,
+                                        host_id: user_id,
+                                        sqtype: parsedData.sqtype,
+                                        error: `No questions found for this ${parsedData.sqtype}`
+                                    };
+                                    sendPayload(hostpayload, wss);
+                                }
                             })
                             break;
 
@@ -149,7 +180,7 @@ function init() {
                             query.deleteSQ(parsedData.sq_id);
                             query.deleteAllSQQO(parsedData.sq_id);
                             break;
-                        
+
                         case "DELETEGUEST":
                             query.deleteGQRForHost(parsedData.host_guest_id, user_id).then(resp => {
                                 query.deleteHG(parsedData.host_guest_id);
@@ -168,6 +199,9 @@ function init() {
         })
     })
 }
+
+
+
 
 // [ { first_name: 'Sarah',
 //     last_name: 'A',
@@ -192,14 +226,14 @@ function formatSQ(resp, host_id, sqtype) {
     result["type"] = "DISPLAYACTIVESQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function formatSQEdit(resp, host_id, sqtype) {
@@ -207,14 +241,15 @@ function formatSQEdit(resp, host_id, sqtype) {
     result["type"] = "DISPLAYEDITSQ";
     result["host_id"] = host_id;
     result["sq_id"] = resp[0]["sq_id"];
-    result["title"] = resp[0]["sq_name"]
+    result["title"] = resp[0]["sq_name"];
+    result["error"] = null;
     result["sqtype"] = sqtype;
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
         result["payload"] = quizPayload(resp);
     }
-    return result;   
+    return result;
 }
 
 function surveyPayload(resp) {
@@ -264,6 +299,7 @@ function formatResults(resp, user_id) {
     result["host_id"] = user_id;
     result["title"] = resp[0]["sq_name"];
     result["payload"] = {};
+    result["error"] = null;
     resp.forEach((person) => {
         let email = person.guest_id;
         if (!(email in result.payload)) {
@@ -308,8 +344,9 @@ function addQuestionsAndAnswers(questions, sq_id) {
 
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
-        if (option.option_id !== null) {
-            query.updateOption(option.option_id, option.text, option.value);
+        let id = option.option_id;
+        if (id !== null) {
+            query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {
                 query.addSQQuestionOption(sq_id, question_id, resp.dataValues.option_id);
@@ -370,6 +407,34 @@ function sendPayload(payload, wss) {
         client.send(JSON.stringify(payload));
     });
 }
+
+function sendHeartbeat(wss, parsedData, user_id) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'RECEIVEHEARTBEAT',
+            "host_id": user_id
+        }))
+    })
+}
+function sendHeartbeatToHost(wss, parsedData) {
+    wss.clients.forEach(function each(client) {
+        client.send(JSON.stringify({
+            "type": 'GUESTHEARTBEATTOHOST',
+            "host_id": parsedData.host_id,
+            "guest_id": parsedData.guest_id
+        }))
+    })
+}
+
+
+
+
+
+
+
+// function sendToWebSocket(message) {
+//     socket.send(JSON.stringify(message));
+// }
 
 module.exports = {
     init

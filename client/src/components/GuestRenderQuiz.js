@@ -53,6 +53,7 @@ class GuestRenderQuiz extends Component {
             payload: this.state.payload
         }
         this.props.sendMessage(JSON.stringify(payload));
+        this.props.onSubmit();
         this.props.history.push('/Guest/Waiting/');
     }
 }

@@ -51,6 +51,7 @@ class GuestRenderSurvey extends Component {
         };
 
         this.props.sendMessage(JSON.stringify(payload));
+        this.props.onSubmit();
         this.props.history.push('/Guest/Waiting/');
     }
 }

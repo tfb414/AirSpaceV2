@@ -16,7 +16,7 @@ class HostRenderSurvey extends Component {
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
         this.props.sendMessage(JSON.stringify(payload));
-   
+
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
@@ -40,12 +40,14 @@ class HostRenderSurvey extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
+
             <div className="SQComponent">   
             </div>
             )
         }
         let surveys = this.state.results.map((data) => {
             return (
+
                 <tr className="SQFunctions">
                     <td className="SQTitle">
                         <p>{data.sq_name}</p>
@@ -120,7 +122,7 @@ class HostRenderSurvey extends Component {
         this.props.sendMessage(payload);
     }
 
-     _receiveMessage = (parsedData) => {
+    _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
             let results = parsedData.payload;
             console.log(results);

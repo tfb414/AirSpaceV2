@@ -31,7 +31,7 @@ class Guest extends Component {
 
 
     _handleChange = (event) => {
-        this.props.handleChange(event.target.value)
+        this.props.handleChange(event.target.value);
     }
 
 

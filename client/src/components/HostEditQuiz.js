@@ -6,6 +6,7 @@ class HostEditQuiz extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activatedMessage: "",
             waitingOnData: true,
             title: "",
             question: [],
@@ -20,18 +21,7 @@ class HostEditQuiz extends Component {
    
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            console.log(results)
-            let keys = Object.keys(results.payload)
-            let new_form = keys.map((key) => {
-                return { question_number: results.payload[key].question_number, question_id: results.payload[key].question_id, text: results.payload[key].text, options: results.payload[key].options }                     // adding the new object to this.state.question
-            })
-            this.setState({
-                sq_id: results.sq_id,
-                title: results.title,
-                waitingOnData: false,
-                question: new_form
-            })
+            this._receiveMessage(parsedData);
         }
     }
         
@@ -58,7 +48,6 @@ class HostEditQuiz extends Component {
         let target = event.target.getAttribute('target')
         let new_question = this.state.question
         let old_options = new_question[Number(target[0])].options
-        console.log(old_options)
         let new_options = []
         for (let x = 0; x < old_options.length; x++) {
             if (x === Number(target[1])) {
@@ -73,14 +62,19 @@ class HostEditQuiz extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData === true) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage === "") {
             return (
                 <div>
                     <h3>Waiting on Quiz...</h3>
                 </div>
             )
-        }
-        else if (this.state.waitingOnData === false) { 
+        } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
+            return (
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
+            )
+        } else if (this.state.waitingOnData === false) { 
             let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
             return <QuizQuestionInput num={data.question_number} RonChange={this.handleChangeRadio} Qvalue={data.text} option={data.options} addOption={this._addOption} removeOption={this._RemoveOption} QonChange={this.handleChangeQuestion} OonChange={this.handleChangeOption} remove={this._RemoveQuestion} />
 
@@ -192,7 +186,23 @@ class HostEditQuiz extends Component {
     }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'quiz' &&  parsedData.host_id === this.props.host_id) {
-                return parsedData;
+            let results = parsedData;
+            if (results.error === null) {
+                let keys = Object.keys(results.payload);
+                let new_form = keys.map((key) => {
+                return { question_number: results.payload[key].question_number, question_id: results.payload[key].question_id, text: results.payload[key].text, options: results.payload[key].options } 
+                })                    // adding the new object to this.state.question
+                this.setState({
+                    sq_id: results.sq_id,
+                    title: results.title,
+                    waitingOnData: false,
+                    question: new_form
+                })
+            } else {
+                this.setState({
+                    activatedMessage: results.error
+                })
+            }
         } 
     }
 }
