@@ -60,8 +60,11 @@ class HostRenderSurvey extends Component {
                 </tr>  
             )
         })
-        let title = this.props.sqtype
-        title = title.charAt(0).toUpperCase() + title.slice(1)
+        if (this.props.sqtype === 'survey') {
+            let title = "Your Surveys"
+        } else {
+            let title = "Your Quizzes"
+        }
         return (
             <div className="SQComponent">
                 <div className="HostSQRenderTitleActivate">
