@@ -24,6 +24,7 @@
     "pg-hstore": "^2.3.2",
     "react": "^16.0.0",
     "react-redux": "^5.0.6",
+    "reconnecting-websocket": "^3.2.2",
     "redux": "^3.7.2",
     "redux-promise": "^0.5.3",
     "sequelize": "^4.11.1",

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
+import env from '../utility/env';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import HostRenderResults from './HostRenderResults'
@@ -12,13 +13,14 @@ class HostRenderSurvey extends Component {
             activatedMessage: "",
             waitingOnData: true
         }
+        this.connection = new WebSocket(env);
     }
 
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
         this._sendMessage(JSON.stringify(payload));
 
-        this.props.connection.onmessage = event => {
+        this.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
         }
@@ -26,6 +28,7 @@ class HostRenderSurvey extends Component {
 
     render() {
         console.log(this.props.user.host_id);
+        console.log(this.props);
         if (this.state.waitingOnData) {
             return (
                 <div>
@@ -98,9 +101,7 @@ class HostRenderSurvey extends Component {
     }
 
     _sendMessage = (payload) => {
-        this.props.connection.onopen = () => {
-            this.props.connection.send(payload);
-        }
+        this.connection.send(payload);
     }
 
     _receiveMessage = (parsedData) => {

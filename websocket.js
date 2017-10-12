@@ -32,9 +32,6 @@ function init() {
                 // client.send("you're a wizard harry!");
                 // client.send(data);
 
-                // }
-                // });
-
                 ws.on('message', function incoming(data) {
                     let parsedData = JSON.parse(data);
                     switch(parsedData.type) {
