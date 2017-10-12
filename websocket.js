@@ -35,7 +35,7 @@ function init() {
 
                 ws.on('message', function incoming(data) {
 
-                    console.log("WE GOT A MESSAGE");
+                    // console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
                     switch(parsedData.type) {
                         case 'CREATESQ':

@@ -722,7 +722,8 @@ td {
 .HostSQRenderTitle {
   font-size: 3em;
   padding-right: 5%;
-  display: inline; }
+  display: inline;
+  width: 40%; }
 
 .HostSQRenderTitleActivate {
   display: flex;
@@ -800,9 +801,18 @@ td {
 .HDNavButton:focus,
 .HDNavButton:hover {
   background-color: #697fa3;
+  outline: 0;
   transition: .5s background-color ease-in-out; }
 
-.HDNavButton a {
+a:hover button {
+  text-decoration: none;
+  cursor: pointer; }
+
+a.active button {
+  background-color: #697fa3; }
+
+.HDNavButton {
+  width: 100%;
   color: white; }
 
 a:hover {
@@ -815,20 +825,16 @@ a:hover {
   flex-direction: row; }
 
 .createPage {
+  background-color: #eae7e3;
   width: 100%;
-  height: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center; }
 
 .createSelection {
-  width: 70%;
-  height: 40%;
+  background-color: #eae7e3;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  justify-content: center; }
 
 .createTitle {
   margin-top: 1rem;
@@ -837,7 +843,7 @@ a:hover {
   @media (min-width: 768px) {
     .createTitle {
       margin-top: 0;
-      font-size: 2.8em; } }
+      font-size: 4rem; } }
 
 .createBox {
   width: 90%;
@@ -846,12 +852,15 @@ a:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
-  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  border-radius: 2rem; }
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0);
+  font-family: 'Raleway', sans-serif; }
   @media (min-width: 768px) {
     .createBox {
       width: 30rem; } }
+
+.createOption:focus, .createOption:hover {
+  color: white;
+  background-color: transparent; }
 
 @media (min-width: 768px) {
   .quizOrSurveyBox {
@@ -862,23 +871,15 @@ a:hover {
 .createOption {
   width: 5rem;
   height: 2.7rem;
-  margin: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  border-radius: 2rem;
-  background-color: #527bff; }
+  color: white; }
   @media (min-width: 768px) {
     .createOption {
-      width: 8.4rem;
-      height: 4.2rem;
+      width: 6.4rem;
+      height: 3.2rem;
       font-size: 1.8rem; } }
-
-.createOption:hover,
-.createOption:focus {
-  background-color: #335ce0;
-  transition: .4s background-color ease-in-out; }
 
 .landingButton {
   width: 40%;
