@@ -89,17 +89,6 @@ class HostRenderSurvey extends Component {
         );
     }
 
-<<<<<<< HEAD
-    // componentDidMount() {
-    //     setTimeout(
-    //         this.setState({
-    //             activatedMessage: ""
-    //         }), 2000)
-    // }
-
-
-=======
->>>>>>> bd59a42f5e0ac255f166ba6de778dbb39fef3b2d
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
