@@ -116,6 +116,7 @@ function init() {
                                         type: "ACTIVATEDSQ",
                                         title: resp[0]["sq_name"],
                                         sq_id: parsedData.sq_id,
+                                        title: resp[0]["sq_name"],
                                         host_id: user_id,
                                         sqtype: parsedData.sqtype,
                                         error: null

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import QuizQuestionInput from './QuizQuestionInput.js'
+import QuizQuestionInput from './QuizQuestionInput.js';
+import { withRouter } from 'react-router';
 
-export default class HostEditQuiz extends Component {
+class HostEditQuiz extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -160,6 +161,9 @@ export default class HostEditQuiz extends Component {
 
     _submitSurvey = () => {
         this.props.sendMessage(this._createPayload());
+        setTimeout(() => { 
+            this.props.history.push('/Host/Your Quizzes/')
+        }, 100)    
 
     }
 
@@ -202,3 +206,5 @@ export default class HostEditQuiz extends Component {
         } 
     }
 }
+
+export default withRouter(HostEditQuiz);
