@@ -696,34 +696,117 @@ td {
 
 .hostDash > div:nth-child(1) {
   width: 45%;
+  font-family: 'Raleway', sans-serif;
   min-width: 4rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #6694ff;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); }
+  background-color: #9abcdd;
+  box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.2); }
   @media (min-width: 768px) {
     .hostDash > div:nth-child(1) {
       max-width: 15rem; } }
+
+.HostSQTable {
+  margin-left: 3rem; }
+
+.HostSQTable td {
+  border: none; }
+
+.SQTitle {
+  font-size: 1.3rem;
+  padding-bottom: 0rem;
+  padding-right: 15rem; }
+
+.HostSQRenderTitle {
+  font-size: 3em;
+  padding-right: 5%;
+  display: inline; }
+
+.HostSQRenderTitleActivate {
+  display: flex;
+  align-items: center; }
+
+.HostSQRenderTitleActivate p {
+  margin-bottom: -26px; }
+
+.btn-outline-secondary {
+  color: #fefdfb;
+  background-color: #97c2c1;
+  margin-right: .7rem;
+  background-image: none;
+  border-color: transparent; }
+
+.btn-outline-secondary:hover {
+  color: #fefdfb;
+  background-color: #58a19f;
+  border-color: transparent; }
+
+.btn-outline-secondary.active, .btn-outline-secondary:active, .show > .btn-outline-secondary.dropdown-toggle {
+  color: #fefdfb;
+  background-color: #58a19f;
+  border-color: transparent;
+  box-shadow: none; }
+
+.SQComponent hr {
+  width: 40%;
+  margin-left: 4%; }
+
+.HostSQTable hr {
+  width: 132%;
+  margin-left: 16%; }
+
+.HostSQRenderTitleActivate hr {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+  width: 40%;
+  margin-left: 4%;
+  margin-top: -2%;
+  overflow: visible; }
+
+.SQComponent {
+  background-color: #eae7e3;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+  padding-left: 5.2rem;
+  padding-top: 1rem; }
+
+.hidden {
+  -webkit-transition: all 2s ease-out;
+  -moz-transition: all 2s ease-out;
+  -ms-transition: all 2s ease-out;
+  -o-transition: all 2s ease-out;
+  opacity: 0; }
+
+.show {
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  opacity: 1; }
 
 .HDNavButton {
   border: none;
   padding: 1.6rem;
   font-size: 1rem;
   background-color: unset;
-  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  font-family: 'Raleway', sans-serif; }
   @media (min-width: 320px) {
     .HDNavButton {
       font-size: 1.2rem; } }
 
 .HDNavButton:focus,
 .HDNavButton:hover {
-  background-color: #335ce0;
+  background-color: #697fa3;
   transition: .5s background-color ease-in-out; }
 
 .HDNavButton a {
   color: white; }
+
+a:hover {
+  text-decoration: none; }
 
 .hostDash {
   display: flex;
@@ -844,15 +927,15 @@ td {
   align-items: center;
   justify-content: center;
   background: url(stylesheets/images/littleboard3.jpg);
-  background-size: cover;
+  background-size: contain;
   color: white; }
 
 .branding {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   font-weight: bold;
-  font-size: 3rem;
+  font-size: 4rem;
   text-align: center;
-  font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; }
+  font-family: 'Homemade Apple', cursive; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }

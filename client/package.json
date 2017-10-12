@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "dotenv": "^4.0.0",
+    "global": "^4.3.2",
     "guid": "^0.0.12",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",

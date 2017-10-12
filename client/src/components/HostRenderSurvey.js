@@ -11,6 +11,7 @@ class HostRenderSurvey extends Component {
         super(props);
         this.state = {
             activatedMessage: "",
+            refresh: 0,
             waitingOnData: true
         }
         this.connection = new WebSocket(env);
@@ -26,6 +27,20 @@ class HostRenderSurvey extends Component {
                 this._receiveMessage(parsedData);
             }
         }
+        setInterval(() => {
+            let counter = 1 + this.state.refresh
+            if (counter < 4) {
+                this.setState({
+                refresh: counter
+            })
+            } else {
+                this.setState({
+                    refresh: counter,
+                    activatedMessage: ""
+                })
+            }
+            
+        }, 1000)
     }
 
     render() {
@@ -33,26 +48,48 @@ class HostRenderSurvey extends Component {
         console.log(this.props);
         if (this.state.waitingOnData) {
             return (
-                <div>
-                    <h1>Searching for you Surveys and Quizzes</h1>
-                </div>
+
+            <div className="SQComponent">   
+            </div>
             )
         }
         let surveys = this.state.results.map((data) => {
             return (
-                <div>
-                    <h1>{data.sq_name}</h1><button value={data.sq_id} onClick={this._viewResults}>View Results</button><button value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button><button value={data.sq_id} onClick={this._editSQ}>Edit</button><button value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
-                </div>
+
+                <tr className="SQFunctions">
+                    <td className="SQTitle">
+                        <p>{data.sq_name}</p>
+                        <hr />
+                    </td>
+                    <td>
+                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._viewResults}>Results</button>
+                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._createSurveyPayload}>Activate</button>
+                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._editSQ}>Edit</button>
+                        <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
+                    </td>
+                </tr>  
             )
         })
+        if (this.props.sqtype === 'survey') {
+            let title = "Your Surveys"
+        } else {
+            let title = "Your Quizzes"
+        }
         return (
-            <div>
-                <ActivateSurvey message={this.state.activatedMessage} />
-                {surveys}
+            <div className="SQComponent">
+                <div className="HostSQRenderTitleActivate">
+                        <h1 className="HostSQRenderTitle">{title}</h1>
+                        <ActivateSurvey message={this.state.activatedMessage} /> 
+                </div> 
+                <hr className="TitleHR"/>
+                <table className="HostSQTable">
+                    {surveys}
+                </table>
             </div>
         );
     }
 
+<<<<<<< HEAD
     // componentDidMount() {
     //     setTimeout(
     //         this.setState({
@@ -61,6 +98,8 @@ class HostRenderSurvey extends Component {
     // }
 
 
+=======
+>>>>>>> bd59a42f5e0ac255f166ba6de778dbb39fef3b2d
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
@@ -119,10 +158,12 @@ class HostRenderSurvey extends Component {
             console.log(results)
             if (results.error === null) {
                 this.setState({
+                    refresh: 0,
                     activatedMessage: `${results.title} has been successfully activated`
                 })
             } else if (results.error === "No questions found") {
                 this.setState({
+                    refresh: 0,
                     activatedMessage: 'Could not activate. No questions found for that survey'
                 })
             }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import SurveyQuestionInput from './SurveyQuestionInput.js';
+import { withRouter } from 'react-router';
 import guid from 'guid';
 
-export default class HostEditSurvey extends Component {
+class HostEditSurvey extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -123,7 +124,12 @@ export default class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
+
+        console.log(this._createPayload())
         this._sendMessage(this._createPayload());
+        setTimeout(() => { 
+            this.props.history.push('/Host/Your Surveys/')
+        }, 100)  
     }
 
     _createPayload = () => {
@@ -142,6 +148,9 @@ export default class HostEditSurvey extends Component {
 
     }
     _receiveMessage = (parsedData) => {
+
+        console.log(parsedData)
+
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             console.log(parsedData);
             this.setState({
@@ -167,3 +176,5 @@ export default class HostEditSurvey extends Component {
         } 
     }
 }
+
+export default withRouter(HostEditSurvey);
