@@ -16,23 +16,12 @@ class HostEditSurvey extends Component {
     }
 
     componentWillMount() {
-        let id = guid.raw();
-        let payload = {
-            type: 'GETUSERID',
-            id: id
-        };
-        this.setState({
-            host_id: id
-        })
-        this.connection.onopen = () => {
-            this._sendMessage(JSON.stringify(payload));
-            let newpayload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
-            this._sendMessage(JSON.stringify(newpayload));
-            this.props.connection.onmessage = event => {
-                console.log(parsedData);
-                let parsedData = JSON.parse(event.data);
-                this._receiveMessage(parsedData);
-            }
+        let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.params.id };
+        this.props.sendMessage(JSON.stringify(payload));
+        this.props.connection.onmessage = event => {
+            console.log(parsedData);
+            let parsedData = JSON.parse(event.data);
+            this._receiveMessage(parsedData);
         }
     }
 
@@ -86,12 +75,6 @@ class HostEditSurvey extends Component {
 
     }
 
-    _sendMessage = (payload) => {
-        this.props.connection.onopen = () => {
-            this.connection.send(payload);
-        }
-    }
-
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
         let new_form = this.state.question
         var new_num = new_form.length + 1
@@ -126,7 +109,7 @@ class HostEditSurvey extends Component {
     _submitSurvey = () => {
 
         console.log(this._createPayload())
-        this._sendMessage(this._createPayload());
+        this.props.sendMessage(this._createPayload());
         setTimeout(() => { 
             this.props.history.push('/Host/Your Surveys/')
         }, 100)  
@@ -148,16 +131,7 @@ class HostEditSurvey extends Component {
 
     }
     _receiveMessage = (parsedData) => {
-
-        console.log(parsedData)
-
-        if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
-            console.log(parsedData);
-            this.setState({
-                host_id: parsedData.user_id
-            })
-        }
-        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id || parsedData.host_id === this.state.host_id)) {
+        if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id)) {
             let results = parsedData;
             if (results.error === null) {
                 let new_form = results.payload.map((data) => {

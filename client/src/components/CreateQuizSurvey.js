@@ -10,8 +10,8 @@ const CreateQuizSurvey = (props) => {
             <div className="createBox">
                 <h1 className="createTitle">Create</h1>
                 <div className="quizOrSurveyBox">
-                    <Link className="createOption" to={`/Host/Create/Survey`}> Survey </Link>
-                    <Link className="createOption" to={`/Host/Create/Quiz`}> Quiz </Link>
+                    <button type="button" className="btn btn-outline-secondary"><Link className="createOption" to={`/Host/Create/Survey`}> Survey </Link></button>
+                    <button type="button" className="btn btn-outline-secondary"><Link className="createOption" to={`/Host/Create/Quiz`}> Quiz </Link></button>
                 </div>
             </div>
         </div>

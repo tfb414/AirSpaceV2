@@ -23,19 +23,17 @@ function init() {
     wss.on('connection', function connection(ws, req) {
         sessionmanager.sharedSession(req, {}, function () {
             req.session.save(function () {
-                let user_id = req.session.passport.user;
+                let user_id = req.session.passport.user.email;
+                let first_name = req.session.passport.user.firstname;
+                let last_name = req.session.passport.user.lastname;
+                console.log(user_id);
 
                 // wss.clients.forEach(function each(client) {
                 // if (client !== ws && client.readyState === WebSocket.OPEN) {
                 // client.send("you're a wizard harry!");
                 // client.send(data);
 
-                // }
-                // });
-
                 ws.on('message', function incoming(data) {
-
-                    console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
                     switch (parsedData.type) {
                         case 'CREATESQ':
@@ -168,8 +166,17 @@ function init() {
 
                         case "REQUESTGUESTS":
                             query.getGuestsForHost(user_id).then(resp => {
-                                let payload = formatGuests(resp, user_id);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatGuests(resp, user_id);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let payload = {
+                                        type: "DISPLAYGUESTS",
+                                        host_id: user_id,
+                                        error: `There are no students in your class.`
+                                    };
+                                    sendPayload(payload, wss);
+                                }
                             })
                             break;
 
@@ -200,24 +207,12 @@ function init() {
     })
 }
 
-
-
-
-// [ { first_name: 'Sarah',
-//     last_name: 'A',
-//     guest_id: 'sabbey37@gmail.com' },
-//   { first_name: 'Aaron',
-//     last_name: 'Sosa',
-//     guest_id: 'aarontsosa@gmail.com' },
-//   { first_name: 'Tim',
-//     last_name: 'Brady',
-//     guest_id: 'tfb414@gmail.com' } ]
-
 function formatGuests(resp, host_id) {
     let result = {};
     result["type"] = "DISPLAYGUESTS";
     result["host_id"] = host_id;
     result["payload"] = resp;
+    result["error"] = null;
     return result;
 }
 
@@ -315,7 +310,7 @@ function formatResults(resp, user_id) {
             question_obj["response"] = person.option_text;
             question_obj["value"] = person.option_value;
         } else if (person.response === null) {
-            question_obj["response"] = "No response";
+            question_obj["response"] = "-";
         }
         result.payload[email].question.push(question_obj);
     })

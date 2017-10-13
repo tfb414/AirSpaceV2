@@ -1,24 +1,56 @@
 .surveyBox {
-    font-family: $copyfont;
     width: 90%;
     color: $fontcolor;
     display: flex;
     padding: 2rem;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.5);
-    font-family: $copyfont;
+    justify-content: normal;
+    font-family: 'Raleway', sans-serif;
     border-radius: 2rem;
     @include respond-to(medium) {
         width: 90%;
     }
 }
 
+.QuestionClump{
+    margin-bottom: 2%;
+    margin-left: 6%;
+}
+
+.SurveyNum{
+    font-size: larger;
+}
+
+h3.surveyQTitle {
+    padding-bottom: 6%;
+    margin-left: 0;
+}
+
+.QuestionClump, .surveyTitleInput{
+    display: flex;
+    align-items: normal;
+}
+
+.surveyTinput , .surveyQInput {
+    border: none;
+    width: 27rem;
+    box-shadow: 1px 1px 1px 1px rgba(77, 77, 77, 0.07);
+    margin-left: 5%;
+    font-family: 'Raleway', sans-serif;
+    outline: none;
+    text-indent: 5%;
+    font-size: 1.3rem;
+}
+
+.surveyTitleInput {
+    margin-bottom: 8%;
+}
+
 .surveyInnerBox {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: normal;
     width: 100%;
     @include respond-to(medium) {
         width: 50%;
@@ -29,17 +61,17 @@
 }
 
 .surveyInnerBox button {
-    align-self: flex-start;
+    align-self: flex-end;
     padding: .5rem;
     font-family: $copyfont;
 }
 
 .cnsTitle {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     font-size: 1.6rem;
     @include respond-to(medium) {
-        font-size: 2rem;
+        font-size: 3.5rem;
     }
 }
 
@@ -47,10 +79,15 @@
 .surveyQTitle {
     margin-bottom: 0;
     align-self: flex-start;
+    font-size: 2.2rem;
 }
 
 .surveyTinput {
-    align-self: flex-start;
+    align-self: normal;
+    border: none;
+    width: 100%;
+    box-shadow: 1px 1px 1px 1px rgba(77, 77, 77, 0.07);
+    margin-left: 4%;
 }
 
 .questionItem p {
@@ -70,32 +107,43 @@
     flex-direction: row;
 }
 
+button.addSq {
+    margin-bottom: 6%;
+}
+
 .bottomButtons {
     width: 100%;
     height: 100%;
+    margin-left: 9%;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-around;
 }
 
 .addSq {
-    margin-top: 1.6rem;
-    margin-bottom: 1.6rem;
-    color: $fontcolor;
-    border: 1px solid $fontcolor;
-    background-color: unset;
+    box-shadow: 1px 1px 1px 1px rgba(77, 77, 77, 0.07);
+    background-color: white;
+    color: black;
+    width: 2rem;
+    margin-left: .5rem;
+    border: none;
 }
 
-.addSq:hover,
 .addSq:focus {
+    outline: none;
+}
+
+.addSq:hover {
+    background-color: #97c2c1;
+    outline: none;
+    cursor: pointer;
     color: white;
-    background-color: $fontcolor;
-    border: white;
     transition: .2s background-color ease-in-out;
 }
 
 .subtractQues {
+    box-shadow: 1px 1px 1px 1px rgba(77, 77, 77, 0.07);
     background-color: white;
     color: black;
     width: 2rem;
@@ -105,24 +153,18 @@
 
 .subtractQues:hover,
 .subtractQues:focus {
-    background-color: red;
+    background-color: #e59696;
+    outline: none;
+    cursor: pointer;
     color: white;
     transition: .2s background-color ease-in-out;
 }
 
 .submitSurvey {
-    // background-color: black;
-    background-color: $newblue;
-    color: white;
     border: none;
-    width: 5.5rem;
-    height: 2.4rem;
-    border-radius: 2rem;
-    padding: 2rem;
 }
 
-.submitSurvey:hover,
-.submitSurvey:focus {
-    background-color: #11C211;
-    // background-color: $darkerblue;
+button.btn.btn-outline-secondary.submitSurvey {
+    margin-right: 0;
 }
+

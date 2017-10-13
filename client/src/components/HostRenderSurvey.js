@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router'
-import HostRenderResults from './HostRenderResults'
-import ActivateSurvey from './ActivateSurvey.js'
+import { withRouter } from 'react-router';
+import HostRenderResults from './HostRenderResults';
+import ActivateSurvey from './ActivateSurvey.js';
 
 class HostRenderSurvey extends Component {
     constructor(props) {
@@ -12,7 +12,6 @@ class HostRenderSurvey extends Component {
             waitingOnData: true
         }
     }
-
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
         this.props.sendMessage(JSON.stringify(payload));
@@ -36,12 +35,25 @@ class HostRenderSurvey extends Component {
 
         }, 1000)
     }
+    
+    // this used to be componentWillMount
+    // componentWillReceiveProps(nextProps) {
+
+    //     console.log('running componentWillUpdate(nextProps)');
+    //     console.log(this.props.connection);
+            
+    //     let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
+    //     this.props.sendMessage(JSON.stringify(payload));
+
+    //     nextProps.connection.onmessage = event => {
+    //         let parsedData = JSON.parse(event.data);
+    //         this._receiveMessage(parsedData);
+    //     }
+    // }
 
     render() {
-        let title;
         if (this.state.waitingOnData) {
             return (
-
                 <div className="SQComponent">
                 </div>
             )
@@ -63,6 +75,7 @@ class HostRenderSurvey extends Component {
                 </tr>
             )
         })
+        let title;
         if (this.props.sqtype === 'survey') {
             title = "Your Surveys"
         } else {

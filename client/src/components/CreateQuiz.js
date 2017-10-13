@@ -68,13 +68,17 @@ class CreateQuiz extends Component {
                 <div className='quizInnerBox'>
                     <h1 className='cnqTitle'>Create New Quiz</h1>
                     <div className='quizInnerBox'>
-                        <h3 className='quizTitle'>Title</h3>
-                        <input className='quizQuesText' type='text' value={this.state.title} onChange={this.handleChange}></input>
-                        <h3 className='surveyQTitle'>Questions</h3>
-                        {questionForm}      {/* Where the mapped question inputs are */}
+                        <div className="QuestionClump surveyTitleInput">
+                            <h3 className='surveyTitle'>Title</h3>
+                            <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
+                        </div>
+                        <div>
+                            <h3 className='surveyQTitle'>Questions</h3>
+                            {questionForm}      {/* Where the mapped question inputs are */}
+                        </div>
                         <div className='bottomButtons'>
-                            <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
-                            <button className='submitQuiz' onClick={this._submitSurvey}>Submit</button>
+                            <button className='addSq' onClick={this._addQuestion}> + </button>
+                            <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Submit</button>
                         </div>
                         <RequiredFillOutMessage filledOut={this.state.filledOut} />
                     </div>
