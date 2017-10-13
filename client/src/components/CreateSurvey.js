@@ -39,13 +39,17 @@ class CreateSurvey extends Component {
             <div className='surveyBox'>
                 <h1 className='cnsTitle'>Create New Survey</h1>
                 <div className='surveyInnerBox'>
-                    <h3 className='surveyTitle'>Title</h3>
-                    <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
-                    <h3 className='surveyQTitle'>Questions</h3>
-                    {questionForm}       {/* Where the mapped question inputs are */}
+                    <div className="surveyTitleInput">
+                        <h3 className='surveyTitle'>Title </h3>
+                        <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
+                    </div>
+                    <div>
+                        <h3 className='surveyQTitle'>Questions </h3>
+                        {questionForm}       {/* Where the mapped question inputs are */}
+                    </div>
                     <div className='bottomButtons'>
-                        <button className='addSq' onClick={this._addQuestion}>Add Question + </button>
-                        <button className='submitSurvey' onClick={this._submitSurvey}>Submit</button>
+                        <button className='addSq' onClick={this._addQuestion}> + </button>
+                        <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Create</button>
                     </div>
                     <RequiredFillOutMessage filledOut={this.state.filledOut} />
                 </div>
@@ -67,6 +71,9 @@ class CreateSurvey extends Component {
     _RemoveQuestion = (event) => {                              // Removes a Question Form
         let index = event.target.getAttribute('target') - 1
         let object = this.state.question
+        if (object.length <= 1) {
+            return
+        }
         let new_object = object.splice(index, 1);
         var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number
