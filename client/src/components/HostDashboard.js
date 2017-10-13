@@ -24,17 +24,6 @@ class HostDashboard extends Component {
         }
     }
     componentWillMount() {
-        // const options = {
-        // maxReconnectionDelay: 10000,
-        // minReconnectionDelay: 10,
-        // reconnectionDelayGrowFactor: 1.3,
-        // connectionTimeout: 4000,
-        // maxRetries: Infinity,
-        // debug: false};
-        // // ReconnectingWebSocket(env, [], options)
-        // let connection = new WebSocket(env);
-        // this.props.setConnection(connection);
-        
         let id = guid.raw();
         let payload = {
             type: 'GETUSERID',
