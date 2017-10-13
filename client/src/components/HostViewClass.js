@@ -27,7 +27,6 @@ class HostViewClass extends Component {
         if (this.state.waitingOnData) {
             return (
             <div>
-                <h1>Searching for your guests</h1>
             </div>
             )
         }

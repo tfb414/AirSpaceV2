@@ -14,10 +14,23 @@ class HostRenderResults extends Component {
         }
     }
 
+    // componentWillReceiveProps(nextProps) {
+    //     let payload = {
+    //         type: 'REQUESTRESULTS',
+    //         sq_id: this.props.match.match.params.id,
+    //         sqtype: this.props.sqtype
+    //     };
+    //     nextProps.connection.send(JSON.stringify(payload));
+    //     nextProps.connection.onmessage = event => {
+    //         let parsedData = JSON.parse(event.data);
+    //         this._receiveMessage(parsedData);
+    //     }
+    // }
+
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
-            sq_id: this.props.match.params.id,
+            sq_id: this.props.match.match.params.id,
             sqtype: this.props.sqtype
         };
         this.props.connection.send(JSON.stringify(payload));
@@ -25,6 +38,7 @@ class HostRenderResults extends Component {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
         }
+            
     }
 
 
@@ -56,13 +70,11 @@ class HostRenderResults extends Component {
             let results = parsedData;
             if (results.error === null) {
                 let names = Object.keys(results.payload);
-                var new_nameList;
-                var new_questionList
+                var new_nameList = [];
+                var new_questionList = {};
                 names.forEach((name)=> {
                     let data = results.payload[name];
                     let new_name = data.first_name + " " + data.last_name;
-                    new_nameList = this.state.nameList;
-                    new_questionList = this.state.questionList;
                     data.question.forEach((question) => {
                         if (new_questionList[question.text] === undefined) {
                             new_questionList[question.text] = []
