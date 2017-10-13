@@ -13,7 +13,7 @@ class HostRenderSurvey extends Component {
     }
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this._sendMessage(JSON.stringify(payload));
+        this.props.sendMesage(JSON.stringify(payload));
 
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
@@ -42,7 +42,7 @@ class HostRenderSurvey extends Component {
     //     console.log(this.props.connection);
             
     //     let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-    //     this._sendMessage(JSON.stringify(payload));
+    //     this.props.sendMesage(JSON.stringify(payload));
 
     //     nextProps.connection.onmessage = event => {
     //         let parsedData = JSON.parse(event.data);
@@ -94,10 +94,6 @@ class HostRenderSurvey extends Component {
         );
     }
 
-    _sendMessage = (payload) => {
-        this.props.connection.send(payload);
-    }
-
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
@@ -121,7 +117,7 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this._sendMessage(payload);
+        this.props.sendMesage(payload);
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys`)
         } else if (this.props.sqtype === 'quiz') {
@@ -136,7 +132,7 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this._sendMessage(payload);
+        this.props.sendMesage(payload);
     }
 
     _receiveMessage = (parsedData) => {
