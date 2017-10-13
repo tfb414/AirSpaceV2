@@ -38,7 +38,6 @@ class HostRenderSurvey extends Component {
     }
 
     render() {
-        let title;
         if (this.state.waitingOnData) {
             return (
 
