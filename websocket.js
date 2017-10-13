@@ -166,8 +166,17 @@ function init() {
 
                         case "REQUESTGUESTS":
                             query.getGuestsForHost(user_id).then(resp => {
-                                let payload = formatGuests(resp, user_id);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatGuests(resp, user_id);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let payload = {
+                                        type: "DISPLAYGUESTS",
+                                        host_id: user_id,
+                                        error: `No students currently connected.`
+                                    };
+                                    sendPayload(payload, wss);
+                                }
                             })
                             break;
 
@@ -197,19 +206,6 @@ function init() {
         })
     })
 }
-
-
-
-
-// [ { first_name: 'Sarah',
-//     last_name: 'A',
-//     guest_id: 'sabbey37@gmail.com' },
-//   { first_name: 'Aaron',
-//     last_name: 'Sosa',
-//     guest_id: 'aarontsosa@gmail.com' },
-//   { first_name: 'Tim',
-//     last_name: 'Brady',
-//     guest_id: 'tfb414@gmail.com' } ]
 
 function formatGuests(resp, host_id) {
     let result = {};
