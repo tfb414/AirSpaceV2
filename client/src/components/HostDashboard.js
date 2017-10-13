@@ -101,7 +101,8 @@ class HostDashboard extends Component {
                                 <HostEditSurvey 
                                     sendMessage={this._sendMessage} connection={this.state.connection} 
                                     match={match} 
-                                    host_id={this.state.host_id} sqtype="survey"
+                                    host_id={this.state.host_id} 
+                                    sqtype="survey"
                                 />)}/>
                         <Route exact path="/Host/Your Quizzes/Edit/:id"         component={(match) => (
                                 <HostEditQuiz 
