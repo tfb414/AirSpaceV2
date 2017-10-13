@@ -7,7 +7,6 @@
     align-items: center;
     justify-content: normal;
     font-family: 'Raleway', sans-serif;
-    border-radius: 2rem;
     @include respond-to(medium) {
         width: 90%;
     }

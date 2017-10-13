@@ -456,8 +456,7 @@ td {
   flex-direction: column;
   align-items: center;
   justify-content: normal;
-  font-family: 'Raleway', sans-serif;
-  border-radius: 2rem; }
+  font-family: 'Raleway', sans-serif; }
   @media (min-width: 768px) {
     .surveyBox {
       width: 90%; } }
