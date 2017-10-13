@@ -97,7 +97,8 @@ class HostDashboard extends Component {
                                     sendMessage={this._sendMessage} 
                                 />)} />
 
-                        <Route exact path="/Host/Your Surveys/Edit/:id"         component={(match) => (
+                        <Route exact path="/Host/Your Surveys/Edit/:id"         
+                            component={(match) => (
                                 <HostEditSurvey 
                                     sendMessage={this._sendMessage} connection={this.state.connection} 
                                     match={match} 
@@ -112,7 +113,7 @@ class HostDashboard extends Component {
                                     host_id={this.state.host_id} sqtype="quiz"
                                 />)}/>
                         <Route path="/Host/Your Surveys/:id" 
-                            render={(match) => (
+                            component={(match) => (
                                 <HostRenderResults 
                                     sendMessage={this._sendMessage} 
                                     connection={this.state.connection} 

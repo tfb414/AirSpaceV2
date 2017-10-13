@@ -14,19 +14,6 @@ class HostRenderResults extends Component {
         }
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     let payload = {
-    //         type: 'REQUESTRESULTS',
-    //         sq_id: this.props.match.match.params.id,
-    //         sqtype: this.props.sqtype
-    //     };
-    //     nextProps.connection.send(JSON.stringify(payload));
-    //     nextProps.connection.onmessage = event => {
-    //         let parsedData = JSON.parse(event.data);
-    //         this._receiveMessage(parsedData);
-    //     }
-    // }
-
     componentWillMount() {
         let payload = {
             type: 'REQUESTRESULTS',
