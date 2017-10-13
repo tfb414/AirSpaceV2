@@ -930,15 +930,22 @@ a:hover {
   background-size: cover;
   color: white; }
 
+h1.branding {
+  font-size: 4rem; }
+
 .branding {
   margin-bottom: 2rem;
   font-weight: bold;
-  font-size: 4rem;
   text-align: center;
   font-family: "Raleway", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }
+
+svg.logo {
+  width: 4rem;
+  height: 4rem;
+  color: white; }
 
 .App > div {
   width: 100%;

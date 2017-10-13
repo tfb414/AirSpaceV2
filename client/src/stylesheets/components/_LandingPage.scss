@@ -10,10 +10,14 @@
     color: white;
 }
 
+h1.branding {
+    font-size: 4rem;
+}
+
 .branding {
     margin-bottom: 2rem;
     font-weight: bold;
-    font-size: 4rem;
+    // font-size: 3rem;
     text-align: center;
     font-family: 'Raleway', $copyfont;
     // font-family: 'Homemade Apple', cursive;
@@ -22,4 +26,10 @@
     @include respond-to(small) {
         font-size: 4rem;
     }
+}
+
+svg.logo {
+    width: 4rem;
+    height: 4rem;
+    color: white;
 }
