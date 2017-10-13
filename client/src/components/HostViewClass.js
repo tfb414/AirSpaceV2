@@ -23,6 +23,7 @@ class HostViewClass extends Component {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
             <div>
+                <h3>{this.state.activatedMessage}</h3>
             </div>
             );
         } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
@@ -32,7 +33,7 @@ class HostViewClass extends Component {
                         <td>{person.first_name}</td>
                         <td>{person.last_name}</td>
                         <td>{person.guest_id}</td>
-                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
                     </tr>
                 )});
             return (
@@ -49,9 +50,7 @@ class HostViewClass extends Component {
             );
         } else {
             return (
-                <div>
-                    <h3>{this.state.activatedMessage}</h3>
-                </div>
+                <div></div>
             );
         }
     }
