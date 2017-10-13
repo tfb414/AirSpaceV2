@@ -140,7 +140,7 @@ class HostDashboard extends Component {
                                 />)} />
                     </Switch>
                     <div>
-                        {this._displayConnected()}
+                        {this.displayConnected()}
                     </div>
                 </div>
             )
