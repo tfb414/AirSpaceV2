@@ -15,12 +15,7 @@ class HostViewClass extends Component {
    
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            let results = this._receiveMessage(parsedData);
-            console.log(results);
-            this.setState({
-                waitingOnData: false,
-                results: results
-            })
+            this._receiveMessage(parsedData);
         }
     }
 
@@ -72,7 +67,16 @@ class HostViewClass extends Component {
 
      _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
-            return parsedData.payload;
+             if (parsedData.error === null) {
+                 this.setState({
+                    waitingOnData: false,
+                    results: parsedData.payload
+                })
+             } else {
+                 this.setState({
+                    activatedMessage: parsedData.error
+                })
+             }
         }
 
     }
