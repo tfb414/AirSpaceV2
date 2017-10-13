@@ -173,19 +173,3 @@ class HostRenderSurvey extends Component {
 
 
 export default withRouter(HostRenderSurvey);
-
-// const mapStateToProps = state => {
-//     console.log('when does this run?')
-//     return {
-//         user: state.user,
-//         connection: state.connection
-//     }
-// };
-
-// const mapDispatchToProps = dispatch => ({
-//     setHostId: (host_id) => {
-//         dispatch(actions.setHostId(host_id))
-//     }
-// })
-
-// export default connect(mapStateToProps)(withRouter(HostRenderSurvey));

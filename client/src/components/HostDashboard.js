@@ -195,20 +195,3 @@ class HostDashboard extends Component {
 
 }
 export default HostDashboard;
-// const mapStateToProps = state => {
-//     return {
-//     user: state.user,
-//     connection: state.connection
-//     }
-// };
-
-// const mapDispatchToProps = dispatch => ({
-//     setHostId: (host_id) => {
-//         dispatch(actions.setHostId(host_id));
-//     },
-//     setConnection: (connection) => {
-//         dispatch(actions.setConnection(connection));
-//     }
-// })
-
-// export default connect(mapStateToProps, mapDispatchToProps)(HostDashboard);
