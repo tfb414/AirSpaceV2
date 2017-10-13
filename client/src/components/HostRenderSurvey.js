@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import env from '../utility/env';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
 import HostRenderResults from './HostRenderResults'
 import ActivateSurvey from './ActivateSurvey.js'
 

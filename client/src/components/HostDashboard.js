@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import ReconnectingWebSocket from 'reconnecting-websocket';
-import * as actions from '../actions';
 import env from '../utility/env';
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
