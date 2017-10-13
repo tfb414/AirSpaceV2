@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import HostRenderResults from './HostRenderResults'
-import ActivateSurvey from './ActivateSurvey.js'
+import { withRouter } from 'react-router';
+import HostRenderResults from './HostRenderResults';
+import ActivateSurvey from './ActivateSurvey.js';
 
 class HostRenderSurvey extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class HostRenderSurvey extends Component {
     }
     componentWillMount() {
         let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-        this.props.sendMesage(JSON.stringify(payload));
+        this.props.sendMessage(JSON.stringify(payload));
 
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
@@ -42,7 +43,7 @@ class HostRenderSurvey extends Component {
     //     console.log(this.props.connection);
             
     //     let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-    //     this.props.sendMesage(JSON.stringify(payload));
+    //     this.props.sendMessage(JSON.stringify(payload));
 
     //     nextProps.connection.onmessage = event => {
     //         let parsedData = JSON.parse(event.data);
@@ -117,7 +118,7 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this.props.sendMesage(payload);
+        this.props.sendMessage(payload);
         if (this.props.sqtype === 'survey') {
             this.props.history.push(`/Host/Your Surveys`)
         } else if (this.props.sqtype === 'quiz') {
@@ -132,7 +133,7 @@ class HostRenderSurvey extends Component {
             sq_id: event.target.value
         }
         payload = JSON.stringify(payload);
-        this.props.sendMesage(payload);
+        this.props.sendMessage(payload);
     }
 
     _receiveMessage = (parsedData) => {
