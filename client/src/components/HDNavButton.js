@@ -1,12 +1,15 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const HDNavButton = ({ match, name }) => {
+
+const HDNavButton = ({ match, name, onClick }) => {
 
     return (
-        <button className="HDNavButton">
-            <NavLink to={`/Host/${name}`}>{name}</NavLink>
-        </button>
+        <NavLink to={`/Host/${name}`}>
+            <button className="HDNavButton">
+                {name}
+            </button>
+        </NavLink>
     )
 }
 

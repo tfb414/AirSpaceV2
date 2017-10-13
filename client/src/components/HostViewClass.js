@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
+import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
+import env from '../utility/env';
 
 class HostViewClass extends Component {
     constructor(props) {
         super(props);
         this.state = {
             waitingOnData: true,
-            activatedMessage: ""
+            activatedMessage: "",
+            currentlyConnected: []
         }
+        this.connection = new WebSocket(env);
+
+        this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
+        this.manageActiveUsers = manageActiveUsers.bind(this);
+        this.receivedGuestHeartbeat = receivedGuestHeartbeat.bind(this);
+        this.displayConnected = displayConnected.bind(this);
     }
 
     componentWillMount() {
         let payload = { type: "REQUESTGUESTS" };
         this.props.sendMessage(JSON.stringify(payload));
-   
+
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
+            this.manageActiveUsers();
         }
+
+    }
+    componentDidMount() {
+        setInterval(() => {
+            let payload = {
+                type: "HEARTBEAT",
+            }
+            let JSONpayload = JSON.stringify(payload);
+            this.connection.send(JSONpayload);
+        }, 1000);
     }
 
     render() {
@@ -27,27 +47,49 @@ class HostViewClass extends Component {
             </div>
             );
         } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
-            let classList = this.state.results.map((person) => {
+            let classList = this.state.results.map((person, idx) => {
+            let onlineStatus = this.state.currentlyConnected.filter((status) => {
+                return person.guest_id === status[0]
+            })
+            console.log(onlineStatus)
+            if (onlineStatus.length === 0) {
                 return (
                     <tr>
+                        <td>offline</td>
                         <td>{person.first_name}</td>
                         <td>{person.last_name}</td>
                         <td>{person.guest_id}</td>
-                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
+                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
                     </tr>
-                )});
+                )
+            }
             return (
+                <tr>
+                    <td>online</td>
+                    <td>{person.first_name}</td>
+                    <td>{person.last_name}</td>
+                    <td>{person.guest_id}</td>
+                    <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                </tr>
+            )
+
+        })
+        return (
+            <div>
                 <table>
                     <thead>
+                        <th>Online</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
                     </thead>
                     <tbody>
-                        {classList} 
+                        {classList}
                     </tbody>
-                </table>    
-            );
+                </table>
+                <div>{this.displayConnected()}</div>
+            </div>
+        )
         } else {
             return (
                 <div></div>
@@ -64,8 +106,7 @@ class HostViewClass extends Component {
         this.props.sendMessage(payload);
     }
 
-     _receiveMessage = (parsedData) => {
-        console.log(parsedData);
+    _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
              if (parsedData.error === null) {
                  this.setState({
@@ -78,6 +119,11 @@ class HostViewClass extends Component {
                 })
              }
         }
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
+            this.receivedGuestHeartbeat(parsedData)
+        }
+
+
 
     }
 

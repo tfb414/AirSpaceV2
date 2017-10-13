@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import env from '../utility/env';
+import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
 import HDNavBar from './HDNavBar';
 import CreateSurvey from './CreateSurvey';
 import Create from './Create.js';
@@ -12,7 +13,6 @@ import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
 
-
 class HostDashboard extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +21,12 @@ class HostDashboard extends Component {
             connection: new WebSocket(env),
             isConnected: false,
             currentlyConnected: [],
+            time: new Date()
         }
+        this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
+        this.manageActiveUsers = manageActiveUsers.bind(this);
+        this.receivedGuestHeartbeat = receivedGuestHeartbeat.bind(this);
+        this.displayConnected = displayConnected.bind(this);
     }
     componentWillMount() {
         let id = guid.raw();
@@ -44,15 +49,17 @@ class HostDashboard extends Component {
                 this._manageActiveUsers();
             };
         }
-        // setInterval(() => {
-        //     let payload = {
-        //         type: "HEARTBEAT",
-        //     }
-        //     let JSONpayload = JSON.stringify(payload);
-        //     this.props.connection.send(JSONpayload);
-        // }, 1000);
 
 
+    }
+  componentDidMount() {
+        setInterval(() => {
+            let payload = {
+                type: "HEARTBEAT",
+            }
+            let JSONpayload = JSON.stringify(payload);
+            this.connection.send(JSONpayload);
+        }, 1000);
     }
 
     render() {
@@ -150,61 +157,29 @@ class HostDashboard extends Component {
         this._sendMessage(payload)
     }
 
+    _whatTime = () => {
+        let time = (this.state.time).toLocaleTimeString('en-US')
+        console.log(time)
+        if (time[0] === 1 && time[1] !== ":") {
+            time.splice(5, 3)
+            console.log(time)
+            return time
+        }
+        time.splice(4, 3)
+        console.log(time)
+        return time
+    }
+
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
                 host_id: parsedData.user_id
             })
         }
-        if (parsedData.type === 'GUESTHEARTBEATTOHOST') {
-            this._receivedGuestHeartbeat(parsedData)
+        if (parsedData.type === 'GUESTHEARTBEATTOHOST' && parsedData.id === this.state.host_id) {
+            this.receivedGuestHeartbeat(parsedData)
         }
 
     }
-
-
-    _createArrayOfFirstThings = (array, number) => {
-        return array.map((thing) => {
-            return thing[number];
-        })
-    }
-
-    _manageActiveUsers = () => {
-        let currentCount = this.state.currentlyConnected.filter((guest) => {
-            guest[1] -= 1;
-            return guest[1] > 0
-        })
-        this.setState({
-            currentlyConnected: currentCount
-        })
-    }
-
-    _receivedGuestHeartbeat(parsedData) {
-        var currentlyConnected = this.state.currentlyConnected
-        let arrayOfFirstThings = this._createArrayOfFirstThings(currentlyConnected, 0)
-        if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
-            currentlyConnected.push([parsedData.guest_id, 3])
-            this.setState({
-                currentlyConnected: currentlyConnected
-            })
-        }
-        else {
-            currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = 3
-            this.setState({
-                currentlyConnected: currentlyConnected
-            })
-        }
-    }
-
-    _displayConnected = () => {
-        return this.state.currentlyConnected.map((guest) => {
-            return (
-                <div>
-                    {guest[0]} Timer: {guest[1]}
-                </div>
-            )
-        })
-    }
-
 }
 export default HostDashboard;

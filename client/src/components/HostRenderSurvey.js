@@ -24,15 +24,15 @@ class HostRenderSurvey extends Component {
             let counter = 1 + this.state.refresh
             if (counter < 4) {
                 this.setState({
-                refresh: counter
-            })
+                    refresh: counter
+                })
             } else {
                 this.setState({
                     refresh: counter,
                     activatedMessage: ""
                 })
             }
-            
+
         }, 1000)
     }
     
@@ -54,8 +54,8 @@ class HostRenderSurvey extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
-            <div className="SQComponent">   
-            </div>
+                <div className="SQComponent">
+                </div>
             )
         }
         let surveys = this.state.results.map((data) => {
@@ -72,7 +72,7 @@ class HostRenderSurvey extends Component {
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._editSQ}>Edit</button>
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
                     </td>
-                </tr>  
+                </tr>
             )
         })
         let title;
@@ -84,10 +84,10 @@ class HostRenderSurvey extends Component {
         return (
             <div className="SQComponent">
                 <div className="HostSQRenderTitleActivate">
-                        <h1 className="HostSQRenderTitle">{title}</h1>
-                        <ActivateSurvey message={this.state.activatedMessage} /> 
-                </div> 
-                <hr className="TitleHR"/>
+                    <h1 className="HostSQRenderTitle">{title}</h1>
+                    <ActivateSurvey message={this.state.activatedMessage} />
+                </div>
+                <hr className="TitleHR" />
                 <table className="HostSQTable">
                     {surveys}
                 </table>

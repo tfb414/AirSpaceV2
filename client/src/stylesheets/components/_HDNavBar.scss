@@ -14,7 +14,7 @@
     // justify-content: flex-start;
     // background-color: $othernav;
     background-color: #9abcdd;
-    box-shadow: 2px 2px 2px rgba(51, 51, 51, 0.2);
+    box-shadow: 2px 2px 2px rgba(51, 51, 51, 0);
 }
 .HostSQTable{
     margin-left: 3rem;
@@ -33,6 +33,7 @@
     font-size: 3em;
     padding-right: 5%;
     display: inline;
+    width: 40%;
 }
 
 .HostSQRenderTitleActivate{
@@ -56,6 +57,11 @@
     color: #fefdfb;
     background-color: #58a19f;
     border-color: transparent;
+}
+
+.btn-outline-secondary:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .btn-outline-secondary.active, .btn-outline-secondary:active, .show>.btn-outline-secondary.dropdown-toggle {
