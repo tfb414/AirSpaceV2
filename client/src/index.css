@@ -943,9 +943,13 @@ h1.branding {
       font-size: 4rem; } }
 
 svg.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 4rem;
   height: 4rem;
-  color: white; }
+  color: white;
+  fill: white; }
 
 .App > div {
   width: 100%;

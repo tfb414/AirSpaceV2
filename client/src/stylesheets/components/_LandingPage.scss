@@ -29,7 +29,11 @@ h1.branding {
 }
 
 svg.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 4rem;
     height: 4rem;
     color: white;
+    fill: white;
 }
