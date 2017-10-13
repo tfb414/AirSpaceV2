@@ -35,9 +35,15 @@ class GuestRenderSurvey extends Component {
             return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={this.state.payload[index].response} />
         })
         return (
-            <div>
-                <h2>{this.props.title}</h2>
-                {surveyForm}
+            <div className="GuestRenderSurvey">
+                <div>
+                    <h2 className="GuestSurveyTitle">{this.props.title}</h2>
+                </div>
+                <hr className="TitleHR" />
+                <div className="GuestSurveyQuestionsContainer">
+                    {surveyForm}
+                </div>
+
                 <button onClick={this._submitSurvey}>Submit</button>
             </div>
         );

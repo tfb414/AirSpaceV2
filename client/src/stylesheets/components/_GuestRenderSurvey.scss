@@ -1,0 +1,35 @@
+.GuestRenderSurvey {
+    background-color: #eae7e3;
+    width: 100%;
+    font-family: Raleway,sans-serif;
+    padding-left: 5.2rem;
+    padding-top: 1rem;
+}
+
+
+.SQComponent hr {
+    width: 40%;
+    margin-left: 4%;
+}
+
+.HostSQTable hr {
+    width: 132%;
+    margin-left: 16%;
+}
+.GuestSurveyTitle{
+    font-size: 3em;
+    display: inline;
+}
+
+.GuestSurveyQuestionsContainer{
+    margin-left: 3rem;
+}
+
+.TitleHR{
+    width: 40%;
+    margin-left: 4%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1)
+}

@@ -17,20 +17,20 @@ class GuestWaitingRoom extends Component {
         if (this.state.title !== null) {
             if (this.props.sqtype === "survey") {
                 return (
-                    <GuestRenderSurvey onSubmit={() => {this.setState({title: null})}} {... this.props}/>
-            )
+                    <GuestRenderSurvey onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
+                )
             } else if (this.props.sqtype === "quiz") {
                 console.log('quiz')
                 return (
-                    <GuestRenderQuiz onSubmit={() => {this.setState({title: null})}} {... this.props}/>
+                    <GuestRenderQuiz onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
                 )
             } else {
 
             }
-            
+
         }
         return (
-            <div>
+            <div className="GuestWaitingRoom">
                 <div>
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
                     {this.props.title}
