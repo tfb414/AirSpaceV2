@@ -20,7 +20,6 @@ class HostRenderResults extends Component {
             sq_id: this.props.match.params.id,
             sqtype: this.props.sqtype
         };
-        let resultsReceived = false;
         this.props.connection.send(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);

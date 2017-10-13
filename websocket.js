@@ -313,7 +313,7 @@ function formatResults(resp, user_id) {
             question_obj["response"] = person.option_text;
             question_obj["value"] = person.option_value;
         } else if (person.response === null) {
-            question_obj["response"] = "No response";
+            question_obj["response"] = "-";
         }
         result.payload[email].question.push(question_obj);
     })
