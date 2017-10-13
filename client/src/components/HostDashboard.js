@@ -21,6 +21,7 @@ class HostDashboard extends Component {
             surveyResults: [{ text: "Survey 1", sq_id: "" }, { text: "Survey 2", sq_id: "2" }],
             quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }],
             currentlyConnected: [],
+            time: new Date()
         }
         this.connection = new WebSocket(env);
 
@@ -102,6 +103,19 @@ class HostDashboard extends Component {
             type: "HEARTBEAT",
         }
         this._sendMessage(payload)
+    }
+
+    _whatTime = () => {
+        let time = (this.state.time).toLocaleTimeString('en-US')
+        console.log(time)
+        if (time[0] === 1 && time[1] !== ":") {
+            time.splice(5, 3)
+            console.log(time)
+            return time
+        }
+        time.splice(4, 3)
+        console.log(time)
+        return time
     }
 
     _receiveMessage = (parsedData) => {

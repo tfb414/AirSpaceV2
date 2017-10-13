@@ -14,10 +14,21 @@
     // background-color: black;
     // background-color: $newblue;
     background-color: #697fa3;
+    outline: 0;
     transition: .5s background-color ease-in-out;
 }
 
-.HDNavButton a {
+a:hover button{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a.active button{
+    background-color: #697fa3;
+}
+
+.HDNavButton {
+    width: 100%;
     color: white;
 }
 
