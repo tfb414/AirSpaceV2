@@ -424,19 +424,18 @@ body {
   justify-content: center; }
 
 .resultBox {
-  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Raleway', sans-serif;
   color: #455358;
-  width: 90%;
+  background-color: #eae7e3;
+  width: 100%;
   display: flex;
   padding: 2rem;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 2rem; }
+  justify-content: center; }
   @media (min-width: 768px) {
     .resultBox {
-      width: 50%; } }
+      width: 100%; } }
 
 .resultTableName {
   align-self: center; }

@@ -40,14 +40,13 @@ class HostRenderResults extends Component {
             );
         } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
+                <div className="resultBox">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
         } else {
             return (
                 <div className='resultBox'>
-                    <h1 className='resultTableName'>Waiting for results...</h1>
                 </div>
             );
         }
