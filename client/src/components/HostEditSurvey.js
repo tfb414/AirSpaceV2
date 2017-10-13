@@ -16,7 +16,7 @@ class HostEditSurvey extends Component {
     }
 
     componentWillMount() {
-        let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.match.params.id };
+        let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.params.id };
         this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             console.log(parsedData);
