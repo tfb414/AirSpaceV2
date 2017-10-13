@@ -37,7 +37,7 @@ function init() {
 
                     // console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
-                    switch(parsedData.type) {
+                    switch (parsedData.type) {
                         case 'CREATESQ':
                             addQuizQuestionsAnswers(parsedData, user_id);
                             break;
@@ -97,7 +97,7 @@ function init() {
                                     };
                                     sendPayload(hostpayload, wss);
                                 }
-                                })
+                            })
                             break;
 
                         case 'REQUESTSQLIST':
@@ -147,7 +147,7 @@ function init() {
                             })
                             break;
 
-        
+
                         case "REQUESTEDITSQ":
                             query.getSQ(parsedData.sq_id).then(resp => {
                                 if (resp.length !== 0) {
