@@ -5,10 +5,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: url(https://testdrive-archive.azurewebsites.net/performance/chalkboard/Images/EmptyChalkboard.svg);
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    /* background: url(https://testdrive-archive.azurewebsites.net/performance/chalkboard/Images/EmptyChalkboard.svg); */
+    /* background-size: contain; */
+    /* background-position: center; */
+    /* background-repeat: no-repeat; */
     color: white;
 }
 
@@ -44,7 +44,7 @@
     font-weight: bold;
     font-size: 8em;
     text-align: center;
-    font-family: 'Homemade Apple', cursive;
+    /* font-family: 'Homemade Apple', cursive; */
     /* font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     letter-spacing: 3px; */
 }

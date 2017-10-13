@@ -934,8 +934,7 @@ a:hover {
   margin-bottom: 2rem;
   font-weight: bold;
   font-size: 4rem;
-  text-align: center;
-  font-family: "Raleway", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  text-align: center; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }
@@ -944,4 +943,4 @@ a:hover {
   width: 100%;
   height: 100%; }
 
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=main.css.map */
