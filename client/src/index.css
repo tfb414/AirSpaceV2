@@ -889,23 +889,25 @@ a:hover {
   text-align: center;
   background-color: unset;
   border: 1px solid white;
+  border-radius: 2rem;
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .landingButton {
-      font-size: 2rem; } }
+      font-size: 3rem; } }
   @media (min-width: 768px) {
     .landingButton {
       width: 30%;
       height: 50%;
-      margin: 3rem; } }
+      margin: 3rem;
+      margin-top: 0; } }
   @media (min-width: 1024px) {
     .landingButton {
       width: 20%;
-      font-size: 2.5rem; } }
+      font-size: 4rem; } }
 
 .landingButton:focus,
 .landingButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
   transition: .7s background-color ease-in-out; }
 
 .landingButtonContainer {
@@ -931,13 +933,15 @@ a:hover {
   color: white; }
 
 h1.branding {
-  font-size: 4rem; }
+  font-size: 7rem;
+  letter-spacing: 10px;
+  margin-top: 1rem;
+  margin-bottom: 0; }
 
 .branding {
-  margin-bottom: 2rem;
   font-weight: bold;
   text-align: center;
-  font-family: "Raleway", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  font-family: "Shrikhand", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }
