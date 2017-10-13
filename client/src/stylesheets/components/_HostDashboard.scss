@@ -1,9 +1,25 @@
 .hostDash {
     display: flex;
     width: 100%;
+    background-color: #9abbdc;
+    font-family: 'Raleway', sans-serif;
     height: 100%;
     flex-direction: row;
     // background: url(stylesheets/images/littleboard3.jpg);
+}
+
+.HDGreeting{
+    color: #fefdfb;
+    display: flex;
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.Greeting{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
 }
 
 .createPage {
@@ -39,7 +55,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 10px 10px 30px rgba(0,0,0,0);
     // box-shadow: 1px 1px 1px rgba(0,0,0,.5);
     font-family: 'Raleway', sans-serif;
     @include respond-to(medium) {

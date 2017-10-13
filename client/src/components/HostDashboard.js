@@ -21,6 +21,7 @@ class HostDashboard extends Component {
             surveyResults: [{ text: "Survey 1", sq_id: "" }, { text: "Survey 2", sq_id: "2" }],
             quizResults: [{ text: "Quiz 1", sq_id: "18" }, { text: "Quiz 2", sq_id: "18" }],
             currentlyConnected: [],
+            time: new Date()
         }
         this.connection = new WebSocket(env);
     }
@@ -78,9 +79,14 @@ class HostDashboard extends Component {
                     <Route path="/Host/Your Surveys/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='survey'/>}/>
                     <Route path="/Host/Your Quizzes/:id" component={(match) => <HostRenderResults sendMessage={this._sendMessage} connection={this.connection} match={match} host_id={this.state.host_id} sqtype='quiz'/>} />
                 </Switch>
-                <div>
-                    {this._displayConnected()}
-                </div>
+                {/* <div className="Greeting"> */}
+                    {/* <div>
+                        <h1 className="HDGreeting">Hello, Aaron Sosa</h1>
+                        <h3 className="HDGreeting">TeacherID: {this.state.host_id}</h3>
+                        <h6 className="HDGreeting">{(this.state.time).toLocaleTimeString('en-US')}</h6>
+                    </div>     */}
+                    {/* {this._displayConnected()} */}
+                {/* </div> */}
             </div>
 
         )
@@ -95,6 +101,19 @@ class HostDashboard extends Component {
             type: "HEARTBEAT",
         }
         this._sendMessage(payload)
+    }
+
+    _whatTime = () => {
+        let time = (this.state.time).toLocaleTimeString('en-US')
+        console.log(time)
+        if (time[0] === 1 && time[1] !== ":") {
+            time.splice(5, 3)
+            console.log(time)
+            return time
+        }
+        time.splice(4, 3)
+        console.log(time)
+        return time
     }
 
     _receiveMessage = (parsedData) => {
