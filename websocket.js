@@ -173,7 +173,7 @@ function init() {
                                     let payload = {
                                         type: "DISPLAYGUESTS",
                                         host_id: user_id,
-                                        error: `No students currently connected.`
+                                        error: `There are no students in your class.`
                                     };
                                     sendPayload(payload, wss);
                                 }
@@ -212,6 +212,7 @@ function formatGuests(resp, host_id) {
     result["type"] = "DISPLAYGUESTS";
     result["host_id"] = host_id;
     result["payload"] = resp;
+    result["error"] = null;
     return result;
 }
 

@@ -65,6 +65,7 @@ class HostViewClass extends Component {
     }
 
      _receiveMessage = (parsedData) => {
+        console.log(parsedData);
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
              if (parsedData.error === null) {
                  this.setState({

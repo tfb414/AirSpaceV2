@@ -69,7 +69,8 @@ class HostDashboard extends Component {
                         <Route exact path="/Host/Your Class/" 
                             component={() => (
                                 <HostViewClass 
-                                    sendMessage={this._sendMessage} connection={this.state.connection} host_id={this.state.host_id} 
+                                    sendMessage={this._sendMessage}                                      connection={this.state.connection} 
+                                    host_id={this.state.host_id} 
                                     />)} />
                         
                         
