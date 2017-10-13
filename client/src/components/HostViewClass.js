@@ -5,6 +5,7 @@ class HostViewClass extends Component {
         super(props);
         this.state = {
             waitingOnData: true,
+            activatedMessage: ""
         }
     }
 
@@ -24,34 +25,40 @@ class HostViewClass extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
             <div>
             </div>
-            )
-        }
-        let classList = this.state.results.map((person) => {
+            );
+        } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            let classList = this.state.results.map((person) => {
+                return (
+                    <tr>
+                        <td>{person.first_name}</td>
+                        <td>{person.last_name}</td>
+                        <td>{person.guest_id}</td>
+                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                    </tr>
+                )});
             return (
-                <tr>
-                    <td>{person.first_name}</td>
-                    <td>{person.last_name}</td>
-                    <td>{person.guest_id}</td>
-                    <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
-                </tr>
-            )
-        })
-        return (
-            <table>
-                <thead>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                </thead>
-                <tbody>
-                    {classList} 
-                </tbody>
-            </table>    
-        )
+                <table>
+                    <thead>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </thead>
+                    <tbody>
+                        {classList} 
+                    </tbody>
+                </table>    
+            );
+        } else {
+            return (
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
+            );
+        }
     }
 
     _deleteGuest = (event) => {

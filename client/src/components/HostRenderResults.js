@@ -30,7 +30,6 @@ class HostRenderResults extends Component {
 
 
     render() {
-        // let questions=Object.keys(this.state.question)
         if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
             return (
                 <div className='resultBox'>
