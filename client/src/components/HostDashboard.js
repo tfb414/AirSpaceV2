@@ -46,7 +46,7 @@ class HostDashboard extends Component {
             this.state.connection.onmessage = event => {
                 let parsedData = JSON.parse(event.data);
                 this._receiveMessage(parsedData);
-                this._manageActiveUsers();
+                this.manageActiveUsers();
             };
         }
 
@@ -58,7 +58,7 @@ class HostDashboard extends Component {
                 type: "HEARTBEAT",
             }
             let JSONpayload = JSON.stringify(payload);
-            this.connection.send(JSONpayload);
+            this.state.connection.send(JSONpayload);
         }, 1000);
     }
 
