@@ -15,7 +15,8 @@ class GuestRouter extends Component {
             message: '',
             title: "",
             sqtype: "",
-            sq_id: ""
+            sq_id: "",
+            connection: new WebSocket(env)
         }
 
     }
@@ -30,12 +31,10 @@ class GuestRouter extends Component {
             guest_id: id
         })
 
-        this.connection = new WebSocket(env);
-
         // listen to onmessage event
-        this.connection.onopen = () => {
+        this.state.connection.onopen = () => {
             this._sendMessage(JSON.stringify(payload));
-            this.connection.onmessage = evt => {
+            this.state.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
                 console.log('we got a message in connnect.onopen');
                 this._receiveMessage(parsedData);
@@ -96,7 +95,7 @@ class GuestRouter extends Component {
     }
 
     _sendMessage = (payload) => {
-        this.connection.send(payload);
+        this.state.connection.send(payload);
     }
 
     _receiveMessage = (parsedData) => {
@@ -136,7 +135,7 @@ class GuestRouter extends Component {
 
         if (parsedData.type === 'RECEIVEHEARTBEAT') {
             console.log('we got recieve heartbeat and we sent it back')
-            this.connection.send(JSON.stringify({
+            this.sendMessage(JSON.stringify({
                 type: "GUESTHEARTBEAT",
                 guest_id: this.state.guest_id,
                 host_id: this.state.host_id
