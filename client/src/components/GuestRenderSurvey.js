@@ -29,10 +29,8 @@ class GuestRenderSurvey extends Component {
     }
 
     render() {
-        let surveyForm = this.props.payload.map((data) => {
-            let new_payload = this.props.payload
-            let index = new_payload.indexOf(data)
-            return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={this.state.payload[index].response} />
+        let surveyForm = this.props.payload.map((data, index) => {
+            return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={data.response} />
         })
         return (
             <div className="GuestRenderSurvey">
