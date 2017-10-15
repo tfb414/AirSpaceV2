@@ -70,6 +70,7 @@ class HostRenderResults extends Component {
             let results = parsedData;
             if (results.error === null) {
                 let names = Object.keys(results.payload);
+                names = names.sort();
                 var new_nameList = [];
                 var new_questionList = {};
                 names.forEach((name)=> {
