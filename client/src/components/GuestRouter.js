@@ -95,7 +95,6 @@ class GuestRouter extends Component {
 
     _submitHost_id = () => {
         this._sendMessage(this._createPayload());
-
     }
 
     _createPayload = () => {

@@ -33,7 +33,6 @@ class GuestWaitingRoom extends Component {
             <div className="GuestWaitingRoom">
                 <div>
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
-                    {this.props.title}
                 </div>
             </div>
 
