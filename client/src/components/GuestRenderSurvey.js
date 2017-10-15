@@ -11,27 +11,25 @@ class GuestRenderSurvey extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        this._setPayload(nextProps);
+    }
+
     componentWillMount() {
-        this.props.payload.forEach((data) => {
-            let new_payload = this.state.payload
-            new_payload.push({ question_id: data.question_id, response: "" })
-            this.setState({ payload: new_payload })
-        })
+        this._setPayload(this.props);
     }
 
     handleChangeTextarea = (event) => {
-        let index = event.target.getAttribute('target')
-        let new_payload = this.state.payload
-        new_payload[index].response = event.target.value
+        let index = event.target.getAttribute('target');
+        let new_payload = this.state.payload;
+        new_payload[index].response = event.target.value;
         this.setState({
             payload: new_payload
         })
     }
 
     render() {
-        let surveyForm = this.props.payload.map((data) => {
-            let new_payload = this.props.payload
-            let index = new_payload.indexOf(data)
+        let surveyForm = this.props.payload.map((data, index) => {
             return <RenderSurveyQuestion TonChange={this.handleChangeTextarea} index={index} question_number={data.question_number} text={data.text} value={this.state.payload[index].response} />
         })
         return (
@@ -55,10 +53,10 @@ class GuestRenderSurvey extends Component {
     _submitSurvey = () => {
         let payload = {
             type: "RESULTSURVEY",
-            sq_id: this.state.sq_id,
+            sq_id: this.props.sq_id,
             payload: this.state.payload
         };
-
+        console.log(payload);
         this.props.sendMessage(JSON.stringify(payload));
         this.props.onSubmit();
         localStorage.removeItem("sqtype");
@@ -66,6 +64,14 @@ class GuestRenderSurvey extends Component {
         localStorage.removeItem("title");
         localStorage.removeItem("payload");
         this.props.history.push('/Guest/Waiting/');
+    }
+
+    _setPayload = (props) => {
+        let new_payload = [];
+        props.payload.forEach((data) => {
+            new_payload.push({ question_id: data.question_id, response: "" });
+            this.setState({ payload: new_payload })
+        })
     }
 }
 
