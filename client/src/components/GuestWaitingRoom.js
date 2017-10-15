@@ -19,7 +19,6 @@ class GuestWaitingRoom extends Component {
                     <GuestRenderSurvey onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
                 )
             } else if (this.props.sqtype === "quiz") {
-                console.log('quiz')
                 return (
                     <GuestRenderQuiz onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
                 )
