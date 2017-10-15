@@ -28,6 +28,24 @@ class HostRenderResults extends Component {
             
     }
 
+    componentDidMount() {
+        let payload = {
+            type: 'REQUESTRESULTS',
+            sq_id: this.props.match.match.params.id,
+            sqtype: this.props.sqtype
+        };
+        this.requestInterval = setInterval(() => {
+            this.props.connection.send(JSON.stringify(payload));
+        }, 1000);
+        // this.props.connection.onmessage = event => {
+        //     let parsedData = JSON.parse(event.data);
+        //     this._receiveMessage(parsedData);
+        // }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.requestInterval);
+    }
 
     render() {
         if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
