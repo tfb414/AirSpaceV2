@@ -56,18 +56,6 @@ class GuestRenderQuiz extends Component {
         this.props.onSubmit();
         this.props.history.push('/Guest/Waiting/');
     }
-
-    _receiveMessage = (parsedData) => {
-        if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.host_id === this.props.host_id) {
-            console.log('gooot ittt');
-            this.setState({
-                sqtype: parsedData.sqtype,
-                sq_id: parsedData.sq_id,
-                title: parsedData.title,
-                payload: parsedData.payload
-            })
-        } 
-    }
 }
 
 export default withRouter(GuestRenderQuiz);
