@@ -1,12 +1,12 @@
 import React from 'react'
 import LandingButtonContainer from './LandingButtonContainer'
-import logo from '../stylesheets/images/plane.svg';
+import logo from '../stylesheets/images/wifi.svg';
 
 const LandingPage = () => {
     return (
         <div className="landingPage">
             <div className="branding">
-                <img src={logo} />
+                <img className="logo" src={logo} />
                 <h1 className="branding">AirSpace</h1>
             </div>
             <LandingButtonContainer />

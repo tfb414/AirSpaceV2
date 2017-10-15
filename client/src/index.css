@@ -903,7 +903,7 @@ a:hover {
   @media (min-width: 1024px) {
     .landingButton {
       width: 20%;
-      font-size: 4rem; } }
+      font-size: 3rem; } }
 
 .landingButton:focus,
 .landingButton:hover {
@@ -945,6 +945,9 @@ h1.branding {
   @media (min-width: 320px) {
     .branding {
       font-size: 4rem; } }
+
+img.logo {
+  width: 16rem; }
 
 svg.logo {
   display: flex;
