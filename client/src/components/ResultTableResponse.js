@@ -7,7 +7,7 @@ const ResultTableResponse = ({ question }) => {
         let singleResponse = responses.map((info) => {
             return (
                 <td>
-                    <p className={info.value}>{info.text}</p>
+                    <p className={String(info.value)}>{info.text}</p>
                 </td>
             )
         })
@@ -20,7 +20,6 @@ const ResultTableResponse = ({ question }) => {
         </tr>    
         )
     })
-    console.log(tableData)
     return (
         <tbody>
             {tableData}

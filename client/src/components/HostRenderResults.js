@@ -68,6 +68,7 @@ class HostRenderResults extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
             let results = parsedData;
+            console.log(results);
             if (results.error === null) {
                 let names = Object.keys(results.payload);
                 names = names.sort();
