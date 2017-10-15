@@ -16,7 +16,8 @@ class GuestRouter extends Component {
             title: "",
             sqtype: "",
             sq_id: "",
-            connection: new WebSocket(env)
+            connection: new WebSocket(env),
+            isConnected: false
         }
 
     }
@@ -33,6 +34,9 @@ class GuestRouter extends Component {
 
         // listen to onmessage event
         this.state.connection.onopen = () => {
+            this.setState({
+                isConnected: true
+            })
             this._sendMessage(JSON.stringify(payload));
             this.state.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
@@ -43,36 +47,42 @@ class GuestRouter extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <Switch>
-                    <Route
-                        exact
-                        path='/Guest/'
-                        render={() => (
-                            <Guest
-                                handleChange={this._handleChange}
-                                submitHost_id={this._submitHost_id}
-                                host_id={this.state.host_id}
-                            />
-                        )}
-                    />
-                    <Route
-                        path="/Guest/Waiting/"
-                        render={() => (
-                            <GuestWaitingRoom
-                                host_id={this.state.host_id}
-                                title={this.state.title}
-                                payload={this.state.payload}
-                                sq_id={this.state.sq_id}
-                                sqtype={this.state.sqtype}
-                                sendMessage={this._sendMessage}
-                            />
-                        )}
-                    />
-                </Switch>
-            </div>
-        )
+        if (!this.state.isConnected) {
+            return (
+                <div></div>
+            );
+        } else {
+            return (
+                <div>
+                    <Switch>
+                        <Route
+                            exact
+                            path='/Guest/'
+                            render={() => (
+                                <Guest
+                                    handleChange={this._handleChange}
+                                    submitHost_id={this._submitHost_id}
+                                    host_id={this.state.host_id}
+                                />
+                            )}
+                        />
+                        <Route
+                            path="/Guest/Waiting/"
+                            render={() => (
+                                <GuestWaitingRoom
+                                    host_id={this.state.host_id}
+                                    title={this.state.title}
+                                    payload={this.state.payload}
+                                    sq_id={this.state.sq_id}
+                                    sqtype={this.state.sqtype}
+                                    sendMessage={this._sendMessage}
+                                />
+                            )}
+                        />
+                    </Switch>
+                </div>
+            );
+        }
 
     }
 
