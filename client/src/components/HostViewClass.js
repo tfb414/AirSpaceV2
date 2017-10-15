@@ -10,7 +10,6 @@ class HostViewClass extends Component {
             activatedMessage: "",
             currentlyConnected: []
         }
-        this.connection = new WebSocket(env);
 
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
