@@ -1022,6 +1022,7 @@ a:hover {
 .GuestRenderSurvey {
   background-color: #eae7e3;
   width: 100%;
+  height: 100%;
   font-family: Raleway,sans-serif;
   padding-left: 5.2rem;
   padding-top: 1rem; }
@@ -1048,6 +1049,123 @@ a:hover {
   margin-bottom: 1rem;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+.bottom-buttons {
+  width: 100%;
+  height: 100%;
+  margin-left: 9%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  -ms-flex-pack: distribute;
+  justify-content: space-around; }
+
+.inner-button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: purple;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  margin: 20px;
+  font-size: 1rem;
+  line-height: 1.25;
+  border-radius: .25rem;
+  transition: all .15s ease-in-out; }
+
+.inner-button-secondary {
+  color: #fefdfb;
+  background-color: #97c2c1;
+  margin-right: .7rem;
+  background-image: none;
+  border-color: transparent; }
+
+.GuestRenderQuiz {
+  background-color: #eae7e3;
+  width: 100%;
+  height: 100%;
+  font-family: Raleway,sans-serif;
+  padding-left: 5.2rem;
+  padding-top: 1rem; }
+
+.SQComponent hr {
+  width: 40%;
+  margin-left: 4%; }
+
+.HostSQTable hr {
+  width: 132%;
+  margin-left: 16%; }
+
+.GuestSurveyTitle {
+  font-size: 3em;
+  display: inline; }
+
+.GuestQuizQuestionsContainer {
+  margin-left: 3rem; }
+
+.TitleHR {
+  width: 40%;
+  margin-left: 4%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1); }
+
+.bottom-buttons {
+  width: 100%;
+  height: 100%;
+  margin-left: 9%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  -ms-flex-pack: distribute;
+  justify-content: space-around; }
+
+.inner-button {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: purple;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  margin: 20px;
+  font-size: 1rem;
+  line-height: 1.25;
+  border-radius: .25rem;
+  transition: all .15s ease-in-out; }
+
+.inner-button-secondary {
+  color: #fefdfb;
+  background-color: #97c2c1;
+  margin-right: .7rem;
+  background-image: none;
+  border-color: transparent; }
 
 .App > div {
   width: 100%;

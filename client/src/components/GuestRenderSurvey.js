@@ -43,8 +43,11 @@ class GuestRenderSurvey extends Component {
                 <div className="GuestSurveyQuestionsContainer">
                     {surveyForm}
                 </div>
-
-                <button onClick={this._submitSurvey}>Submit</button>
+                <div className="button-buttons">
+                    <div className="spacing">
+                        <button className="inner-button inner-button-secondary" onClick={this._submitSurvey}>Submit</button>
+                    </div>
+                </div>
             </div>
         );
     }
