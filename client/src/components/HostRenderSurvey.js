@@ -35,21 +35,6 @@ class HostRenderSurvey extends Component {
 
         }, 1000)
     }
-    
-    // this used to be componentWillMount
-    // componentWillReceiveProps(nextProps) {
-
-    //     console.log('running componentWillUpdate(nextProps)');
-    //     console.log(this.props.connection);
-            
-    //     let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-    //     this.props.sendMessage(JSON.stringify(payload));
-
-    //     nextProps.connection.onmessage = event => {
-    //         let parsedData = JSON.parse(event.data);
-    //         this._receiveMessage(parsedData);
-    //     }
-    // }
 
     render() {
         if (this.state.waitingOnData) {

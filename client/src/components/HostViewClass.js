@@ -33,8 +33,7 @@ class HostViewClass extends Component {
             let payload = {
                 type: "HEARTBEAT",
             }
-            let JSONpayload = JSON.stringify(payload);
-            this.connection.send(JSONpayload);
+            this.props.sendMessage(JSON.stringify(payload));
         }, 1000);
     }
 

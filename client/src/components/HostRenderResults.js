@@ -20,7 +20,7 @@ class HostRenderResults extends Component {
             sq_id: this.props.match.match.params.id,
             sqtype: this.props.sqtype
         };
-        this.props.connection.send(JSON.stringify(payload));
+        this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
@@ -37,10 +37,6 @@ class HostRenderResults extends Component {
         this.requestInterval = setInterval(() => {
             this.props.connection.send(JSON.stringify(payload));
         }, 1000);
-        // this.props.connection.onmessage = event => {
-        //     let parsedData = JSON.parse(event.data);
-        //     this._receiveMessage(parsedData);
-        // }
     }
 
     componentWillUnmount() {
