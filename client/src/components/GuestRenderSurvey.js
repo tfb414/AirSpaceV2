@@ -58,6 +58,10 @@ class GuestRenderSurvey extends Component {
 
         this.props.sendMessage(JSON.stringify(payload));
         this.props.onSubmit();
+        localStorage.removeItem("sqtype");
+        localStorage.removeItem("sq_id");
+        localStorage.removeItem("title");
+        localStorage.removeItem("payload");
         this.props.history.push('/Guest/Waiting/');
     }
 }

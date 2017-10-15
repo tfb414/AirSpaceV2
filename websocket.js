@@ -226,7 +226,7 @@ function formatSQ(resp, host_id, sqtype) {
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
-        result["payload"] = quizPayload(resp);
+        result["payload"] = quizPayload(resp, "display");
     }
     return result;
 }
@@ -242,7 +242,7 @@ function formatSQEdit(resp, host_id, sqtype) {
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
-        result["payload"] = quizPayload(resp);
+        result["payload"] = quizPayload(resp, null);
     }
     return result;
 }
@@ -259,7 +259,7 @@ function surveyPayload(resp) {
     return result;
 }
 
-function quizPayload(resp) {
+function quizPayload(resp, display) {
     let result = {}
     resp.forEach((question) => {
         let question_id = question.question_id;
@@ -273,7 +273,9 @@ function quizPayload(resp) {
         let option = {};
         option.option_id = question.option_id;
         option.text = question.option_text;
-        option.value = question.option_value;
+        if (display !== "display") {
+            option.value = question.option_value;
+        }
         result[question_id].options.push(option);
     })
     return result;

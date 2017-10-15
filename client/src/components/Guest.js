@@ -12,7 +12,7 @@ class Guest extends Component {
         return (
             <div>
                 <div>
-                    Please enter your hosts email address
+                    Please enter your host's email address
                 </div>
                 <div>
                     <input type='text' value={this.props.host_id} onChange={this._handleChange}></input>
