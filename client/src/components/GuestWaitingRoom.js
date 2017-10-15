@@ -13,8 +13,7 @@ class GuestWaitingRoom extends Component {
     }
 
     render() {
-        console.log(this.state.title);
-        if (this.state.title !== null) {
+        if (this.state.title !== null || localStorage.getItem('title') !== null) {
             if (this.props.sqtype === "survey") {
                 return (
                     <GuestRenderSurvey onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
@@ -24,8 +23,6 @@ class GuestWaitingRoom extends Component {
                 return (
                     <GuestRenderQuiz onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
                 )
-            } else {
-
             }
 
         }
