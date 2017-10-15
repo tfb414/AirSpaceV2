@@ -13,9 +13,6 @@ class GuestRouter extends Component {
             host_id: '',
             guest_id: '',
             message: '',
-            title: "",
-            sqtype: "",
-            sq_id: "",
             connection: new WebSocket(env),
             isConnected: false
         }
@@ -40,7 +37,6 @@ class GuestRouter extends Component {
             this._sendMessage(JSON.stringify(payload));
             this.state.connection.onmessage = evt => {
                 let parsedData = JSON.parse(evt.data);
-                console.log('we got a message in connnect.onopen');
                 this._receiveMessage(parsedData);
             };
         }
@@ -56,9 +52,8 @@ class GuestRouter extends Component {
                 <div>
                     <Switch>
                         <Route
-                            exact
-                            path='/Guest/'
-                            render={() => (
+                            exact path='/Guest/'
+                            component={() => (
                                 <Guest
                                     handleChange={this._handleChange}
                                     submitHost_id={this._submitHost_id}
@@ -68,13 +63,9 @@ class GuestRouter extends Component {
                         />
                         <Route
                             path="/Guest/Waiting/"
-                            render={() => (
+                            component={() => (
                                 <GuestWaitingRoom
                                     host_id={this.state.host_id}
-                                    title={this.state.title}
-                                    payload={this.state.payload}
-                                    sq_id={this.state.sq_id}
-                                    sqtype={this.state.sqtype}
                                     sendMessage={this._sendMessage}
                                 />
                             )}
@@ -109,7 +100,6 @@ class GuestRouter extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-        console.log(parsedData);
         if (parsedData.type === "CONNECTEDTOHOST") {
             console.log('connected to host')
             this.setState({
@@ -132,20 +122,9 @@ class GuestRouter extends Component {
                 guest_id: parsedData.user_id
             })
         }
-        console.log(this.state.host_id);
-        if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.host_id === this.state.host_id) {
-            console.log('gooot ittt');
-            this.setState({
-                sqtype: parsedData.sqtype,
-                sq_id: parsedData.sq_id,
-                title: parsedData.title,
-                payload: parsedData.payload
-            })
-        } 
 
         if (parsedData.type === 'RECEIVEHEARTBEAT') {
-            console.log('we got recieve heartbeat and we sent it back')
-            this.sendMessage(JSON.stringify({
+            this._sendMessage(JSON.stringify({
                 type: "GUESTHEARTBEAT",
                 guest_id: this.state.guest_id,
                 host_id: this.state.host_id
