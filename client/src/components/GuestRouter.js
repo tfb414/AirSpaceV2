@@ -13,9 +13,10 @@ class GuestRouter extends Component {
             host_id: localStorage.getItem('host_id'),
             guest_id: '',
             message: '',
-            title: "",
-            sqtype: "",
-            sq_id: "",
+            title: localStorage.getItem('title'),
+            sqtype: localStorage.getItem('sqtype'),
+            sq_id: localStorage.getItem('sq_id'),
+            payload: JSON.parse(localStorage.getItem('payload')),
             connection: new WebSocket(env),
             isConnected: false
         }
@@ -47,6 +48,7 @@ class GuestRouter extends Component {
     }
 
     render() {
+        console.log(this.state.payload);
         console.log(this.state.host_id);
         if (!this.state.isConnected) {
             return (
@@ -134,6 +136,10 @@ class GuestRouter extends Component {
 
         if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.host_id === this.state.host_id) {
             console.log('gooot ittt');
+            localStorage.setItem('sqtype', parsedData.sqtype);
+            localStorage.setItem('sq_id', parsedData.sq_id);
+            localStorage.setItem('title', parsedData.title);
+            localStorage.setItem('payload', JSON.stringify(parsedData.payload));
             this.setState({
                 sqtype: parsedData.sqtype,
                 sq_id: parsedData.sq_id,
