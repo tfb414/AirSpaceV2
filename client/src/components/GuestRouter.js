@@ -10,7 +10,7 @@ class GuestRouter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            host_id: '',
+            host_id: localStorage.getItem('host_id'),
             guest_id: '',
             message: '',
             title: "",
@@ -87,11 +87,11 @@ class GuestRouter extends Component {
     }
 
     _handleChange = (host_id) => {
+        localStorage.setItem('host_id', host_id);
         this.setState({ host_id });
     }
 
     _submitHost_id = () => {
-        // this.setState({host_id})
         this._sendMessage(this._createPayload());
 
     }
