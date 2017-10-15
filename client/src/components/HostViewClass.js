@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
 import env from '../utility/env';
 
@@ -102,6 +103,7 @@ class HostViewClass extends Component {
         }
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
+        this.props.history.push(`/Host/Your Class`);
     }
 
     _receiveMessage = (parsedData) => {
@@ -128,4 +130,4 @@ class HostViewClass extends Component {
 }
 
 
-export default HostViewClass;
+export default withRouter(HostViewClass);
