@@ -30,10 +30,10 @@ class HostRenderSurvey extends Component {
             } else {
                 this.setState({
                     refresh: counter,
-                    activatedMessage: ""
+                    activatedMessage: "",
+                    activatedsq_id: 0
                 })
             }
-
         }, 1000)
     }
 
@@ -47,7 +47,6 @@ class HostRenderSurvey extends Component {
         let surveys = this.state.results.map((data) => {
             let activatedTR;
             if (data.sq_id === Number(this.state.activatedsq_id)) {
-                console.log('did the thing!');
                 activatedTR = <tr><td colSpan="2"><ActivateSurvey message={this.state.activatedMessage} /></td></tr>
             } else {
                 activatedTR = "";
@@ -80,7 +79,6 @@ class HostRenderSurvey extends Component {
             <div className="SQComponent">
                 <div className="HostSQRenderTitleActivate">
                     <h1 className="HostSQRenderTitle">{title}</h1>
-                    {/*<ActivateSurvey message={this.state.activatedMessage} />*/}
                 </div>
                 <hr className="TitleHR" />
                 <table className="HostSQTable">
