@@ -32,7 +32,7 @@ class HostViewClass extends Component {
         this.requestInterval = setInterval(() => {
             let payload = {
                 type: "HEARTBEAT",
-            }
+            };
             this.props.sendMessage(JSON.stringify(payload));
             let guestPayload = { type: "REQUESTGUESTS" };
             this.props.sendMessage(JSON.stringify(guestPayload));
@@ -103,14 +103,12 @@ class HostViewClass extends Component {
             type: "DELETEGUEST",
             host_guest_id: event.target.value
         }
-        payload = JSON.stringify(payload);
-        this.props.sendMessage(payload);
+        this.props.sendMessage(JSON.stringify(payload));
         this.props.history.push(`/Host/Your Class`);
     }
 
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
-            console.log(parsedData);
              if (parsedData.error === null) {
                  this.setState({
                     waitingOnData: false,
@@ -125,9 +123,6 @@ class HostViewClass extends Component {
         if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
             this.receivedGuestHeartbeat(parsedData)
         }
-
-
-
     }
 
 }
