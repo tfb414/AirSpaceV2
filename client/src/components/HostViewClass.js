@@ -29,12 +29,12 @@ class HostViewClass extends Component {
         }
     }
     componentDidMount() {
-        this.requestInterval = setInterval(() => {
-            let payload = {
+        let payload = {
                 type: "HEARTBEAT",
             };
+        let guestPayload = { type: "REQUESTGUESTS" };
+        this.requestInterval = setInterval(() => {
             this.props.sendMessage(JSON.stringify(payload));
-            let guestPayload = { type: "REQUESTGUESTS" };
             this.props.sendMessage(JSON.stringify(guestPayload));
         }, 1000);
     }
@@ -102,7 +102,7 @@ class HostViewClass extends Component {
         let payload = {
             type: "DELETEGUEST",
             host_guest_id: event.target.value
-        }
+        };
         this.props.sendMessage(JSON.stringify(payload));
         this.props.history.push(`/Host/Your Class`);
     }
@@ -118,7 +118,7 @@ class HostViewClass extends Component {
                  this.setState({
                     activatedMessage: parsedData.error
                 })
-             }
+            }
         }
         if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
             this.receivedGuestHeartbeat(parsedData)
