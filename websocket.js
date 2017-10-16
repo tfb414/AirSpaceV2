@@ -26,7 +26,6 @@ function init() {
                 let user_id = req.session.passport.user.email;
                 let first_name = req.session.passport.user.firstname;
                 let last_name = req.session.passport.user.lastname;
-                console.log(user_id);
 
                 // wss.clients.forEach(function each(client) {
                 // if (client !== ws && client.readyState === WebSocket.OPEN) {
@@ -74,7 +73,9 @@ function init() {
                                 let payload = {
                                     type: 'RETURNUSERID',
                                     user_id: user_id,
-                                    id: parsedData.id
+                                    id: parsedData.id,
+                                    first_name: first_name,
+                                    last_name: last_name
                                 }
                                 client.send(JSON.stringify(payload));
                             })
