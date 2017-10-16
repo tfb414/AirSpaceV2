@@ -35,7 +35,7 @@ class HostRenderResults extends Component {
             sqtype: this.props.sqtype
         };
         this.requestInterval = setInterval(() => {
-            this.props.connection.send(JSON.stringify(payload));
+            this.props.sendMessage(JSON.stringify(payload));
         }, 1000);
     }
 
