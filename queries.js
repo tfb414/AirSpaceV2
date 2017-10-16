@@ -156,7 +156,7 @@ function addGQRQuiz(guest_id, question_id, option_id) {
 }
 
 function getSQResultsHost(sq_id, host_id) {
-    return db.sequelize.query(`select distinct g.first_name, g.last_name, g.guest_id, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
+    return db.sequelize.query(`select distinct g.first_name, g.last_name, g.guest_id, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value, q.question_id
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id

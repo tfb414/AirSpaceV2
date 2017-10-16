@@ -342,7 +342,7 @@ function addQuestionsAndAnswers(questions, sq_id) {
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
         let id = option.option_id;
-        if (id !== null) {
+        if (id !== null && !("option_id" in option)) {
             query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {
