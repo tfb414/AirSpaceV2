@@ -6,7 +6,7 @@ export function createArrayOfFirstThings(array, number) {
     })
 }
 export function manageActiveUsers() {
-    console.log('manageactiveusers')
+    console.log('manageactiveusers');
     let currentCount = this.state.currentlyConnected.filter((guest) => {
         guest[1] -= 1;
         return guest[1] > 0

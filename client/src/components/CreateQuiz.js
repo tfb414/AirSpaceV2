@@ -58,6 +58,7 @@ class CreateQuiz extends Component {
     }
 
     render() {
+        console.log("rendering.....")
         let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
             return <QuizQuestionInput num={data.question_number} RonChange={this.handleChangeRadio} Qvalue={data.text} option={data.options} addOption={this._addOption} removeOption={this._RemoveOption} QonChange={this.handleChangeQuestion} OonChange={this.handleChangeOption} remove={this._RemoveQuestion} />
 

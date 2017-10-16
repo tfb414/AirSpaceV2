@@ -9,9 +9,9 @@ const Create = (props) => {
     return (
         <div className="createPage">
             <Switch>
-                <Route exact path="/Host/Create" component={() => <CreateQuizSurvey {...props} />} />
-                <Route exact path="/Host/Create/Quiz" component={() => <CreateQuiz {...props} />} />
-                <Route exact path="/Host/Create/Survey" component={() => <CreateSurvey {...props} />} />
+                <Route exact path="/Host/Create" render={() => <CreateQuizSurvey {...props} />} />
+                <Route exact path="/Host/Create/Quiz" render={() => <CreateQuiz {...props} />} />
+                <Route exact path="/Host/Create/Survey" render={() => <CreateSurvey {...props} />} />
 
             </Switch>
         </div>
