@@ -79,7 +79,7 @@ class HostDashboard extends Component {
                     <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
 
                     <Switch>
-                        <Route exact path="/"
+                        <Route exact path="/Host/"
                             component={() => (
                                 <HostWelcomePage
                                     host_id={this.state.host_id}
