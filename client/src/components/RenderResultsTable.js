@@ -5,8 +5,8 @@ import ResultTableResponse from './ResultTableResponse'
 
 const RenderResultsTable = (props) => {
     return (
-        <div>
-            <table>
+        <div class="SQTABLE">
+            <table className="table table-hover results">
                 <ResultTableName {...props}/>
                 <ResultTableResponse {...props} />
             </table>
