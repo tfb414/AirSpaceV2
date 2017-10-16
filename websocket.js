@@ -74,8 +74,8 @@ function init() {
                                     type: 'RETURNUSERID',
                                     user_id: user_id,
                                     id: parsedData.id,
-                                    first_name: first_name,
-                                    last_name: last_name
+                                    first_name,
+                                    last_name
                                 }
                                 client.send(JSON.stringify(payload));
                             })
