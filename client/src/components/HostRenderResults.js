@@ -20,7 +20,7 @@ class HostRenderResults extends Component {
             sq_id: this.props.match.match.params.id,
             sqtype: this.props.sqtype
         };
-        this.props.connection.send(JSON.stringify(payload));
+        this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
@@ -28,6 +28,20 @@ class HostRenderResults extends Component {
             
     }
 
+    componentDidMount() {
+        let payload = {
+            type: 'REQUESTRESULTS',
+            sq_id: this.props.match.match.params.id,
+            sqtype: this.props.sqtype
+        };
+        this.requestInterval = setInterval(() => {
+            this.props.connection.send(JSON.stringify(payload));
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.requestInterval);
+    }
 
     render() {
         if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
@@ -53,8 +67,10 @@ class HostRenderResults extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
             let results = parsedData;
+            console.log(results);
             if (results.error === null) {
                 let names = Object.keys(results.payload);
+                names = names.sort();
                 var new_nameList = [];
                 var new_questionList = {};
                 names.forEach((name)=> {

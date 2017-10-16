@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
 import env from '../utility/env';
 
@@ -33,8 +34,7 @@ class HostViewClass extends Component {
             let payload = {
                 type: "HEARTBEAT",
             }
-            let JSONpayload = JSON.stringify(payload);
-            this.connection.send(JSONpayload);
+            this.props.sendMessage(JSON.stringify(payload));
         }, 1000);
     }
 
@@ -101,6 +101,7 @@ class HostViewClass extends Component {
         }
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
+        this.props.history.push(`/Host/Your Class`);
     }
 
     _receiveMessage = (parsedData) => {
@@ -127,4 +128,4 @@ class HostViewClass extends Component {
 }
 
 
-export default HostViewClass;
+export default withRouter(HostViewClass);

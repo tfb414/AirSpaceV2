@@ -8,6 +8,7 @@ class HostRenderSurvey extends Component {
         super(props);
         this.state = {
             activatedMessage: "",
+            activatedsq_id: 0,
             refresh: 0,
             waitingOnData: true
         }
@@ -29,27 +30,12 @@ class HostRenderSurvey extends Component {
             } else {
                 this.setState({
                     refresh: counter,
-                    activatedMessage: ""
+                    activatedMessage: "",
+                    activatedsq_id: 0
                 })
             }
-
         }, 1000)
     }
-    
-    // this used to be componentWillMount
-    // componentWillReceiveProps(nextProps) {
-
-    //     console.log('running componentWillUpdate(nextProps)');
-    //     console.log(this.props.connection);
-            
-    //     let payload = { type: "REQUESTSQLIST", sqtype: this.props.sqtype };
-    //     this.props.sendMessage(JSON.stringify(payload));
-
-    //     nextProps.connection.onmessage = event => {
-    //         let parsedData = JSON.parse(event.data);
-    //         this._receiveMessage(parsedData);
-    //     }
-    // }
 
     render() {
         if (this.state.waitingOnData) {
@@ -59,8 +45,14 @@ class HostRenderSurvey extends Component {
             )
         }
         let surveys = this.state.results.map((data) => {
+            let activatedTR;
+            if (data.sq_id === Number(this.state.activatedsq_id)) {
+                activatedTR = <tr><td colSpan="2"><ActivateSurvey message={this.state.activatedMessage} /></td></tr>
+            } else {
+                activatedTR = "";
+            }
             return (
-
+                <div>
                 <tr className="SQFunctions">
                     <td className="SQTitle">
                         <p>{data.sq_name}</p>
@@ -72,6 +64,8 @@ class HostRenderSurvey extends Component {
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._deleteSQ}>Delete</button>
                     </td>
                 </tr>
+                {activatedTR}
+                </div>
             )
         })
         let title;
@@ -84,7 +78,6 @@ class HostRenderSurvey extends Component {
             <div className="SQComponent">
                 <div className="HostSQRenderTitleActivate">
                     <h1 className="HostSQRenderTitle">{title}</h1>
-                    <ActivateSurvey message={this.state.activatedMessage} />
                 </div>
                 <div className="yourSQTable">
                     <table className="table table-hover">
@@ -97,18 +90,18 @@ class HostRenderSurvey extends Component {
 
     _viewResults = (event) => {
         if (this.props.sqtype === 'survey') {
-            this.props.history.push(`/Host/Your Surveys/${event.target.value}`)
+            this.props.history.push(`/Host/Your Surveys/${event.target.value}`);
         } else if (this.props.sqtype === 'quiz') {
-            this.props.history.push(`/Host/Your Quizzes/${event.target.value}`)
+            this.props.history.push(`/Host/Your Quizzes/${event.target.value}`);
         }
 
     }
 
     _editSQ = (event) => {
         if (this.props.sqtype === 'survey') {
-            this.props.history.push(`/Host/Your Surveys/Edit/${event.target.value}`)
+            this.props.history.push(`/Host/Your Surveys/Edit/${event.target.value}`);
         } else if (this.props.sqtype === 'quiz') {
-            this.props.history.push(`/Host/Your Quizzes/Edit/${event.target.value}`)
+            this.props.history.push(`/Host/Your Quizzes/Edit/${event.target.value}`);
         }
     }
 
@@ -120,9 +113,9 @@ class HostRenderSurvey extends Component {
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
         if (this.props.sqtype === 'survey') {
-            this.props.history.push(`/Host/Your Surveys`)
+            this.props.history.push(`/Host/Your Surveys`);
         } else if (this.props.sqtype === 'quiz') {
-            this.props.history.push(`/Host/Your Quizzes`)
+            this.props.history.push(`/Host/Your Quizzes`);
         }
     }
 
@@ -131,7 +124,7 @@ class HostRenderSurvey extends Component {
             type: "ACTIVATESQ",
             sqtype: this.props.sqtype,
             sq_id: event.target.value
-        }
+        };
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
     }
@@ -139,23 +132,23 @@ class HostRenderSurvey extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
             let results = parsedData.payload;
-            console.log(results);
             this.setState({
                 waitingOnData: false,
                 results: results
-            })
+            });
         } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
             let results = parsedData;
-            console.log(results)
             if (results.error === null) {
                 this.setState({
                     refresh: 0,
-                    activatedMessage: `${results.title} has been successfully activated`
+                    activatedsq_id: results.sq_id,
+                    activatedMessage: `${results.title} has been successfully activated.`
                 })
             } else if (results.error === "No questions found") {
                 this.setState({
                     refresh: 0,
-                    activatedMessage: 'Could not activate. No questions found for that survey'
+                    activatedsq_id: results.sq_id,
+                    activatedMessage: `Could not activate ${results.title}. No questions found.`
                 })
             }
         }
