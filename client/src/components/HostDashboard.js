@@ -12,6 +12,7 @@ import ActivateSurvey from './ActivateSurvey';
 import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
+import HostWelcomePage from './HostWelcomePage';
 
 class HostDashboard extends Component {
     constructor(props) {
