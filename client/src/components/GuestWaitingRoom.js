@@ -27,7 +27,7 @@ class GuestWaitingRoom extends Component {
         }
         return (
             <div className="GuestWaitingRoom">
-                <div>
+                <div className="guestPrompt">
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
                 </div>
             </div>
