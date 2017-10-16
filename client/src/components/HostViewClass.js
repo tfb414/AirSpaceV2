@@ -27,7 +27,6 @@ class HostViewClass extends Component {
             this._receiveMessage(parsedData);
             this.manageActiveUsers();
         }
-
     }
     componentDidMount() {
         setInterval(() => {
@@ -41,16 +40,15 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div className="SQComponent">
-                </div>
+            <div>
+                <h3>{this.state.activatedMessage}</h3>
+            </div>
             )
-        }
-
-        let classList = this.state.results.map((person, idx) => {
+        } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            let classList = this.state.results.map((person, idx) => {
             let onlineStatus = this.state.currentlyConnected.filter((status) => {
                 return person.guest_id === status[0]
             })
-            console.log(onlineStatus)
             if (onlineStatus.length === 0) {
                 return (
                     <tr>
