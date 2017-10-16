@@ -30,7 +30,8 @@ class CreateSurvey extends Component {
     }
 
     render() {
-        let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
+        console.log("rendering.....");
+        let questionForm = this.state.question.map((data) => {     // Maps through and renders the Question Inputs.
             return <SurveyQuestionInput num={data.question_number} value={data.text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
 
         })
@@ -104,12 +105,12 @@ class CreateSurvey extends Component {
             filledOut: formIsFilled
         }, () => { 
             if (this.state.filledOut === true) {
-            console.log(this._createPayload())
-            this.props.sendMessage(this._createPayload());
-            setTimeout(() => { 
-                this.props.history.push('/Host/Your Surveys/')
-            }, 100)    
-        }
+            // console.log(this._createPayload())
+                this.props.sendMessage(this._createPayload());
+                setTimeout(() => { 
+                    this.props.history.push('/Host/Your Surveys/')
+                }, 100)    
+            }
         })
     }
 
