@@ -1097,7 +1097,9 @@ button.guestButton {
   margin: 1rem;
   margin-top: 2rem;
   padding: 1rem;
-  border: 1px solid black; }
+  background-color: #97c2c1;
+  color: white;
+  border-radius: 10px; }
 
 .GuestRenderSurvey {
   background-color: #eae7e3;
@@ -1116,17 +1118,14 @@ button.guestButton {
   margin-left: 16%; }
 
 .GuestSurveyTitle {
-  font-size: 3em;
-  display: inline; }
-
-.GuestSurveyQuestionsContainer {
-  margin-left: 3rem; }
+  margin-top: 2rem;
+  font-size: 3em; }
 
 .TitleHR {
   width: 40%;
   margin-left: 4%;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
@@ -1170,8 +1169,10 @@ button.guestButton {
   color: #fefdfb;
   background-color: #97c2c1;
   margin-right: .7rem;
+  margin-top: 2rem;
   background-image: none;
-  border-color: transparent; }
+  border-color: transparent;
+  padding: .6rem; }
 
 .GuestRenderQuiz {
   background-color: #eae7e3;
