@@ -1,6 +1,6 @@
 import React from 'react'
 import LandingButtonContainer from './LandingButtonContainer'
-import logo from '../stylesheets/images/wifi.svg';
+import logo from '../stylesheets/images/mix.svg';
 
 const LandingPage = () => {
     return (
