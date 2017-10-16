@@ -19,10 +19,11 @@ const ResultTableResponse = ({ question }) => {
                 </td>
             )
         })
+        console.log(question);
         return (
         <tr>
             <td className='questionBox'>
-                    {data}
+                    {responses[0].question_text}
             </td>
             {singleResponse}    
         </tr>    

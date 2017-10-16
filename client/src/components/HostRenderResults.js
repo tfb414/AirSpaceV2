@@ -78,13 +78,13 @@ class HostRenderResults extends Component {
                     let data = results.payload[name];
                     let new_name = data.first_name + " " + data.last_name;
                     data.question.forEach((question) => {
-                        if (new_questionList[question.text] === undefined) {
-                            new_questionList[question.text] = []
+                        if (new_questionList[question.id] === undefined) {
+                            new_questionList[question.id] = []
                         }
                         if (question.value != undefined) {
-                            new_questionList[question.text].push({ text: question.response, value: question.value })
+                            new_questionList[question.id].push({ question_text: question.text, text: question.response, value: question.value })
                         } else {
-                            new_questionList[question.text].push({ text: question.response, value: 'survey' })
+                            new_questionList[question.id].push({ question_text: question.text, text: question.response, value: 'survey' })
                         }
                         
                     })

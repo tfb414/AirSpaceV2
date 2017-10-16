@@ -307,6 +307,7 @@ function formatResults(resp, user_id) {
         }
         let question_obj = {};
         question_obj["text"] = person.question;
+        question_obj["id"] = person.question_id;
         question_obj["response"] = person.response;
         if (person.response === null && person.option_value !== null) {
             question_obj["response"] = person.option_text;
