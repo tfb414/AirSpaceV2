@@ -140,12 +140,6 @@ class HostDashboard extends Component {
                                     sqtype='quiz'
                                 />)} />
                     </Switch>
-<<<<<<< HEAD
-=======
-                    {/*<div>
-                        {this.displayConnected()}
-                    </div>*/}
->>>>>>> master
                 </div>
             )
         }

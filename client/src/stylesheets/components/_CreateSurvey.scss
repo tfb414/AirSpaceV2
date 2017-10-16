@@ -97,7 +97,7 @@ h3.surveyQTitle {
     align-self: flex-start;
     font-size: 2.2rem;
     @include respond-to(small) {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -184,5 +184,7 @@ button.addSq {
 
 button.btn.btn-outline-secondary.submitSurvey {
     margin-right: 0;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 

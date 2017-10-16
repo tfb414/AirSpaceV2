@@ -575,7 +575,7 @@ h3.surveyQTitle {
   @media (min-width: 320px) {
     .surveyTitle,
     .surveyQTitle {
-      font-size: 1.8rem; } }
+      font-size: 1.6rem; } }
 
 .surveyTinput {
   align-self: normal;
@@ -647,7 +647,9 @@ button.addSq {
   border: none; }
 
 button.btn.btn-outline-secondary.submitSurvey {
-  margin-right: 0; }
+  margin-right: 0;
+  margin-top: 1rem;
+  margin-bottom: 2rem; }
 
 .quizBox {
   width: 90%;
@@ -669,8 +671,13 @@ button.btn.btn-outline-secondary.submitSurvey {
 
 .cnqTitle {
   margin-top: 0;
-  margin-bottom: 3rem;
-  font-size: 1.6rem; }
+  font-size: 1.6rem;
+  margin-bottom: 0; }
+  @media (min-width: 320px) {
+    .cnqTitle {
+      font-size: 2.4rem;
+      padding-top: 1.8rem;
+      padding-bottom: 1.8rem; } }
   @media (min-width: 768px) {
     .cnqTitle {
       font-size: 3.5rem; } }
@@ -678,7 +685,6 @@ button.btn.btn-outline-secondary.submitSurvey {
 .quizTitle {
   margin-bottom: 0; }
 
-.quizTitle, .qui
 .quizQuestionLine {
   width: 100%; }
 
@@ -779,11 +785,7 @@ button.btn.btn-outline-secondary.submitSurvey {
   padding-bottom: .5rem; }
 
 input.quizOptionRadio {
-  margin-left: 4%;
-  margin-right: -88%; }
-
-.quizOptionsBlock input {
-  width: 80%; }
+  margin-left: 20%; }
 
 .quizQuestionItem {
   padding-bottom: 1.5rem; }
@@ -801,6 +803,9 @@ input.quizOptionRadio {
   margin-top: .5rem;
   margin-bottom: .5rem;
   margin-left: 79px; }
+  @media (min-width: 320px) {
+    .correct p {
+      margin-left: 190%; } }
 
 .quizOptionRadio {
   display: flex;
@@ -1015,6 +1020,24 @@ a:hover {
       width: 6.8rem;
       height: 3.4rem;
       font-size: 1.8rem; } }
+
+.welcomePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white; }
+
+.welcomeLogo {
+  width: 10rem; }
+
+@media (min-width: 320px) {
+  .welcomePage > h1 {
+    font-size: 1.6rem;
+    padding: 2rem; } }
+
+.welcomeTeacherId p {
+  margin-bottom: 0; }
 
 .landingPage {
   width: 100%;

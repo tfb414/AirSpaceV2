@@ -39,8 +39,13 @@
 
 .cnqTitle {
     margin-top: 0;
-    margin-bottom: 3rem;
     font-size: 1.6rem;
+    margin-bottom: 0;
+    @include respond-to(small) {
+        font-size: 2.4rem;
+        padding-top: 1.8rem;
+        padding-bottom: 1.8rem;
+    }
     @include respond-to(medium) {
         font-size: 3.5rem;
     }
@@ -49,8 +54,6 @@
 .quizTitle {
     margin-bottom: 0;
 }
-
-.quizTitle, .qui
 
 .quizQuestionLine {
     width: 100%;
@@ -174,12 +177,11 @@
 }
 
 input.quizOptionRadio {
-    margin-left: 4%;
-    margin-right: -88%;
+    margin-left: 20%;
 }
 
 .quizOptionsBlock input {
-    width: 80%;
+    // width: 80%;
 }
 
 .quizQuestionItem {
@@ -200,6 +202,9 @@ input.quizOptionRadio {
     margin-top: .5rem;
     margin-bottom: .5rem;
     margin-left: 79px;
+    @include respond-to(small) {
+        margin-left: 190%;
+    }
 }
 
 .quizOptionRadio {
