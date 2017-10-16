@@ -1,15 +1,16 @@
 import React from 'react'
 import LandingButtonContainer from './LandingButtonContainer'
-
+import logo from '../stylesheets/images/mix.svg';
 
 const LandingPage = () => {
     return (
         <div className="landingPage">
             <div className="branding">
-                AirSpace
+                <img className="logo" src={logo} />
+                <h1 className="branding">AirSpace</h1>
             </div>
             <LandingButtonContainer />
         </div>
     )
 }
-export default LandingPage
+export default LandingPage;

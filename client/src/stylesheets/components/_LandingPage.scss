@@ -5,20 +5,41 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: url(stylesheets/images/littleboard3.jpg);
-    background-size: contain;
+    background: url(stylesheets/images/blooboard.jpg);
+    background-size: cover;
     color: white;
 }
 
+h1.branding {
+    font-size: 7rem;
+    letter-spacing: 10px;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
 .branding {
-    margin-bottom: 2rem;
     font-weight: bold;
-    font-size: 4rem;
+    // font-size: 3rem;
     text-align: center;
-    font-family: 'Homemade Apple', cursive;
+    font-family: 'Shrikhand', $copyfont;
+    // font-family: 'Homemade Apple', cursive;
     // font-family: 'Montserrat', 'Lucia Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     // letter-spacing: 3px;
     @include respond-to(small) {
         font-size: 4rem;
     }
+}
+
+img.logo {
+    width: 16rem;
+}
+
+svg.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    color: white;
+    fill: white;
 }
