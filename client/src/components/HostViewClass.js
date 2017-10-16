@@ -46,51 +46,52 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-            <div>
-                <h3>{this.state.activatedMessage}</h3>
-            </div>
+                <div>
+                    <h3>{this.state.activatedMessage}</h3>
+                </div>
             )
         } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
             let classList = this.state.results.map((person, idx) => {
-            let onlineStatus = this.state.currentlyConnected.filter((status) => {
-                return person.guest_id === status[0]
-            })
-            if (onlineStatus.length === 0) {
+                let onlineStatus = this.state.currentlyConnected.filter((status) => {
+                    console.log(status)
+                    return person.guest_id === status[0]
+                })
+                if (onlineStatus.length === 0) {
+                    return (
+                        <tr>
+                            <td scope="row" className="connection offline"><i className="fa fa-circle" aria-hidden="true"></i></td>
+                            <td>{person.first_name} {person.last_name}</td>
+                            <td>{person.guest_id}</td>
+                            <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
+                        </tr>
+                    )
+                }
                 return (
                     <tr>
-                        <td scope="row" className="connection offline"><i className="fa fa-circle" aria-hidden="true"></i></td>
+                        <td scope="row" className="connection online" ><i className="fa fa-circle" aria-hidden="true"></i></td>
                         <td>{person.first_name} {person.last_name}</td>
                         <td>{person.guest_id}</td>
                         <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
                     </tr>
                 )
-            }
-            return (
-                <tr>
-                    <td scope="row" className="connection online" ><i className="fa fa-circle" aria-hidden="true"></i></td>
-                    <td>{person.first_name} {person.last_name}</td>
-                    <td>{person.guest_id}</td>
-                    <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
-                </tr>
-            )
 
-        })
-        return (
-            <div className="surveyBox SQComponent">
-                <h1>Classroom</h1>
-                <table className="table table-hover classRoom">
-                    <thead>
-                        <th> </th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Class Options</th>
-                    </thead>
-                    <tbody>
-                        {classList}
-                    </tbody>
-                </table>
-            </div>
-        )
+            })
+            return (
+                <div className="surveyBox SQComponent">
+                    <h1>Classroom</h1>
+                    <table className="table table-hover classRoom">
+                        <thead>
+                            <th> </th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Class Options</th>
+                        </thead>
+                        <tbody>
+                            {classList}
+                        </tbody>
+                    </table>
+                </div>
+            )
         } else {
             return (
                 <div></div>
@@ -109,13 +110,13 @@ class HostViewClass extends Component {
 
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
-             if (parsedData.error === null) {
-                 this.setState({
+            if (parsedData.error === null) {
+                this.setState({
                     waitingOnData: false,
                     results: parsedData.payload
                 })
-             } else {
-                 this.setState({
+            } else {
+                this.setState({
                     activatedMessage: parsedData.error
                 })
             }

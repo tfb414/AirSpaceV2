@@ -18,17 +18,19 @@ export function manageActiveUsers() {
 }
 export function receivedGuestHeartbeat(parsedData) {
     console.log('recievedguestHeartbeat')
-    console.log(parsedData)
     var currentlyConnected = this.state.currentlyConnected
+    var length = (currentlyConnected.length + 1) * 3;
+    console.log(currentlyConnected);
+    console.log(length);
     let arrayOfFirstThings = this.createArrayOfFirstThings(currentlyConnected, 0)
     if (arrayOfFirstThings.indexOf(parsedData.guest_id) < 0) {
-        currentlyConnected.push([parsedData.guest_id, 3])
+        currentlyConnected.push([parsedData.guest_id, length])
         this.setState({
             currentlyConnected: currentlyConnected
         })
     }
     else {
-        currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = 3
+        currentlyConnected[arrayOfFirstThings.indexOf(parsedData.guest_id)][1] = length
         this.setState({
             currentlyConnected: currentlyConnected
         })
