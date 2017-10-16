@@ -86,13 +86,6 @@ class CreateQuiz extends Component {
                 </div>
             </div>
         )
-
-    }
-
-    componentDidMount() {
-        for (let i=0; i < 20; i++) {
-            this._addQuestion();
-        }
     }
 
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form
