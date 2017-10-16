@@ -49,17 +49,6 @@ class HostDashboard extends Component {
                 this.manageActiveUsers();
             };
         }
-
-
-    }
-  componentDidMount() {
-        setInterval(() => {
-            let payload = {
-                type: "HEARTBEAT",
-            }
-            let JSONpayload = JSON.stringify(payload);
-            this.state.connection.send(JSONpayload);
-        }, 1000);
     }
 
     render() {
