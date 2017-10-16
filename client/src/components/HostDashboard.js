@@ -63,10 +63,6 @@ class HostDashboard extends Component {
     //     }, 1000);
     // }
 
-    componentWillUnmount() {
-         clearInterval(this.heartbeatInterval);
-    }
-
     render() {
         if (!this.state.isConnected) {
             return (
