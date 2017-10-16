@@ -65,10 +65,11 @@ img.logo {
         height: 50%;
         margin: 3rem;
         margin-top: 0;
+        font-size: 2rem;
     }
     @include respond-to(large) {
         width: 20%;
-        font-size: 3rem;
+        // font-size: 3rem;
     }
 }
 
