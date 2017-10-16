@@ -15,8 +15,8 @@ class HostAbout extends Component {
                     <ul>
                         <li>Results:  Displays a table of all the students' responses to your survey or quiz. It also shows students' scores if it is a quiz.</li>
                         <li>Activate: Sends the selected survey/quiz to all connected users.</li>
-                        <li>Edit: Allows you to edit the selected survey/quiz. </li>
-                        <li>Delete: Will delete </li>
+                        <li>Edit: Allows you to edit the selected survey/quiz. Editing a survey will also cause all guest responses associated with this survey/quiz to be cleared.</li>
+                        <li>Delete: Will delete the selected survey/quiz and all responses associated with this survey/quiz.</li>
                     </ul>
                 </p>
             </div>
