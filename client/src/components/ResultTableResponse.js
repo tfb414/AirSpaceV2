@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ResultTableResponse = ({ question }) => {
+const ResultTableResponse = ({ question, sqtype }) => {
     let keys = Object.keys(question);
     let totalQuestions = keys.length;
     let scores = [];
@@ -35,20 +35,22 @@ const ResultTableResponse = ({ question }) => {
         score = String(score) + "%";
         return score;
     })
-    let scoreCells;
-    // if ()
-    scoreCells = newScores.map(score => {
-        return (
-            <td>{score}</td>
-        )
-    })
+    let scoreRow;
+    if (sqtype === "quiz") {
+        let scoreCells = newScores.map(score => {
+            return (
+                <td>{score}</td>
+            )
+        })
+        scoreRow = <tr><td>Score</td>
+                {scoreCells}</tr>
+    } else {
+        scoreRow = <div></div>
+    }
     return (
         <tbody>
             {tableData}
-            <tr>
-                <td>Score</td>
-                {scoreCells}
-            </tr>
+            {scoreRow}
         </tbody>
     );
 };
