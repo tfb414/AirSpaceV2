@@ -20,7 +20,7 @@ class HostRenderResults extends Component {
             sq_id: this.props.match.match.params.id,
             sqtype: this.props.sqtype
         };
-        this.props.connection.send(JSON.stringify(payload));
+        this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
@@ -28,6 +28,20 @@ class HostRenderResults extends Component {
             
     }
 
+    componentDidMount() {
+        let payload = {
+            type: 'REQUESTRESULTS',
+            sq_id: this.props.match.match.params.id,
+            sqtype: this.props.sqtype
+        };
+        this.requestInterval = setInterval(() => {
+            this.props.connection.send(JSON.stringify(payload));
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.requestInterval);
+    }
 
     render() {
         if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
@@ -39,14 +53,13 @@ class HostRenderResults extends Component {
             );
         } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
+                <div className="resultBox">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
         } else {
             return (
                 <div className='resultBox'>
-                    <h1 className='resultTableName'>Waiting for results...</h1>
                 </div>
             );
         }
@@ -54,8 +67,10 @@ class HostRenderResults extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYRESULTS' && this.state.host_id === parsedData.host_id) {
             let results = parsedData;
+            console.log(results);
             if (results.error === null) {
                 let names = Object.keys(results.payload);
+                names = names.sort();
                 var new_nameList = [];
                 var new_questionList = {};
                 names.forEach((name)=> {

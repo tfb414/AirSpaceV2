@@ -31,12 +31,10 @@ db.option = require('./models/option.js')(sequelize, Sequelize);
 db.question = require('./models/question.js')(sequelize, Sequelize);
 db.sq = require('./models/sq.js')(sequelize, Sequelize);
 db.sq_question_option = require('./models/sq_question_option.js')(sequelize, Sequelize);
-
-//Relations
-// db.host.hasMany(db.guest);
-// db.guest.belongsTo
+db.scores = require('./models/scores.js')(sequelize, Sequelize);
 
 //Syncs tables to DB 
+// db.scores.sync({force: true});
 // db.host.sync({force: true});
 // db.guest.sync({force: true});
 // db.guest_question_response.sync({force: true});

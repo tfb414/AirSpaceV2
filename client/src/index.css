@@ -424,19 +424,36 @@ body {
   justify-content: center; }
 
 .resultBox {
-  font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Raleway', sans-serif;
   color: #455358;
-  width: 90%;
+  background-color: #eae7e3;
+  width: 100%;
   display: flex;
   padding: 2rem;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  border-radius: 2rem; }
+  align-items: center; }
   @media (min-width: 768px) {
     .resultBox {
-      width: 50%; } }
+      width: 100%; } }
+
+.classRoom {
+  width: 64%; }
+
+.results {
+  max-width: 100%; }
+
+.SQTABLE {
+  display: flex;
+  justify-content: center; }
+
+.SQuesInput {
+  width: 94%; }
+
+.results td {
+  width: 1%; }
+
+.table td, .table th {
+  text-align: center; }
 
 .resultTableName {
   align-self: center; }
@@ -446,8 +463,30 @@ body {
 
 td {
   padding: 1rem;
-  border-right: 1px solid #455358;
-  border-bottom: 1px solid #455358; }
+  border-bottom: 1px solid #b2b2b2; }
+
+.table thead th {
+  border-bottom: none;
+  font-size: 1.5rem; }
+
+.table td, .table th {
+  border-top: none; }
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.03); }
+
+td.connection {
+  width: 8%;
+  text-align: center; }
+
+.offline {
+  color: #e59696; }
+
+.online {
+  color: #97c2c1; }
+
+tbody {
+  border-top: 1px solid #455358; }
 
 .surveyBox {
   width: 90%;
@@ -457,8 +496,7 @@ td {
   flex-direction: column;
   align-items: center;
   justify-content: normal;
-  font-family: 'Raleway', sans-serif;
-  border-radius: 2rem; }
+  font-family: 'Raleway', sans-serif; }
   @media (min-width: 768px) {
     .surveyBox {
       width: 90%; } }
@@ -480,7 +518,6 @@ h3.surveyQTitle {
 
 .surveyTinput, .surveyQInput {
   border: none;
-  width: 27rem;
   box-shadow: 1px 1px 1px 1px rgba(77, 77, 77, 0.07);
   margin-left: 5%;
   font-family: 'Raleway', sans-serif;
@@ -546,7 +583,6 @@ button.addSq {
 .bottomButtons {
   width: 100%;
   height: 100%;
-  margin-left: 9%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
