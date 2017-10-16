@@ -9,8 +9,7 @@ class HostAbout extends Component {
         return (
             <div>
                 <p>AirSpace is a group response platform that allows students or other members of a group to provide feedback and answer a teacher's or host's questions.<br /><br />
-                Group members can initiate or join existing sessions via phone, tablet, or computer by entering their teacher's email.
-                The teacher can then send surveys and view member responses in real time.</p>
+                Group members can initiate or join existing sessions via phone, tablet, or computer by entering their teacher's email. The teacher can then send surveys and view member responses in real time.</p>
                 <p>As a host, start by creating a survey or quiz on the <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectCreate}>Create</a> page. Then, view the survey or quiz you created in the <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectSurvey}>Your Surveys</a> or <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectQuiz}>Your Quizzes</a> page respectively. From this page, you have a few options:
                     <ul>
                         <li>Results:  Displays a table of all the students' responses to your survey or quiz. It also shows students' scores if it is a quiz.</li>
