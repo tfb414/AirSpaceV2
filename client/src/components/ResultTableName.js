@@ -4,7 +4,7 @@ const ResultTableName = ({ name }) => {
     let nameTable = name.map((data) => {
         return (
             <td>
-                {data}
+                <h4>{data}</h4>
             </td>
         )
     })

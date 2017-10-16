@@ -13,27 +13,22 @@ class GuestWaitingRoom extends Component {
     }
 
     render() {
-        console.log(this.state.title);
-        if (this.state.title !== null) {
+        if (this.state.title !== null || localStorage.getItem('title') !== null) {
             if (this.props.sqtype === "survey") {
                 return (
-                    <GuestRenderSurvey onSubmit={() => {this.setState({title: null})}} {... this.props}/>
-            )
-            } else if (this.props.sqtype === "quiz") {
-                console.log('quiz')
-                return (
-                    <GuestRenderQuiz onSubmit={() => {this.setState({title: null})}} {... this.props}/>
+                    <GuestRenderSurvey onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
                 )
-            } else {
-
+            } else if (this.props.sqtype === "quiz") {
+                return (
+                    <GuestRenderQuiz onSubmit={() => { this.setState({ title: null }) }} {... this.props} />
+                )
             }
-            
+
         }
         return (
-            <div>
+            <div className="GuestWaitingRoom">
                 <div>
                     Welcome to the Guest Waiting Room! We are waiting for your host to send a survey!
-                    {this.props.title}
                 </div>
             </div>
 

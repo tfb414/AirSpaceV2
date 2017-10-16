@@ -1,10 +1,10 @@
 import React from 'react';
 
-const RenderSurveyQuestion = ({ TonChange, question_number, text, value, index}) => {
+const RenderSurveyQuestion = ({ TonChange, question_number, text, value, index }) => {
     return (
-        <div>
+        <div className="SurveyQuestions">
             <h3>{question_number}. {text}</h3>
-            <textarea value={value} target={index} onChange={TonChange}></textarea>
+            <input type="text" value={value} target={index} onChange={TonChange} />
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { createArrayOfFirstThings, manageActiveUsers, receivedGuestHeartbeat, displayConnected } from '../utility/activeUsers.js'
 import env from '../utility/env';
 
@@ -7,9 +8,9 @@ class HostViewClass extends Component {
         super(props);
         this.state = {
             waitingOnData: true,
+            activatedMessage: "",
             currentlyConnected: []
         }
-        this.connection = new WebSocket(env);
 
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
@@ -23,83 +24,72 @@ class HostViewClass extends Component {
 
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            if (parsedData.type === "DISPLAYGUESTS") {
-                let results = this._receiveMessage(parsedData);
-                console.log(results);
-                this.setState({
-                    waitingOnData: false,
-                    results: results,
-                })
-            }
-
             this._receiveMessage(parsedData);
             this.manageActiveUsers();
-
         }
-
     }
     componentDidMount() {
         setInterval(() => {
             let payload = {
                 type: "HEARTBEAT",
             }
-            let JSONpayload = JSON.stringify(payload);
-            this.connection.send(JSONpayload);
+            this.props.sendMessage(JSON.stringify(payload));
         }, 1000);
     }
 
     render() {
-        if (this.state.waitingOnData) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
-                    <h1>Searching for your guests</h1>
-                </div>
+            <div>
+                <h3>{this.state.activatedMessage}</h3>
+            </div>
             )
-        }
-
-        let classList = this.state.results.map((person, idx) => {
+        } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            let classList = this.state.results.map((person, idx) => {
             let onlineStatus = this.state.currentlyConnected.filter((status) => {
                 return person.guest_id === status[0]
             })
-            console.log(onlineStatus)
             if (onlineStatus.length === 0) {
                 return (
                     <tr>
-                        <td>offline</td>
-                        <td>{person.first_name}</td>
-                        <td>{person.last_name}</td>
+                        <td scope="row" className="connection offline"><i className="fa fa-circle" aria-hidden="true"></i></td>
+                        <td>{person.first_name} {person.last_name}</td>
                         <td>{person.guest_id}</td>
-                        <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                        <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
                     </tr>
                 )
             }
             return (
                 <tr>
-                    <td>online</td>
-                    <td>{person.first_name}</td>
-                    <td>{person.last_name}</td>
+                    <td scope="row" className="connection online" ><i className="fa fa-circle" aria-hidden="true"></i></td>
+                    <td>{person.first_name} {person.last_name}</td>
                     <td>{person.guest_id}</td>
-                    <td><button value={person.host_guest_id} onClick={this._deleteGuest}>Delete</button></td>
+                    <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
                 </tr>
             )
 
         })
         return (
-            <div>
-                <table>
+            <div className="surveyBox SQComponent">
+                <h1>Classroom</h1>
+                <table className="table table-hover classRoom">
                     <thead>
-                        <th>Online</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th> </th>
+                        <th>Name</th>
                         <th>Email</th>
+                        <th>Class Options</th>
                     </thead>
                     <tbody>
                         {classList}
                     </tbody>
                 </table>
-                <div>{this.displayConnected()}</div>
             </div>
         )
+        } else {
+            return (
+                <div></div>
+            );
+        }
     }
 
     _deleteGuest = (event) => {
@@ -109,12 +99,21 @@ class HostViewClass extends Component {
         }
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
+        this.props.history.push(`/Host/Your Class`);
     }
 
     _receiveMessage = (parsedData) => {
-
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
-            return parsedData.payload;
+             if (parsedData.error === null) {
+                 this.setState({
+                    waitingOnData: false,
+                    results: parsedData.payload
+                })
+             } else {
+                 this.setState({
+                    activatedMessage: parsedData.error
+                })
+             }
         }
         if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
             this.receivedGuestHeartbeat(parsedData)
@@ -127,4 +126,4 @@ class HostViewClass extends Component {
 }
 
 
-export default HostViewClass;
+export default withRouter(HostViewClass);

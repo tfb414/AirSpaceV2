@@ -1,6 +1,13 @@
 const db = require('./sequelize.js');
 const Sequelize = require('sequelize');
 
+function retrieveHost(host_id) {
+    return db.host.findAll({
+        attributes: ['host_id', 'first_name', 'last_name'],
+        where: {host_id},
+        raw: true
+    })
+}
 
 function upsertHost(host_id, first_name, last_name) {
     db.host.upsert({
@@ -149,7 +156,7 @@ function addGQRQuiz(guest_id, question_id, option_id) {
 }
 
 function getSQResultsHost(sq_id, host_id) {
-    return db.sequelize.query(`select distinct g.first_name, g.last_name, g.guest_id, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value
+    return db.sequelize.query(`select distinct g.first_name, g.last_name, g.guest_id, gqr.response, q.question, sq.sq_name, o.option_text, o.option_value, q.question_id
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id
@@ -383,7 +390,8 @@ module.exports = {
     updateOption,
     getGuestsForHost,
     deleteGQRForHost,
-    deleteHG
+    deleteHG,
+    retrieveHost
 };
 
 

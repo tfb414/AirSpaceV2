@@ -23,19 +23,17 @@ function init() {
     wss.on('connection', function connection(ws, req) {
         sessionmanager.sharedSession(req, {}, function () {
             req.session.save(function () {
-                let user_id = req.session.passport.user;
+                let user_id = req.session.passport.user.email;
+                let first_name = req.session.passport.user.firstname;
+                let last_name = req.session.passport.user.lastname;
+                console.log(user_id);
 
                 // wss.clients.forEach(function each(client) {
                 // if (client !== ws && client.readyState === WebSocket.OPEN) {
                 // client.send("you're a wizard harry!");
                 // client.send(data);
 
-                // }
-                // });
-
                 ws.on('message', function incoming(data) {
-
-                    console.log("WE GOT A MESSAGE");
                     let parsedData = JSON.parse(data);
                     switch (parsedData.type) {
                         case 'CREATESQ':
@@ -168,8 +166,17 @@ function init() {
 
                         case "REQUESTGUESTS":
                             query.getGuestsForHost(user_id).then(resp => {
-                                let payload = formatGuests(resp, user_id);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatGuests(resp, user_id);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let payload = {
+                                        type: "DISPLAYGUESTS",
+                                        host_id: user_id,
+                                        error: `There are no students in your class.`
+                                    };
+                                    sendPayload(payload, wss);
+                                }
                             })
                             break;
 
@@ -200,24 +207,12 @@ function init() {
     })
 }
 
-
-
-
-// [ { first_name: 'Sarah',
-//     last_name: 'A',
-//     guest_id: 'sabbey37@gmail.com' },
-//   { first_name: 'Aaron',
-//     last_name: 'Sosa',
-//     guest_id: 'aarontsosa@gmail.com' },
-//   { first_name: 'Tim',
-//     last_name: 'Brady',
-//     guest_id: 'tfb414@gmail.com' } ]
-
 function formatGuests(resp, host_id) {
     let result = {};
     result["type"] = "DISPLAYGUESTS";
     result["host_id"] = host_id;
     result["payload"] = resp;
+    result["error"] = null;
     return result;
 }
 
@@ -231,7 +226,7 @@ function formatSQ(resp, host_id, sqtype) {
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
-        result["payload"] = quizPayload(resp);
+        result["payload"] = quizPayload(resp, "display");
     }
     return result;
 }
@@ -247,7 +242,7 @@ function formatSQEdit(resp, host_id, sqtype) {
     if (sqtype === 'survey') {
         result["payload"] = surveyPayload(resp);
     } else if (sqtype === 'quiz') {
-        result["payload"] = quizPayload(resp);
+        result["payload"] = quizPayload(resp, null);
     }
     return result;
 }
@@ -264,7 +259,7 @@ function surveyPayload(resp) {
     return result;
 }
 
-function quizPayload(resp) {
+function quizPayload(resp, display) {
     let result = {}
     resp.forEach((question) => {
         let question_id = question.question_id;
@@ -278,7 +273,9 @@ function quizPayload(resp) {
         let option = {};
         option.option_id = question.option_id;
         option.text = question.option_text;
-        option.value = question.option_value;
+        if (display !== "display") {
+            option.value = question.option_value;
+        }
         result[question_id].options.push(option);
     })
     return result;
@@ -310,12 +307,13 @@ function formatResults(resp, user_id) {
         }
         let question_obj = {};
         question_obj["text"] = person.question;
+        question_obj["id"] = person.question_id;
         question_obj["response"] = person.response;
         if (person.response === null && person.option_value !== null) {
             question_obj["response"] = person.option_text;
             question_obj["value"] = person.option_value;
         } else if (person.response === null) {
-            question_obj["response"] = "No response";
+            question_obj["response"] = "-";
         }
         result.payload[email].question.push(question_obj);
     })
@@ -345,7 +343,7 @@ function addQuestionsAndAnswers(questions, sq_id) {
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
         let id = option.option_id;
-        if (id !== null) {
+        if (id !== null && !("option_id" in option)) {
             query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {

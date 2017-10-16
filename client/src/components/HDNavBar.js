@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import HDNavButton from './HDNavButton';
+import { withRouter } from 'react-router';
 
 // import MenuFactory from './MenuFactory';
 
@@ -77,6 +78,7 @@ const HDNavBar = (props) => {
         </div>
 
     )
+    
 }
 
-export default HDNavBar
+export default withRouter(HDNavBar)
