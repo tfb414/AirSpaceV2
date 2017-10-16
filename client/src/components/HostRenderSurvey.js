@@ -52,7 +52,7 @@ class HostRenderSurvey extends Component {
                 activatedTR = "";
             }
             return (
-                <div>
+                <tbody>
                 <tr className="SQFunctions">
                     <td className="SQTitle">
                         <p>{data.sq_name}</p>
@@ -65,7 +65,7 @@ class HostRenderSurvey extends Component {
                     </td>
                 </tr>
                 {activatedTR}
-                </div>
+                </tbody>
             )
         })
         let title;

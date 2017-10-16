@@ -83,7 +83,7 @@ function init() {
                         case 'REQUESTRESULTS':
                             query.getSQResultsHost(parsedData.sq_id, user_id).then((resp) => {
                                 if (resp.length !== 0) {
-                                    let payload = formatResults(resp, user_id);
+                                    let payload = formatResults(resp, user_id, parsedData.sqtype);
                                     sendPayload(payload, wss)
                                 } else {
                                     let hostpayload = {
@@ -290,12 +290,13 @@ function formatSQList(resp, user_id) {
 }
 
 // Formats payload for results of survey
-function formatResults(resp, user_id) {
+function formatResults(resp, user_id, sqtype) {
     let result = {};
     result["type"] = "DISPLAYRESULTS";
     result["host_id"] = user_id;
     result["title"] = resp[0]["sq_name"];
     result["payload"] = {};
+    result["sqtype"] = sqtype;
     result["error"] = null;
     resp.forEach((person) => {
         let email = person.guest_id;

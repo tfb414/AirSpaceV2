@@ -19,7 +19,7 @@ const ResultTableResponse = ({ question }) => {
                 </td>
             )
         })
-        console.log(question);
+
         return (
         <tr>
             <td className='questionBox'>
@@ -35,7 +35,9 @@ const ResultTableResponse = ({ question }) => {
         score = String(score) + "%";
         return score;
     })
-    let scoreCells = newScores.map(score => {
+    let scoreCells;
+    // if ()
+    scoreCells = newScores.map(score => {
         return (
             <td>{score}</td>
         )
