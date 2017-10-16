@@ -990,6 +990,44 @@ a:hover {
       height: 3.2rem;
       font-size: 1.8rem; } }
 
+.landingPage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url(stylesheets/images/blooboard.jpg);
+  background-size: cover;
+  color: white; }
+
+h1.branding {
+  font-size: 2rem;
+  letter-spacing: 10px;
+  margin-top: 1rem;
+  margin-bottom: 0; }
+  @media (min-width: 320px) {
+    h1.branding {
+      font-size: 3rem; } }
+  @media (min-width: 768px) {
+    h1.branding {
+      font-size: 7rem; } }
+
+.branding {
+  font-weight: bold;
+  text-align: center;
+  font-family: "Shrikhand", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
+  @media (min-width: 320px) {
+    .branding {
+      font-size: 4rem; } }
+
+@media (min-width: 320px) {
+  img.logo {
+    width: 10rem; } }
+@media (min-width: 768px) {
+  img.logo {
+    width: 16rem; } }
+
 .landingButton {
   width: 40%;
   height: 60%;
@@ -1003,7 +1041,7 @@ a:hover {
   font-family: Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
   @media (min-width: 320px) {
     .landingButton {
-      font-size: 3rem; } }
+      font-size: 2rem; } }
   @media (min-width: 768px) {
     .landingButton {
       width: 30%;
@@ -1030,34 +1068,6 @@ a:hover {
   @media (min-width: 768px) {
     .landingButtonContainer {
       justify-content: center; } }
-
-.landingPage {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: url(stylesheets/images/blooboard.jpg);
-  background-size: cover;
-  color: white; }
-
-h1.branding {
-  font-size: 7rem;
-  letter-spacing: 10px;
-  margin-top: 1rem;
-  margin-bottom: 0; }
-
-.branding {
-  font-weight: bold;
-  text-align: center;
-  font-family: "Shrikhand", Montserrat, "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif; }
-  @media (min-width: 320px) {
-    .branding {
-      font-size: 4rem; } }
-
-img.logo {
-  width: 16rem; }
 
 .GuestWaitingRoom {
   background-color: #eae7e3;
@@ -1215,5 +1225,11 @@ img.logo {
 .App > div {
   width: 100%;
   height: 100%; }
+
+.true {
+  background-color: green; }
+
+.false {
+  background-color: red; }
 
 /*# sourceMappingURL=index.css.map */
