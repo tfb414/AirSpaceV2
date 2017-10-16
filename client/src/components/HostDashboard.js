@@ -139,9 +139,6 @@ class HostDashboard extends Component {
                                     sqtype='quiz'
                                 />)} />
                     </Switch>
-                    <div>
-                        {this.displayConnected()}
-                    </div>
                 </div>
             )
         }
