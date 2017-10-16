@@ -51,8 +51,7 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData) {
             return (
-                <div>
-                    <h1>Searching for your guests</h1>
+                <div className="SQComponent">
                 </div>
             )
         }
@@ -65,7 +64,7 @@ class HostViewClass extends Component {
             if (onlineStatus.length === 0) {
                 return (
                     <tr>
-                        <td>offline</td>
+                        <td scope="row" className="connection offline"><i className="fa fa-circle" aria-hidden="true"></i></td>
                         <td>{person.first_name} {person.last_name}</td>
                         <td>{person.guest_id}</td>
                         <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
@@ -74,7 +73,7 @@ class HostViewClass extends Component {
             }
             return (
                 <tr>
-                    <td>online</td>
+                    <td scope="row" className="connection online" ><i className="fa fa-circle" aria-hidden="true"></i></td>
                     <td>{person.first_name} {person.last_name}</td>
                     <td>{person.guest_id}</td>
                     <td><button type="button" className="btn btn-outline-secondary" value={person.host_guest_id} onClick={this._deleteGuest}>Remove</button></td>
@@ -84,11 +83,13 @@ class HostViewClass extends Component {
         })
         return (
             <div className="surveyBox SQComponent">
-                <table>
+                <h1>Classroom</h1>
+                <table className="table table-hover classRoom">
                     <thead>
-                        <th>Online</th>
+                        <th> </th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Class Options</th>
                     </thead>
                     <tbody>
                         {classList}

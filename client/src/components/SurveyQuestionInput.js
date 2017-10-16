@@ -5,7 +5,7 @@ const SurveyQuestionInput = ({value, onChange, num, remove}) => {
         <div>
             <div className='QuestionClump'>
                 <p className="SurveyNum">{num}.</p>
-                <div className='QuestionClump'>
+                <div className='QuestionClump SQuesInput'>
                     <input className="surveyQInput"type="text" target={num} value={value} onChange={onChange}></input>
                     <button className='subtractQues' onClick={remove} target={num}>—</button>
                 </div>

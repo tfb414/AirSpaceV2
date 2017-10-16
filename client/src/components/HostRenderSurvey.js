@@ -51,7 +51,6 @@ class HostRenderSurvey extends Component {
                 <tr className="SQFunctions">
                     <td className="SQTitle">
                         <p>{data.sq_name}</p>
-                        <hr />
                     </td>
                     <td>
                         <button type="button" className="btn btn-outline-secondary" value={data.sq_id} onClick={this._viewResults}>Results</button>
@@ -76,10 +75,11 @@ class HostRenderSurvey extends Component {
                     <h1 className="HostSQRenderTitle">{title}</h1>
                     <ActivateSurvey message={this.state.activatedMessage} />
                 </div>
-                <hr className="TitleHR" />
-                <table className="HostSQTable">
-                    {surveys}
-                </table>
+                <div className="yourSQTable">
+                    <table className="table table-hover">
+                        {surveys}
+                    </table>
+                </div>
             </div>
         );
     }
