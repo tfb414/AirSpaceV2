@@ -148,7 +148,7 @@ class HostRenderSurvey extends Component {
                 this.setState({
                     refresh: 0,
                     activatedsq_id: results.sq_id,
-                    activatedMessage: `Could not activate ${results.title}. No questions found.`
+                    activatedMessage: `Could not activate. No questions found.`
                 })
             }
         }
