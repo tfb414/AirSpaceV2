@@ -27,11 +27,6 @@ function init() {
                 let first_name = req.session.passport.user.firstname;
                 let last_name = req.session.passport.user.lastname;
 
-                // wss.clients.forEach(function each(client) {
-                // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                // client.send("you're a wizard harry!");
-                // client.send(data);
-
                 ws.on('message', function incoming(data) {
                     let parsedData = JSON.parse(data);
                     switch (parsedData.type) {
