@@ -35,7 +35,7 @@ class HostRenderResults extends Component {
             sqtype: this.props.sqtype
         };
         this.requestInterval = setInterval(() => {
-            this.props.connection.send(JSON.stringify(payload));
+            this.props.sendMessage(JSON.stringify(payload));
         }, 1000);
     }
 
@@ -48,7 +48,7 @@ class HostRenderResults extends Component {
             return (
                 <div className='resultBox'>
                     <h1 className='resultTableName'>{this.state.results.title}</h1>
-                    <RenderResultsTable name={this.state.nameList} question={this.state.questionList}/>
+                    <RenderResultsTable name={this.state.nameList} question={this.state.questionList} sqtype={this.state.results.sqtype}/>
                 </div>
             );
         } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
