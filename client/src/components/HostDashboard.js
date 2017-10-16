@@ -13,6 +13,7 @@ import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
 import HostWelcomePage from './HostWelcomePage';
+import HostAbout from './HostAbout';
 
 class HostDashboard extends Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class HostDashboard extends Component {
         } else {
             return (
                 <div className="hostDash">
-                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
+                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']} />
 
                     <Switch>
                         <Route exact path="/Host/"
@@ -111,6 +112,13 @@ class HostDashboard extends Component {
                         <Route path="/Host/Create" 
                             component={() => (
                                 <Create
+                                    connection={this.state.connection}  
+                                    sendMessage={this._sendMessage} 
+                                />)} />
+                        
+                        <Route path="/Host/About" 
+                            component={() => (
+                                <HostAbout
                                     connection={this.state.connection}  
                                     sendMessage={this._sendMessage} 
                                 />)} />
@@ -168,15 +176,12 @@ class HostDashboard extends Component {
     }
 
     _whatTime = () => {
-        let time = (this.state.time).toLocaleTimeString('en-US')
-        console.log(time)
+        let time = (this.state.time).toLocaleTimeString('en-US');
         if (time[0] === 1 && time[1] !== ":") {
-            time.splice(5, 3)
-            console.log(time)
+            time.splice(5, 3);
             return time
         }
         time.splice(4, 3)
-        console.log(time)
         return time
     }
 
