@@ -10,20 +10,12 @@ class Guest extends Component {
     render() {
 
         return (
-            <div>
-                <div>
-                    Please enter your host's email address
+            <div className='GuestWaitingRoom'>
+                <div className='guestPrompt'>
+                    Please enter your teacher's email address:
                 </div>
-                <div>
-                    <input type='text' value={this.props.host_id} onChange={this._handleChange}></input>
-                </div>
-                <div>
-                    <button onClick={this.props.submitHost_id}>Submit</button>
-                </div>
-                <div>
-                    Message recieved form backend sir!:
-                </div>
-
+                <input type='text' value={this.props.host_id} onChange={this._handleChange}></input>
+                <button className='guestButton' onClick={this.props.submitHost_id}>Submit</button>
             </div>
 
         )
