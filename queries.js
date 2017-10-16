@@ -1,6 +1,13 @@
 const db = require('./sequelize.js');
 const Sequelize = require('sequelize');
 
+function retrieveHost(host_id) {
+    return db.host.findAll({
+        attributes: ['host_id', 'first_name', 'last_name'],
+        where: {host_id},
+        raw: true
+    })
+}
 
 function upsertHost(host_id, first_name, last_name) {
     db.host.upsert({
@@ -383,7 +390,8 @@ module.exports = {
     updateOption,
     getGuestsForHost,
     deleteGQRForHost,
-    deleteHG
+    deleteHG,
+    retrieveHost
 };
 
 

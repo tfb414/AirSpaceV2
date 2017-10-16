@@ -26,8 +26,8 @@ class GuestRenderQuiz extends Component {
         let index = Number(event.target.name) - 1
         new_payload[index].option_id = event.target.value
         this.setState({
-           payload: new_payload
-       }) 
+            payload: new_payload
+        })
     }
 
     render() {
@@ -35,14 +35,24 @@ class GuestRenderQuiz extends Component {
         let data = this.props.payload
         let quizForm = keys.map((key) => {
             let index = keys.indexOf(key)
-            return <RenderQuizQuestion RonChange={this.handleChangeRadio} index={index} option={data[key].options} question_number={data[key].question_number} text={data[key].text}/>
+            return <RenderQuizQuestion RonChange={this.handleChangeRadio} index={index} option={data[key].options} question_number={data[key].question_number} text={data[key].text} />
         })
         return (
-            <div>
-                <h2>{this.props.title}</h2>
-                {quizForm}
-                <button onClick={this._submitQuiz}>Submit</button>
-            </div>
+            <div className="GuestRenderQuiz">
+                <div>
+                    <h2>{this.props.title}</h2>
+                </div>
+                <hr className="TitleHR" />
+
+                <div className="GuestQuizQuestionsContainer">
+                    {quizForm}
+                </div>
+                <div className="button-buttons">
+                    <div className="spacing">
+                        <button className="inner-button inner-button-secondary" onClick={this._submitSurvey}>Submit</button>
+                    </div>
+                </div>
+            </div >
         );
     }
 
@@ -54,6 +64,10 @@ class GuestRenderQuiz extends Component {
         }
         this.props.sendMessage(JSON.stringify(payload));
         this.props.onSubmit();
+        localStorage.removeItem("sqtype");
+        localStorage.removeItem("sq_id");
+        localStorage.removeItem("title");
+        localStorage.removeItem("payload");
         this.props.history.push('/Guest/Waiting/');
     }
 }

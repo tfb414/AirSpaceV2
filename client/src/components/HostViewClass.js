@@ -7,9 +7,9 @@ class HostViewClass extends Component {
         super(props);
         this.state = {
             waitingOnData: true,
+            activatedMessage: "",
             currentlyConnected: []
         }
-        this.connection = new WebSocket(env);
 
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
@@ -23,18 +23,8 @@ class HostViewClass extends Component {
 
         this.props.connection.onmessage = event => {
             let parsedData = JSON.parse(event.data);
-            if (parsedData.type === "DISPLAYGUESTS") {
-                let results = this._receiveMessage(parsedData);
-                console.log(results);
-                this.setState({
-                    waitingOnData: false,
-                    results: results,
-                })
-            }
-
             this._receiveMessage(parsedData);
             this.manageActiveUsers();
-
         }
 
     }
@@ -49,7 +39,7 @@ class HostViewClass extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData) {
+        if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
                 <div className="SQComponent">
                 </div>
@@ -97,6 +87,11 @@ class HostViewClass extends Component {
                 </table>
             </div>
         )
+        } else {
+            return (
+                <div></div>
+            );
+        }
     }
 
     _deleteGuest = (event) => {
@@ -109,9 +104,17 @@ class HostViewClass extends Component {
     }
 
     _receiveMessage = (parsedData) => {
-
         if (parsedData.type === 'DISPLAYGUESTS' && this.props.host_id === parsedData.host_id) {
-            return parsedData.payload;
+             if (parsedData.error === null) {
+                 this.setState({
+                    waitingOnData: false,
+                    results: parsedData.payload
+                })
+             } else {
+                 this.setState({
+                    activatedMessage: parsedData.error
+                })
+             }
         }
         if (parsedData.type === 'GUESTHEARTBEATTOHOST' && this.props.host_id === parsedData.host_id) {
             this.receivedGuestHeartbeat(parsedData)
