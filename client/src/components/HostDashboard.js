@@ -20,8 +20,7 @@ class HostDashboard extends Component {
             host_id: "",
             connection: new WebSocket(env),
             isConnected: false,
-            currentlyConnected: [],
-            time: new Date()
+            currentlyConnected: []
         }
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
@@ -71,7 +70,7 @@ class HostDashboard extends Component {
         } else {
             return (
                 <div className="hostDash">
-                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
+                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} hostid={this.state.host_id}/>
                     <Switch>
                         <Route exact path="/Host/Your Class/" 
                             component={() => (
@@ -139,9 +138,6 @@ class HostDashboard extends Component {
                                     sqtype='quiz'
                                 />)} />
                     </Switch>
-                    <div>
-                        {this.displayConnected()}
-                    </div>
                 </div>
             )
         }

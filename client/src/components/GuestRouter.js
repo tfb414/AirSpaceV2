@@ -56,7 +56,7 @@ class GuestRouter extends Component {
             );
         } else {
             return (
-                <div>
+                <div className="SQComponent">
                     <Switch>
                         <Route
                             exact path='/Guest/'

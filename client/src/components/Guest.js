@@ -12,16 +12,13 @@ class Guest extends Component {
         return (
             <div>
                 <div>
-                    Please enter your host's email address
+                    Please enter your teachers TeacherID:
+                </div>
+                <div className="guestInput">
+                    <input type='text' className="surveyTinput" value={this.props.host_id} onChange={this._handleChange}></input>
                 </div>
                 <div>
-                    <input type='text' value={this.props.host_id} onChange={this._handleChange}></input>
-                </div>
-                <div>
-                    <button onClick={this.props.submitHost_id}>Submit</button>
-                </div>
-                <div>
-                    Message recieved form backend sir!:
+                    <button  type="button" className="btn btn-outline-secondary" onClick={this.props.submitHost_id}>Submit</button>
                 </div>
 
             </div>
