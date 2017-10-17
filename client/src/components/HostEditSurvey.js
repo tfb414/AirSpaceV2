@@ -49,7 +49,8 @@ class HostEditSurvey extends Component {
                 </div>
             )
         } else if (this.state.waitingOnData === false) {
-            let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
+            let questionForm = this.state.question.map((data) => {                   
+            // Maps through and renders the Question Inputs.
             return <SurveyQuestionInput num={data.question_number} value={data.text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
 
         })
@@ -107,8 +108,6 @@ class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
-
-        console.log(this._createPayload())
         this.props.sendMessage(this._createPayload());
         setTimeout(() => { 
             this.props.history.push('/Host/Your Surveys/')
@@ -128,8 +127,6 @@ class HostEditSurvey extends Component {
             deleted_questions: this.state.deleted_questions
         }
         return JSON.stringify(payload);
-
-
     }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id)) {

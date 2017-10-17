@@ -47,7 +47,7 @@ class HostRenderSurvey extends Component {
         } else if (this.state.waitingOnData === true && this.state.sqListMessage !== "") {
             return (
                 <div>
-                    <h3>{this.state.sqListMessage}</h3>
+                    <h3>{this.state.sqListMessage} Please go to the <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectCreate}>Create</a> page to add surveys/quizzes.</h3>
                 </div>
             )
         } else if (this.state.waitingOnData === false) {
@@ -148,16 +148,15 @@ class HostRenderSurvey extends Component {
                     waitingOnData: false,
                     results: results
                 });
-            } else if (parsedData.error === "Nothing found.") {
+            } else if (parsedData.error === "Nothing found") {
                 let name;
                 if (parsedData.sqtype === 'survey') {
                     name = "surveys";
                 } else {
                     name = "quizzes";
                 }
-                let create = <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectCreate}>Create</a>
                 this.setState({
-                    sqListMessage: `No ${name} found. Please go to the ${Create} page to add surveys/quizzes.`
+                    sqListMessage: `No ${name} found.`
                 })
             }
 

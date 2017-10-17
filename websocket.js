@@ -103,8 +103,9 @@ function init() {
                                     let payload = {
                                         type: "DISPLAYSQLIST",
                                         host_id: user_id,
-                                        error: `Nothing found.`
+                                        error: `Nothing found`
                                     }
+                                    sendPayload(payload, wss);
                                 }
                             })
                             break;
