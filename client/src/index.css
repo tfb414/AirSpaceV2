@@ -692,12 +692,14 @@ input.surveyTinput.guest {
   border-top: none; }
 
 .leftHeader {
-  padding-left: 2%;
-  position: absolute;
-  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 20%;
+  font-size: 1rem;
   text-align: center;
-  max-width: 16.7%;
-  max-width: 10%;
   font-size: 0.7rem;
   color: white; }
   @media (min-width: 320px) {
@@ -705,7 +707,6 @@ input.surveyTinput.guest {
       font-size: 1rem; } }
   @media (min-width: 768px) {
     .leftHeader {
-      max-width: 16.7%;
       font-size: 1rem; } }
 
 .quizBox {
@@ -1079,6 +1080,17 @@ a:hover {
       height: 3.4rem;
       font-size: 1.8rem; } }
 
+.hostAbout {
+  color: #455358;
+  background-color: #eae7e3;
+  font-size: 1.4rem;
+  padding: 6rem;
+  padding-top: 2rem; }
+
+.hostInstruct {
+  margin-top: 2rem;
+  margin-bottom: 2rem; }
+
 .welcomePage {
   display: flex;
   flex-direction: column;
@@ -1094,9 +1106,20 @@ a:hover {
   .welcomePage > h1 {
     font-size: 1.6rem;
     padding: 2rem; } }
+@media (min-width: 768px) {
+  .welcomePage > h1 {
+    font-size: 3rem; } }
 
-.welcomeTeacherId p {
+.welcomeTeacherId p,
+.welcomeTeacherId a {
   margin-bottom: 0; }
+  @media (min-width: 768px) {
+    .welcomeTeacherId p,
+    .welcomeTeacherId a {
+      font-size: 2rem; } }
+
+.welcomeTeacherId a {
+  color: #5c92c5; }
 
 .landingPage {
   width: 100%;
@@ -1135,6 +1158,18 @@ h1.branding {
 @media (min-width: 768px) {
   img.logo {
     width: 16rem; } }
+
+.aboutLink {
+  font-size: 1.6rem;
+  font-family: Raleway, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+  align-self: flex-end;
+  padding-right: 4rem; }
+
+.aboutLink:hover {
+  color: #bdbdbd;
+  align-self: flex-end;
+  padding-right: 4rem; }
 
 .landingButton {
   width: 40%;

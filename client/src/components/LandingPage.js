@@ -9,7 +9,8 @@ class LandingPage extends Component {
     render() {
         return (
             <div className="landingPage">
-                <a href="/About/">About</a>
+
+                <a className="aboutLink" href="/About/">About</a>
                 <div className="branding">
                     <img className="logo" src={logo} />
                     <h1 className="branding">AirSpace</h1>
