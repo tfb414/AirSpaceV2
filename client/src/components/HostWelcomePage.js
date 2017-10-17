@@ -8,7 +8,7 @@ class WelcomePage extends Component {
     }
     render() {
       return (
-          <div className='welcomePage'>
+          <div className='welcomePage SQComponent'>
               <img className='welcomeLogo' src={bluelogo} />
               <h1 className='welcomeLine'>Welcome to AirSpace, {this.props.first_name}!</h1>
               <div className='welcomeTeacherId'>

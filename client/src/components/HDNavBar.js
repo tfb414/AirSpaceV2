@@ -13,6 +13,7 @@ const HDNavBar = (props) => {
         <div>
             <div className="leftHeader">
                 <p className="headerBranding">AirSpace</p>
+                <p>{props.first_name} {props.last_name}</p>
                 <div className="teacherID">
                     <p>TeacherID:</p>
                     <p>{props.hostid}</p>
