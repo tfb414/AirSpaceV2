@@ -14,8 +14,8 @@ const ResultTableResponse = ({ question, sqtype }) => {
                 scores[index] += 1;
             }
             return (
-                <td>
-                    <p className={String(info.value)}>{info.text}</p>
+                <td className={String(info.value)}>
+                    <p>{info.text}</p>
                 </td>
             )
         })

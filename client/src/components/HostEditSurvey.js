@@ -56,16 +56,20 @@ class HostEditSurvey extends Component {
         })
 
         return (
-            <div className='surveyBox'>
+            <div className='surveyBox SQComponent'>
                 <h1 className='cnsTitle'>Edit Survey</h1>
                 <div className='surveyInnerBox'>
-                    <h3 className='surveyTitle'>Title</h3>
-                    <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
-                    <h3 className='surveyQTitle'>Questions</h3>
-                    {questionForm}       {/* Where the mapped question inputs are */}
+                    <div className="surveyTitleInput">
+                        <h3 className='surveyTitle'>Title</h3>
+                        <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
+                    </div>
+                    <div>
+                        <h3 className='surveyQTitle'>Questions</h3>
+                        {questionForm}       {/* Where the mapped question inputs are */}
+                    </div>
                     <div className='bottomButtons'>
-                        <button className='addSq' onClick={this._addQuestion}>Add Question + </button>
-                        <button className='submitSurvey' onClick={this._submitSurvey}>Submit</button>
+                        <button className='addSq' onClick={this._addQuestion}> + </button>
+                        <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Submit</button>
                     </div>
                     <p>*** Warning: Clicking submit will clear all responses associated with this survey. ***</p>
                 </div>
