@@ -12,9 +12,6 @@ const sessionmanager = require('./sessionmanager');
 const queries = require('./queries');
 require('dotenv').config();
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
-var index = require('./routes/index');
-var host = require('./routes/host');
-var guest = require('./routes/guest');
 var websocket = require('./websocket');
 var query = require('./queries');
 
@@ -81,6 +78,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use('/', index);
+// app.use('/About/', about);
 
 app.get('/host/auth/google',
     passport.authenticate('host', { scope: ['profile', 'email'] }));
@@ -101,10 +99,9 @@ app.get('/guest/auth/google/callback',
         failureRedirect: '/',
         failureFlash: true
     }));
-
-app.get('/About', (req, res, next) => {
+app.use('/About/', (req, res) => {
     res.sendFile('/public/about.html', { "root": __dirname });
-})
+});
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
     res.sendFile('/public/index.html', { "root": __dirname });
