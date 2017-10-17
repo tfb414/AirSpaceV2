@@ -142,6 +142,7 @@ class GuestRouter extends Component {
         }
 
         if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.host_id === this.state.host_id) {
+            console.log(parsedData);
             localStorage.setItem('sqtype', parsedData.sqtype);
             localStorage.setItem('sq_id', parsedData.sq_id);
             localStorage.setItem('title', parsedData.title);

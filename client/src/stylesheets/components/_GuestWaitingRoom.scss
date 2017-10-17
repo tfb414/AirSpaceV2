@@ -22,6 +22,7 @@
 }
 
 .guestWelcome {
+    text-align: center;
     @include respond-to(small) {
         font-size: 2.3rem;
     }
