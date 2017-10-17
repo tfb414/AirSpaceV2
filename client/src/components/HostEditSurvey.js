@@ -19,7 +19,6 @@ class HostEditSurvey extends Component {
         let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.params.id };
         this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
-            console.log(parsedData);
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
         }
@@ -118,10 +117,11 @@ class HostEditSurvey extends Component {
 
     _createPayload = () => {
         let question_object = this.state.question.map((data) => {
-            return data
+            return data;
         }, {})
         let payload = {
             type: 'EDITSQ',
+            sq_id: this.props.match.params.id,
             sqtype: 'survey',
             title: this.state.title,
             payload: question_object,

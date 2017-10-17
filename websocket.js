@@ -349,7 +349,7 @@ function addQuestionsAndAnswers(questions, sq_id) {
 function addOptions(question, sq_id, question_id) {
     question.options.forEach((option) => {
         let id = option.option_id;
-        if (id !== null && !("option_id" in option)) {
+        if (id !== null && "option_id" in option) {
             query.updateOption(id, option.text, option.value);
         } else {
             query.addOption(option.text, option.value).then(resp => {
@@ -389,9 +389,8 @@ function editSQ(parsedData) {
                 query.updateQuestion(question_id, question.text, question.question_number);
                 if (question['options'] !== undefined) {
                     addOptions(question, parsedData.sq_id, question_id);
-                } else {
-                    query.addSQQuestionOption(parsedData.sq_id, question_id, null);
                 }
+
             } else {
                 query.addQuestion(question.text, question.question_number).then(resp => {
                     question_id = resp.dataValues.question_id;
