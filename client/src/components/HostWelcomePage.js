@@ -7,14 +7,16 @@ class WelcomePage extends Component {
         super(props);
     }
     render() {
-        return (
-            <div className="branding">
-                <img className="logo" src={bluelogo} />
-                <h1 className="branding">Welcome to AirSpace, {this.props.first_name}</h1>
-                <p>Your Teacher ID: {this.props.host_id}</p>
-                <a href='#'onClick={this._onStartClick}>Click here to get started!</a>
-            </div>
-        )
+      return (
+          <div className='welcomePage'>
+              <img className='welcomeLogo' src={bluelogo} />
+              <h1 className='welcomeLine'>Welcome to AirSpace, {this.props.first_name}!</h1>
+              <div className='welcomeTeacherId'>
+                  <p>Your Teacher ID:</p>
+                  <p>{this.props.host_id}</p>
+              </div>
+          </div>
+      )
     }
 
     _onStartClick= (e) => {

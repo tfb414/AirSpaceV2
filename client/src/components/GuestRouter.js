@@ -54,7 +54,7 @@ class GuestRouter extends Component {
             );
         } else {
             return (
-                <div>
+                <div className='guestRouteHolder'>
                     <Switch>
                         <Route
                             exact path='/Guest/'

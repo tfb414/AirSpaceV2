@@ -2,13 +2,16 @@
     width: 90%;
     color: $fontcolor;
     display: flex;
-    padding: 2rem;
     flex-direction: column;
     align-items: center;
-    justify-content: normal;
+    justify-content: center;
     font-family: 'Raleway', sans-serif;
+    @include respond-to(small) {
+        padding: 0;
+    }
     @include respond-to(medium) {
         width: 90%;
+        padding: 2rem;
     }
 }
 
@@ -39,6 +42,12 @@ h3.surveyQTitle {
     outline: none;
     text-indent: 5%;
     font-size: 1.3rem;
+    @include respond-to(small) {
+        width: 70%;
+    }
+    @include respond-to(medium) {
+        width: 100%;
+    }
 }
 
 .surveyTitleInput {
@@ -50,6 +59,9 @@ h3.surveyQTitle {
     flex-direction: column;
     align-items: normal;
     width: 100%;
+    @include respond-to(small) {
+        width: 90%;
+    }
     @include respond-to(medium) {
         width: 50%;
     }
@@ -66,8 +78,13 @@ h3.surveyQTitle {
 
 .cnsTitle {
     margin-top: 0;
-    margin-bottom: 3rem;
     font-size: 1.6rem;
+    margin-bottom: 0;
+    @include respond-to(small) {
+        font-size: 2.4rem;
+        padding: 1.8rem;
+        // margin-bottom: 1rem;
+    }
     @include respond-to(medium) {
         font-size: 3.5rem;
     }
@@ -76,8 +93,12 @@ h3.surveyQTitle {
 .surveyTitle,
 .surveyQTitle {
     margin-bottom: 0;
+    margin-top: 1rem;
     align-self: flex-start;
     font-size: 2.2rem;
+    @include respond-to(small) {
+        font-size: 1.6rem;
+    }
 }
 
 .surveyTinput {
@@ -163,5 +184,7 @@ button.addSq {
 
 button.btn.btn-outline-secondary.submitSurvey {
     margin-right: 0;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 

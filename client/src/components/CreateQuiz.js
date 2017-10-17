@@ -86,7 +86,6 @@ class CreateQuiz extends Component {
                 </div>
             </div>
         )
-
     }
 
     _addQuestion = () => {                                  // Adds a new form to this.state.question to add another Question form

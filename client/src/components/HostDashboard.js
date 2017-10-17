@@ -54,15 +54,6 @@ class HostDashboard extends Component {
 
 
     }
-    // componentDidMount() {
-    //     this.heartbeatInterval = setInterval(() => {
-    //         let payload = {
-    //             type: "HEARTBEAT",
-    //         }
-    //         let JSONpayload = JSON.stringify(payload);
-    //         this.state.connection.send(JSONpayload);
-    //     }, 1000);
-    // }
 
     render() {
         if (!this.state.isConnected) {
@@ -157,9 +148,6 @@ class HostDashboard extends Component {
                                     sqtype='quiz'
                                 />)} />
                     </Switch>
-                    {/*<div>
-                        {this.displayConnected()}
-                    </div>*/}
                 </div>
             )
         }
