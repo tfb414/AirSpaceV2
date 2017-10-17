@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import QuizQuestionInput from './QuizQuestionInput.js';
 import { withRouter } from 'react-router';
+import RequiredFillOutMessage from './RequiredFillOutMessage';
 
 class HostEditQuiz extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class HostEditQuiz extends Component {
             title: "",
             question: [],
             deleted_questions: [],
-            deleted_options: []
+            deleted_options: [],
+            filledOut: true
         }
     }
 
@@ -97,6 +99,7 @@ class HostEditQuiz extends Component {
                             <button className='addSq' onClick={this._addQuestion}> + </button>
                             <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Submit</button>
                         </div>
+                        <RequiredFillOutMessage filledOut={this.state.filledOut} />
                         <p>*** Warning: Clicking submit will clear all responses associated with this quiz. ***</p>
                     </div>
                 </div>
@@ -171,10 +174,32 @@ class HostEditQuiz extends Component {
     }
 
     _submitSurvey = () => {
-        this.props.sendMessage(this._createPayload());
-        setTimeout(() => { 
-            this.props.history.push('/Host/Your Quizzes/')
-        }, 100)    
+        let questionList = this.state.question
+        let formIsFilled = true
+        questionList.forEach((data) => {
+            if (data.text === "") {
+                formIsFilled = false
+            }
+            data.options.forEach((option) => {
+                if (option.text === "") {
+                    formIsFilled = false
+                }
+            })
+        })
+        if (this.state.title === "") {
+            formIsFilled = false
+        }
+        this.setState({
+            filledOut: formIsFilled
+        }, () => { 
+            if (this.state.filledOut === true) {
+            console.log(this._createPayload())
+            this.props.sendMessage(this._createPayload());
+            setTimeout(() => { 
+                this.props.history.push('/Host/Your Quizzes/')
+            }, 100)    
+        }
+        })
 
     }
 
