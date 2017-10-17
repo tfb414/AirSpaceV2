@@ -93,6 +93,7 @@ class HostEditQuiz extends Component {
                             <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
                             <button className='submitQuiz' onClick={this._submitSurvey}>Submit</button>
                         </div>
+                        <p>*** Warning: Clicking submit will clear all responses associated with this quiz. ***</p>
                     </div>
                 </div>
             </div>

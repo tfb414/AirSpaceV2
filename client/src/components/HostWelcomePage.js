@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import bluelogo from '../stylesheets/images/bluelogo.svg';
 
-const WelcomePage = (props) => {
-    return (
-        <div className='welcomePage'>
-            <img className='welcomeLogo' src={bluelogo} />
-            <h1 className='welcomeLine'>Welcome to AirSpace, {props.first_name}!</h1>
-            <div className='welcomeTeacherId'>
-                <p>Your Teacher ID:</p>
-                <p>{props.host_id}</p>
-            </div>
-        </div>
-    )
+class WelcomePage extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+      return (
+          <div className='welcomePage'>
+              <img className='welcomeLogo' src={bluelogo} />
+              <h1 className='welcomeLine'>Welcome to AirSpace, {this.props.first_name}!</h1>
+              <div className='welcomeTeacherId'>
+                  <p>Your Teacher ID:</p>
+                  <p>{this.props.host_id}</p>
+              </div>
+          </div>
+      )
+    }
+
+    _onStartClick= (e) => {
+        e.preventDefault();
+        this.props.history.push(`/Host/About`);
+    }
 }
 
-export default WelcomePage;
+export default withRouter(WelcomePage);

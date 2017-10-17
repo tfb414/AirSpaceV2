@@ -27,11 +27,6 @@ function init() {
                 let first_name = req.session.passport.user.firstname;
                 let last_name = req.session.passport.user.lastname;
 
-                // wss.clients.forEach(function each(client) {
-                // if (client !== ws && client.readyState === WebSocket.OPEN) {
-                // client.send("you're a wizard harry!");
-                // client.send(data);
-
                 ws.on('message', function incoming(data) {
                     let parsedData = JSON.parse(data);
                     switch (parsedData.type) {
@@ -101,8 +96,16 @@ function init() {
 
                         case 'REQUESTSQLIST':
                             query.getSQList(user_id, parsedData.sqtype).then(resp => {
-                                let payload = formatSQList(resp, user_id);
-                                sendPayload(payload, wss);
+                                if (resp.length !== 0) {
+                                    let payload = formatSQList(resp, user_id);
+                                    sendPayload(payload, wss);
+                                } else {
+                                    let payload = {
+                                        type: "DISPLAYSQLIST",
+                                        host_id: user_id,
+                                        error: `Nothing found.`
+                                    }
+                                }
                             })
                             break;
 
@@ -287,6 +290,7 @@ function formatSQList(resp, user_id) {
     result["type"] = "DISPLAYSQLIST";
     result["host_id"] = user_id;
     result["payload"] = resp;
+    result["error"] = null;
     return result;
 }
 
