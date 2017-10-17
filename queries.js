@@ -57,7 +57,8 @@ function getGuestsForHost(host_id) {
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id
-    where hg.host_id = '${host_id}';`, 
+    where hg.host_id = '${host_id}'
+    order by g.first_name ASC;`, 
     { type: db.sequelize.QueryTypes.SELECT}).catch(err => {
         console.log(err);
     });
