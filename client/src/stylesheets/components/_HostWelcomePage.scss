@@ -16,8 +16,19 @@
         font-size: 1.6rem;
         padding: 2rem;
     }
+    @include respond-to(medium) {
+        font-size: 3rem;
+    }
 }
 
-.welcomeTeacherId p {
+.welcomeTeacherId p,
+.welcomeTeacherId a {
     margin-bottom: 0;
+    @include respond-to(medium) {
+        font-size: 2rem;
+    }
+}
+
+.welcomeTeacherId a {
+    color: #5c92c5;
 }

@@ -10,7 +10,7 @@ class LandingPage extends Component {
     render() {
         return (
             <div className="landingPage">
-                <a href="#" onClick={this._aboutRedirect}>About</a>
+                <a className="aboutLink" href="#" onClick={this._aboutRedirect}>About</a>
                 <div className="branding">
                     <img className="logo" src={logo} />
                     <h1 className="branding">AirSpace</h1>
