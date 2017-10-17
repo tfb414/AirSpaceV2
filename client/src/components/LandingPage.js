@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import LandingButtonContainer from './LandingButtonContainer';
 import logo from '../stylesheets/images/mix.svg';
-import { withRouter } from 'react-router';
 
 class LandingPage extends Component {
     constructor(props) {
@@ -10,7 +9,7 @@ class LandingPage extends Component {
     render() {
         return (
             <div className="landingPage">
-                <a href="#" onClick={this._aboutRedirect}>About</a>
+                <a href="/About/">About</a>
                 <div className="branding">
                     <img className="logo" src={logo} />
                     <h1 className="branding">AirSpace</h1>
@@ -19,10 +18,5 @@ class LandingPage extends Component {
             </div>
         );
     }
-
-    _aboutRedirect = (e) => {
-        e.preventDefault();
-        this.props.history.push('/About/');
-    }
 }
-export default withRouter(LandingPage);
+export default LandingPage;
