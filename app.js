@@ -12,9 +12,7 @@ const sessionmanager = require('./sessionmanager');
 const queries = require('./queries');
 require('dotenv').config();
 const ensureAuthenticated = require('./utils').ensureAuthenticated;
-var index = require('./routes/index');
-var host = require('./routes/host');
-var guest = require('./routes/guest');
+var about = require('./routes/about');
 var websocket = require('./websocket');
 var query = require('./queries');
 
@@ -102,9 +100,7 @@ app.get('/guest/auth/google/callback',
         failureFlash: true
     }));
 
-app.get('/About/', (req, res) => {
-    res.sendFile('/public/about.html');
-})
+app.use('/About/', about);
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
     res.sendFile('/public/index.html', { "root": __dirname });
