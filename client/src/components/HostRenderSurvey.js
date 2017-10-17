@@ -46,7 +46,7 @@ class HostRenderSurvey extends Component {
             )
         } else if (this.state.waitingOnData === true && this.state.sqListMessage !== "") {
             return (
-                <div>
+                <div className="SQComponent center">
                     <h3>{this.state.sqListMessage} Please go to the <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectCreate}>Create</a> page to add surveys/quizzes.</h3>
                 </div>
             )

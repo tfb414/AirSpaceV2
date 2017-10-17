@@ -439,6 +439,11 @@ body {
 .classRoom {
   width: 64%; }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 .results {
   max-width: 100%; }
 
@@ -657,10 +662,14 @@ button.btn.btn-outline-secondary.submitSurvey {
 
 .headerBranding {
   font-family: Shrikhand,Montserrat,Lucida Sans,Lucida Sans Regular,Lucida Grande,Lucida Sans Unicode,Geneva,Verdana,sans-serif;
-  font-size: 2rem; }
+  font-size: 2rem;
+  font-size: 1.4rem; }
   @media (min-width: 320px) {
     .headerBranding {
-      font-size: 1.4rem; } }
+      font-size: 1.6rem; } }
+  @media (min-width: 768px) {
+    .headerBranding {
+      font-size: 2rem; } }
 
 input.surveyTinput.guest {
   width: 20%;
@@ -688,14 +697,16 @@ input.surveyTinput.guest {
   top: 0;
   text-align: center;
   max-width: 16.7%;
+  max-width: 10%;
+  font-size: 0.7rem;
   color: white; }
   @media (min-width: 320px) {
     .leftHeader {
-      width: 10%;
-      font-size: 0.7rem; } }
+      font-size: 1rem; } }
   @media (min-width: 768px) {
     .leftHeader {
-      width: 10%; } }
+      max-width: 16.7%;
+      font-size: 1rem; } }
 
 .quizBox {
   width: 90%;
@@ -866,7 +877,7 @@ input.quizOptionRadio {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #9abcdd;
+  background-color: #5c92c5;
   box-shadow: 2px 2px 2px rgba(51, 51, 51, 0); }
   @media (min-width: 768px) {
     .hostDash > div:nth-child(1) {
@@ -898,7 +909,7 @@ input.quizOptionRadio {
 
 .btn-outline-secondary {
   color: #fefdfb;
-  background-color: #97c2c1;
+  background-color: #7cbdbc;
   margin-left: 1%;
   background-image: none;
   border-color: transparent; }
@@ -968,7 +979,7 @@ input.quizOptionRadio {
 
 .HDNavButton:focus,
 .HDNavButton:hover {
-  background-color: #697fa3;
+  background-color: #4b6590;
   outline: 0;
   transition: .5s background-color ease-in-out; }
 
@@ -977,7 +988,7 @@ a:hover button {
   cursor: pointer; }
 
 a.active button {
-  background-color: #697fa3; }
+  background-color: #4b6590; }
 
 .HDNavButton {
   width: 100%;

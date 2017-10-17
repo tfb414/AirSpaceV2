@@ -46,15 +46,15 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
+                <div className="SQComponent center">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
         } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            console.log(this.state.results);
             let classList = this.state.results.map((person, idx) => {
                 let onlineStatus = this.state.currentlyConnected.filter((status) => {
-                    console.log(status)
-                    return person.guest_id === status[0]
+                    return person.guest_id === status[0];
                 })
                 if (onlineStatus.length === 0) {
                     return (
@@ -105,7 +105,9 @@ class HostViewClass extends Component {
             host_guest_id: event.target.value
         };
         this.props.sendMessage(JSON.stringify(payload));
-        this.props.history.push(`/Host/Your Class`);
+        setTimeout(() => {
+            this.props.history.push(`/Host/Your Class`);
+        }, 100)
     }
 
     _receiveMessage = (parsedData) => {
