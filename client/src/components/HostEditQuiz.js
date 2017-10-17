@@ -190,6 +190,7 @@ class HostEditQuiz extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'quiz' &&  parsedData.host_id === this.props.host_id) {
             let results = parsedData;
+            console.log(results);
             if (results.error === null) {
                 let keys = Object.keys(results.payload);
                 let new_form = keys.map((key) => {

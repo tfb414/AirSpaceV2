@@ -136,9 +136,12 @@ class HostEditSurvey extends Component {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id)) {
             let results = parsedData;
             if (results.error === null) {
-                let new_form = results.payload.map((data) => {
-                    return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
+                let new_form = [];
+                results.payload.forEach((data) => {
+                    new_form[data.question_number - 1] = { question_number: data.question_number, text: data.text, question_id: data.question_id }   
+                    // adding the new object to this.state.question
                 })
+                console.log(new_form);
                 this.setState({
                     title: results.title,
                     waitingOnData: false,
