@@ -139,23 +139,26 @@ class HostEditQuiz extends Component {
         })
     }
 
-    _RemoveQuestion = (event) => {                              // Removes a Question Form
-        let index = event.target.getAttribute('target') - 1
-        let object = this.state.question
-        let new_deleted_questions = this.state.deleted_questions
+    _RemoveQuestion = (event) => {                              
+        // Removes a Question Form
+        let index = event.target.getAttribute('target') - 1;
+        let object = this.state.question;
+        let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
-        new_deleted_questions.push(new_object.question_id)
-        var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
-            let key = data.question_number
+        console.log(new_object);
+        new_deleted_questions.push(new_object[0].question_id);
+        var formatted_object = object.map((data) => {           
+            // this maps through and lowers the question number by one for those after the one that is deleted
+            let key = data.question_number;
             if (key > index + 1) {
-                let new_key = key - 1
-                let changed_data = { question_number: new_key, question_id: data.question_id, text: data.text, options: data.options }
-                return changed_data
+                let new_key = key - 1;
+                let changed_data = { question_number: new_key, question_id: data.question_id, text: data.text, options: data.options };
+                return changed_data;
             }
-            return data
+            return data;
         })
         this.setState({
-            question: formated_object,
+            question: formatted_object,
             deleted_questions: new_deleted_questions
         })
     }
@@ -181,6 +184,7 @@ class HostEditQuiz extends Component {
             deleted_questions: this.state.deleted_questions,
             deleted_options: this.state.deleted_options
         }
+        console.log(payload);
         return JSON.stringify(payload);
 
 
