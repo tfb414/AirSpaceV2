@@ -10,6 +10,10 @@
     color: white;
 }
 
+.navBar {
+    padding-top: 4rem;
+}
+
 h1.branding {
     font-size: 2rem;
     letter-spacing: 10px;
@@ -19,7 +23,7 @@ h1.branding {
         font-size: 3.3rem;
     }
     @include respond-to(medium) {
-        font-size: 7rem;
+        font-size: 6rem;
     }
 }
 
@@ -41,7 +45,7 @@ img.logo {
         width: 10rem;
     }
     @include respond-to(medium) {
-        width: 16rem;
+        width: 14rem;
     }
 }
 
@@ -51,6 +55,7 @@ img.logo {
     color: white;
     align-self: flex-end;
     padding-right: 4rem;
+    padding-top: 1rem;
 }
 
 .aboutLink:hover {

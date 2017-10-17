@@ -64,6 +64,7 @@ class HostDashboard extends Component {
             return (
                 <div className="hostDash">
                     <HDNavBar
+                        className={"navBar"}
                         name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']}
                         hostid={this.state.host_id}
                         first_name={this.state.first_name}

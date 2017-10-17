@@ -877,7 +877,6 @@ input.quizOptionRadio {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   background-color: #5c92c5;
   box-shadow: 2px 2px 2px rgba(51, 51, 51, 0); }
   @media (min-width: 768px) {
@@ -1110,6 +1109,9 @@ a:hover {
   .welcomePage > h1 {
     font-size: 3rem; } }
 
+.welcomeLine {
+  text-align: center; }
+
 .welcomeTeacherId p,
 .welcomeTeacherId a {
   margin-bottom: 0; }
@@ -1132,6 +1134,9 @@ a:hover {
   background-size: cover;
   color: white; }
 
+.navBar {
+  padding-top: 4rem; }
+
 h1.branding {
   font-size: 2rem;
   letter-spacing: 10px;
@@ -1142,7 +1147,7 @@ h1.branding {
       font-size: 3.3rem; } }
   @media (min-width: 768px) {
     h1.branding {
-      font-size: 7rem; } }
+      font-size: 6rem; } }
 
 .branding {
   font-weight: bold;
@@ -1157,14 +1162,15 @@ h1.branding {
     width: 10rem; } }
 @media (min-width: 768px) {
   img.logo {
-    width: 16rem; } }
+    width: 14rem; } }
 
 .aboutLink {
   font-size: 1.6rem;
   font-family: Raleway, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: white;
   align-self: flex-end;
-  padding-right: 4rem; }
+  padding-right: 4rem;
+  padding-top: 1rem; }
 
 .aboutLink:hover {
   color: #bdbdbd;
