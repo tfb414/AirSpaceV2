@@ -46,7 +46,7 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
+                <div className="SQComponent">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
@@ -105,7 +105,9 @@ class HostViewClass extends Component {
             host_guest_id: event.target.value
         };
         this.props.sendMessage(JSON.stringify(payload));
-        this.props.history.push(`/Host/Your Class`);
+        setTimeout(() => {
+            this.props.history.push(`/Host/Your Class`);
+        }, 100)
     }
 
     _receiveMessage = (parsedData) => {
