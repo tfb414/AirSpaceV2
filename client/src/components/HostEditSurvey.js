@@ -92,13 +92,9 @@ class HostEditSurvey extends Component {
 
     _RemoveQuestion = (event) => {                              // Removes a Question Form
         let index = event.target.getAttribute('target') - 1;
-        console.log(event.target);
-        console.log(index);
         let object = this.state.question;
-        console.log(object);
         let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
-        console.log(new_object);
         if(new_object[0].question_id !== null) {
             new_deleted_questions.push(new_object[0].question_id)
         }
@@ -129,8 +125,6 @@ class HostEditSurvey extends Component {
             return data;
         }, {})
         question_object = question_object.filter((q) => {return q;});
-        console.log(question_object);
-        console.log(this.state.deleted_questions);
         let payload = {
             type: 'EDITSQ',
             sq_id: this.props.match.params.id,
@@ -139,6 +133,7 @@ class HostEditSurvey extends Component {
             payload: question_object,
             deleted_questions: this.state.deleted_questions
         }
+        console.log(payload);
         return JSON.stringify(payload);
     }
     _receiveMessage = (parsedData) => {
@@ -150,7 +145,6 @@ class HostEditSurvey extends Component {
                     new_form[data.question_number - 1] = { question_number: data.question_number, text: data.text, question_id: data.question_id }   
                     // adding the new object to this.state.question
                 })
-                console.log(new_form);
                 this.setState({
                     title: results.title,
                     waitingOnData: false,

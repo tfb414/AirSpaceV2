@@ -368,6 +368,7 @@ function addGuestToHost(parsedData, guest_id) {
 }
 
 function editSQ(parsedData) {
+    query.updateSQ(parsedData.title, parsedData.sq_id);
     query.deleteAllGQR(parsedData.sq_id);
     if ("deleted_options" in parsedData) {
         parsedData.deleted_options.forEach(option_id => {
