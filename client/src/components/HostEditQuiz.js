@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import QuizQuestionInput from './QuizQuestionInput.js';
 import { withRouter } from 'react-router';
+import RequiredFillOutMessage from './RequiredFillOutMessage';
 
 class HostEditQuiz extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class HostEditQuiz extends Component {
             title: "",
             question: [],
             deleted_questions: [],
-            deleted_options: []
+            deleted_options: [],
+            filledOut: true
         }
     }
 
@@ -81,18 +83,24 @@ class HostEditQuiz extends Component {
         })
 
         return (
-            <div className='quizBox'>
+            <div className='quizBox SQComponent'>
                 <div className='quizInnerBox'>
                     <h1 className='cnqTitle'>Edit Quiz</h1>
                     <div className='quizInnerBox'>
-                        <h3 className='quizTitle'>Title</h3>
-                        <input className='quizQuesText' type='text' value={this.state.title} onChange={this.handleChange}></input>
-                        <h3 className='surveyQTitle'>Questions</h3>
-                        {questionForm}      {/* Where the mapped question inputs are */}
-                        <div className='bottomButtons'>
-                            <button className='addQuizQues' onClick={this._addQuestion}>Add Question +</button>
-                            <button className='submitQuiz' onClick={this._submitSurvey}>Submit</button>
+                        <div className="QuestionClump surveyTitleInput">
+                            <h3 className='surveyTitle'>Title</h3>
+                            <input className='surveyTinput' type='text' value={this.state.title} onChange={this.handleChange}></input>
                         </div>
+                        <div>
+                            <h3 className='surveyQTitle'>Questions</h3>
+                            {questionForm}      {/* Where the mapped question inputs are */}
+                        </div>
+                        <div className='bottomButtons'>
+                            <button className='addSq' onClick={this._addQuestion}> + </button>
+                            <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Submit</button>
+                        </div>
+                        <RequiredFillOutMessage filledOut={this.state.filledOut} />
+                        <p>*** Warning: Clicking submit will clear all responses associated with this quiz. ***</p>
                     </div>
                 </div>
             </div>
@@ -131,39 +139,67 @@ class HostEditQuiz extends Component {
             return
         }
         let old_object = new_form[index].options.pop()
-        new_deleted_options.push(old_object.option_id)
+        if(old_object.option_id !== null) {
+            new_deleted_options.push(old_object.option_id)
+        }
         this.setState({
             question: new_form,
             deleted_options: new_deleted_options
         })
     }
 
-    _RemoveQuestion = (event) => {                              // Removes a Question Form
-        let index = event.target.getAttribute('target') - 1
-        let object = this.state.question
-        let new_deleted_questions = this.state.deleted_questions
+    _RemoveQuestion = (event) => {                              
+        // Removes a Question Form
+        let index = event.target.getAttribute('target') - 1;
+        let object = this.state.question;
+        let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
-        new_deleted_questions.push(new_object.question_id)
-        var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
-            let key = data.question_number
+        if(new_object[0].question_id !== null) {
+            new_deleted_questions.push(new_object[0].question_id);
+        }
+        var formatted_object = object.map((data) => {           
+            // this maps through and lowers the question number by one for those after the one that is deleted
+            let key = data.question_number;
             if (key > index + 1) {
-                let new_key = key - 1
-                let changed_data = { question_number: new_key, question_id: data.question_id, text: data.text, options: data.options }
-                return changed_data
+                let new_key = key - 1;
+                let changed_data = { question_number: new_key, question_id: data.question_id, text: data.text, options: data.options };
+                return changed_data;
             }
-            return data
+            return data;
         })
         this.setState({
-            question: formated_object,
+            question: formatted_object,
             deleted_questions: new_deleted_questions
         })
     }
 
     _submitSurvey = () => {
-        this.props.sendMessage(this._createPayload());
-        setTimeout(() => { 
-            this.props.history.push('/Host/Your Quizzes/')
-        }, 100)    
+        let questionList = this.state.question
+        let formIsFilled = true
+        questionList.forEach((data) => {
+            if (data.text === "") {
+                formIsFilled = false
+            }
+            data.options.forEach((option) => {
+                if (option.text === "") {
+                    formIsFilled = false
+                }
+            })
+        })
+        if (this.state.title === "") {
+            formIsFilled = false
+        }
+        this.setState({
+            filledOut: formIsFilled
+        }, () => { 
+            if (this.state.filledOut === true) {
+            console.log(this._createPayload())
+            this.props.sendMessage(this._createPayload());
+            setTimeout(() => { 
+                this.props.history.push('/Host/Your Quizzes/')
+            }, 100)    
+        }
+        })
 
     }
 
@@ -187,6 +223,7 @@ class HostEditQuiz extends Component {
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'quiz' &&  parsedData.host_id === this.props.host_id) {
             let results = parsedData;
+            console.log(results);
             if (results.error === null) {
                 let keys = Object.keys(results.payload);
                 let new_form = keys.map((key) => {

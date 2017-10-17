@@ -23,11 +23,13 @@
 .HostSQTable td{
     border: none;
 }
+
 .SQTitle{
     font-size: 1.3rem;
     padding-bottom: 0rem;
     padding-right: 15rem;
 }
+
 
 .HostSQRenderTitle{
     font-size: 3em;
@@ -48,7 +50,8 @@
 .btn-outline-secondary {
     color: #fefdfb;
     background-color: #97c2c1;
-    margin-right: .7rem;
+    margin-left: 1%;
+    // margin-right: .7rem;
     background-image: none;
     border-color: transparent;
 }
@@ -85,7 +88,7 @@
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     height: 0;
-    width: 40%;
+    width: 100%;
     margin-left: 4%;
     margin-top: -2%;
     overflow: visible;

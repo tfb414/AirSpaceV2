@@ -8,6 +8,7 @@ class HostRenderSurvey extends Component {
         super(props);
         this.state = {
             activatedMessage: "",
+            sqListMessage: "",
             activatedsq_id: 0,
             refresh: 0,
             waitingOnData: true
@@ -38,12 +39,18 @@ class HostRenderSurvey extends Component {
     }
 
     render() {
-        if (this.state.waitingOnData) {
+        if (this.state.waitingOnData === true && this.state.sqListMessage === "") {
             return (
                 <div className="SQComponent">
                 </div>
             )
-        }
+        } else if (this.state.waitingOnData === true && this.state.sqListMessage !== "") {
+            return (
+                <div>
+                    <h3>{this.state.sqListMessage} Please go to the <a href='#' target="_blank" rel="noopener noreferrer" onClick={this._redirectCreate}>Create</a> page to add surveys/quizzes.</h3>
+                </div>
+            )
+        } else if (this.state.waitingOnData === false) {
         let surveys = this.state.results.map((data) => {
             let activatedTR;
             if (data.sq_id === Number(this.state.activatedsq_id)) {
@@ -86,6 +93,7 @@ class HostRenderSurvey extends Component {
                 </div>
             </div>
         );
+        }
     }
 
     _viewResults = (event) => {
@@ -128,14 +136,30 @@ class HostRenderSurvey extends Component {
         payload = JSON.stringify(payload);
         this.props.sendMessage(payload);
     }
-
+    _redirectCreate = (e) => {
+        e.preventDefault();
+        this.props.history.push(`/Host/Create`);
+    }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYSQLIST' && this.props.host_id === parsedData.host_id) {
-            let results = parsedData.payload;
-            this.setState({
-                waitingOnData: false,
-                results: results
-            });
+            if (parsedData.error === null) {
+                let results = parsedData.payload;
+                this.setState({
+                    waitingOnData: false,
+                    results: results
+                });
+            } else if (parsedData.error === "Nothing found") {
+                let name;
+                if (parsedData.sqtype === 'survey') {
+                    name = "surveys";
+                } else {
+                    name = "quizzes";
+                }
+                this.setState({
+                    sqListMessage: `No ${name} found.`
+                })
+            }
+
         } else if (parsedData.type === "ACTIVATEDSQ" && this.props.host_id === parsedData.host_id) {
             let results = parsedData;
             if (results.error === null) {

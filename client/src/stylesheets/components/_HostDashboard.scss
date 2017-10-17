@@ -48,7 +48,7 @@ p{
     color: $fontcolor;
     @include respond-to(medium) {
         margin-top: 0;
-        // margin-bottom: 2rem;
+        margin-bottom: 2rem;
         font-size: 4rem;
     }
 }
@@ -72,10 +72,15 @@ p{
 }
 
 .quizOrSurveyBox {
-    @include respond-to(medium) {
+    @include respond-to(small) {
         display: flex;
+        width: 100%;
         flex-direction: row;
         align-items: center;
+        justify-content: space-around;
+    }
+    @include respond-to(medium) {
+        width: 70%;
     }
 
 }
@@ -88,8 +93,8 @@ p{
     justify-content: center;
     color: white;
     @include respond-to(medium) {
-        width: 6.4rem;
-        height: 3.2rem;
+        width: 6.8rem;
+        height: 3.4rem;
         font-size: 1.8rem;
     }
 }

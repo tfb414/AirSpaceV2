@@ -7,7 +7,6 @@
     padding-top: 1rem;
 }
 
-
 .SQComponent hr {
     width: 40%;
     margin-left: 4%;
@@ -17,20 +16,23 @@
     width: 132%;
     margin-left: 16%;
 }
+
 .GuestSurveyTitle{
+    margin-top: 2rem;
     font-size: 3em;
-    display: inline;
+    // display: inline;
 }
 
-.GuestSurveyQuestionsContainer{
-    margin-left: 3rem;
+.GuestSurveyQuestionsContainer {
+    // margin-left: 3rem;
+    // removed because looks awkward on mobile
 }
 
-.TitleHR{
+.TitleHR {
     width: 40%;
     margin-left: 4%;
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     border: 0;
     border-top: 1px solid rgba(0,0,0,.1);
 }
@@ -50,7 +52,7 @@
 
 }
 
-.inner-button{
+.inner-button {
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -74,12 +76,14 @@
     transition: all .15s ease-in-out;
 }
 
-.inner-button-secondary{
+.inner-button-secondary {
     color: #fefdfb;
     background-color: #97c2c1;
     margin-right: .7rem;
+    margin-top: 2rem;
     background-image: none;
     border-color: transparent;
+    padding: .6rem;
 }
 // .spacing{
 //     padding-left: 0.5em;

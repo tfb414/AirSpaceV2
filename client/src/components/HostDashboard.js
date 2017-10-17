@@ -13,6 +13,7 @@ import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
 import HostWelcomePage from './HostWelcomePage';
+import HostAbout from './HostAbout';
 
 class HostDashboard extends Component {
     constructor(props) {
@@ -21,8 +22,7 @@ class HostDashboard extends Component {
             host_id: "",
             connection: new WebSocket(env),
             isConnected: false,
-            currentlyConnected: [],
-            time: new Date()
+            currentlyConnected: []
         }
         this.createArrayOfFirstThings = createArrayOfFirstThings.bind(this);
         this.manageActiveUsers = manageActiveUsers.bind(this);
@@ -53,19 +53,6 @@ class HostDashboard extends Component {
 
 
     }
-    // componentDidMount() {
-    //     this.heartbeatInterval = setInterval(() => {
-    //         let payload = {
-    //             type: "HEARTBEAT",
-    //         }
-    //         let JSONpayload = JSON.stringify(payload);
-    //         this.state.connection.send(JSONpayload);
-    //     }, 1000);
-    // }
-
-    componentWillUnmount() {
-         clearInterval(this.heartbeatInterval);
-    }
 
     render() {
         if (!this.state.isConnected) {
@@ -76,8 +63,12 @@ class HostDashboard extends Component {
         } else {
             return (
                 <div className="hostDash">
-                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} />
-
+                    <HDNavBar
+                        name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']}
+                        hostid={this.state.host_id}
+                        first_name={this.state.first_name}
+                        last_name={this.state.last_name}
+                    />
                     <Switch>
                         <Route exact path="/Host/"
                             component={() => (
@@ -118,6 +109,13 @@ class HostDashboard extends Component {
                                     connection={this.state.connection}  
                                     sendMessage={this._sendMessage} 
                                 />)} />
+                        
+                        <Route path="/Host/About" 
+                            component={() => (
+                                <HostAbout
+                                    connection={this.state.connection}  
+                                    sendMessage={this._sendMessage} 
+                                />)} />
 
                         <Route exact path="/Host/Your Surveys/Edit/:id"         
                             component={(match) => (
@@ -153,9 +151,6 @@ class HostDashboard extends Component {
                                     sqtype='quiz'
                                 />)} />
                     </Switch>
-                    {/*<div>
-                        {this.displayConnected()}
-                    </div>*/}
                 </div>
             )
         }
@@ -172,15 +167,12 @@ class HostDashboard extends Component {
     }
 
     _whatTime = () => {
-        let time = (this.state.time).toLocaleTimeString('en-US')
-        console.log(time)
+        let time = (this.state.time).toLocaleTimeString('en-US');
         if (time[0] === 1 && time[1] !== ":") {
-            time.splice(5, 3)
-            console.log(time)
+            time.splice(5, 3);
             return time
         }
         time.splice(4, 3)
-        console.log(time)
         return time
     }
 
