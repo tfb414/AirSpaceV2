@@ -44,12 +44,21 @@ function addHostGuest(host_id, guest_id) {
     });
 }
 
+function updateSQ(sq_name, sq_id) {
+    db.sq.update({
+        sq_name,
+        updatedAt: new Date()},
+        {where: {sq_id}}
+    )
+}
+
 function getGuestsForHost(host_id) {
     return db.sequelize.query(`Select g.first_name, g.last_name, g.guest_id, hg.host_guest_id
     from guest g
     inner join host_guest hg
     on hg.guest_id = g.guest_id
-    where hg.host_id = '${host_id}';`, 
+    where hg.host_id = '${host_id}'
+    order by g.first_name ASC;`, 
     { type: db.sequelize.QueryTypes.SELECT}).catch(err => {
         console.log(err);
     });
@@ -180,6 +189,7 @@ function getSQResultsHost(sq_id, host_id) {
 function getSQList(host_id, sqtype) {
     return db.sq.findAll({
         attributes: ['sq_id', 'sq_name'],
+        order: [['sq_name', 'ASC']],
         where: {host_id, type: sqtype},
         raw: true,
     }).catch(Sequelize.ValidationError, function (err) {
@@ -284,13 +294,6 @@ function deleteAllOptions(sq_id) {
         sqqo.sq_id = '${sq_id}';`)
 }
 
-// DELETE FROM gqr
-// FROM guest_question_response gqr
-// 	INNER JOIN sq_question_option sqqo ON gqr.question_id = sqqo.question_id
-// 	INNER JOIN sq ON sqqo.sq_id = sq.sq_id
-// 	INNER JOIN host_guest hg ON gqr.guest_id = hg.guest_id
-// WHERE hg.host_guest_id = '175' AND sq.host_id = 'aarontsosa@gmail.com';
-
 function deleteAllQuestions(sq_id) {
     return db.sequelize.query(`DELETE 
     FROM question q  
@@ -349,18 +352,6 @@ function deleteSQ(sq_id) {
     })
 }
 
-// function deleteAllSQQO(sq_id) {
-//     return db.sequelize.query(`DELETE 
-//     FROM sq_question_option
-//     WHERE sq_id = '${sq_id}';`)
-// }
-
-// function deleteSQ(sq_id) {
-//     return db.sequelize.query(`DELETE 
-//     FROM sq
-//     WHERE sq_id = '${sq_id}';`)
-// }
-
 module.exports = {
     upsertHost,
     upsertGuest,
@@ -391,7 +382,8 @@ module.exports = {
     getGuestsForHost,
     deleteGQRForHost,
     deleteHG,
-    retrieveHost
+    retrieveHost,
+    updateSQ
 };
 
 

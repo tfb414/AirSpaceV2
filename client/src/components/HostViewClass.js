@@ -51,10 +51,10 @@ class HostViewClass extends Component {
                 </div>
             )
         } else if (this.state.waitingOnData === false && this.state.activatedMessage === "") {
+            console.log(this.state.results);
             let classList = this.state.results.map((person, idx) => {
                 let onlineStatus = this.state.currentlyConnected.filter((status) => {
-                    console.log(status)
-                    return person.guest_id === status[0]
+                    return person.guest_id === status[0];
                 })
                 if (onlineStatus.length === 0) {
                     return (
