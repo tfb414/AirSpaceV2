@@ -95,7 +95,9 @@ class HostEditSurvey extends Component {
         let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
         console.log(new_object);
-        new_deleted_questions.push(new_object[0].question_id)
+        if(new_object[0].question_id !== null) {
+            new_deleted_questions.push(new_object[0].question_id)
+        }
         var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number
             if (key > index + 1) {
@@ -122,6 +124,9 @@ class HostEditSurvey extends Component {
         let question_object = this.state.question.map((data) => {
             return data;
         }, {})
+        question_object = question_object.filter((q) => {return q;});
+        console.log(question_object);
+        console.log(this.state.deleted_questions);
         let payload = {
             type: 'EDITSQ',
             sq_id: this.props.match.params.id,

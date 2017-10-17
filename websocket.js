@@ -432,14 +432,6 @@ function sendHeartbeatToHost(wss, parsedData) {
 
 
 
-
-
-
-
-// function sendToWebSocket(message) {
-//     socket.send(JSON.stringify(message));
-// }
-
 module.exports = {
     init
 }

@@ -132,7 +132,9 @@ class HostEditQuiz extends Component {
             return
         }
         let old_object = new_form[index].options.pop()
-        new_deleted_options.push(old_object.option_id)
+        if(old_object.option_id !== null) {
+            new_deleted_options.push(old_object.option_id)
+        }
         this.setState({
             question: new_form,
             deleted_options: new_deleted_options
@@ -145,7 +147,9 @@ class HostEditQuiz extends Component {
         let object = this.state.question;
         let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
-        new_deleted_questions.push(new_object[0].question_id);
+        if(new_object[0].question_id !== null) {
+            new_deleted_questions.push(new_object[0].question_id);
+        }
         var formatted_object = object.map((data) => {           
             // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number;
