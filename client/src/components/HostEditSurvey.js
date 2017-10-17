@@ -40,13 +40,13 @@ class HostEditSurvey extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage === "") {
             return (
-                <div>
+                <div className="SQComponent center">
                     <h3>Waiting on Survey...</h3>
                 </div>
             )
         } else if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div>
+                <div className="SQComponent center">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )

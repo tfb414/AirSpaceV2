@@ -439,6 +439,11 @@ body {
 .classRoom {
   width: 64%; }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 .results {
   max-width: 100%; }
 
