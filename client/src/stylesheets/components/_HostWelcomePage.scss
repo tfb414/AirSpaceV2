@@ -1,0 +1,23 @@
+.welcomePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100%;
+}
+
+.welcomeLogo {
+    width: 10rem;
+}
+
+.welcomePage > h1 {
+    @include respond-to(small) {
+        font-size: 1.6rem;
+        padding: 2rem;
+    }
+}
+
+.welcomeTeacherId p {
+    margin-bottom: 0;
+}

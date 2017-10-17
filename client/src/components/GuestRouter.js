@@ -48,15 +48,13 @@ class GuestRouter extends Component {
     }
 
     render() {
-        console.log(this.state.payload);
-        console.log(this.state.host_id);
         if (!this.state.isConnected) {
             return (
                 <div></div>
             );
         } else {
             return (
-                <div className="SQComponent">
+                <div className='guestRouteHolder'>
                     <Switch>
                         <Route
                             exact path='/Guest/'
@@ -89,6 +87,18 @@ class GuestRouter extends Component {
     }
 
     _handleChange = (host_id) => {
+        if (host_id !== localStorage.getItem('host_id')) {
+            localStorage.removeItem("sqtype");
+            localStorage.removeItem("sq_id");
+            localStorage.removeItem("title");
+            localStorage.removeItem("payload");
+            this.setState({
+                title: "",
+                sqtype: "",
+                sq_id: "",
+                payload: ""
+            })
+        }
         localStorage.setItem('host_id', host_id);
         this.setState({ host_id });
     }
@@ -111,13 +121,11 @@ class GuestRouter extends Component {
 
     _receiveMessage = (parsedData) => {
         if (parsedData.type === "CONNECTEDTOHOST") {
-            console.log('connected to host')
             this.setState({
                 connectedToHost: true,
                 message: "connected to host!",
 
-            })
-
+            });
             this.props.history.push('/Guest/Waiting/');
         }
         if (parsedData.type === "ERROR") {
@@ -134,7 +142,6 @@ class GuestRouter extends Component {
         }
 
         if (parsedData.type === 'DISPLAYACTIVESQ' && parsedData.host_id === this.state.host_id) {
-            console.log('gooot ittt');
             localStorage.setItem('sqtype', parsedData.sqtype);
             localStorage.setItem('sq_id', parsedData.sq_id);
             localStorage.setItem('title', parsedData.title);

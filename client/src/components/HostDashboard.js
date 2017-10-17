@@ -12,6 +12,8 @@ import ActivateSurvey from './ActivateSurvey';
 import HostEditSurvey from './HostEditSurvey';
 import HostEditQuiz from './HostEditQuiz';
 import HostViewClass from './HostViewClass';
+import HostWelcomePage from './HostWelcomePage';
+import HostAbout from './HostAbout';
 
 class HostDashboard extends Component {
     constructor(props) {
@@ -51,15 +53,6 @@ class HostDashboard extends Component {
 
 
     }
-  componentDidMount() {
-        setInterval(() => {
-            let payload = {
-                type: "HEARTBEAT",
-            }
-            let JSONpayload = JSON.stringify(payload);
-            this.state.connection.send(JSONpayload);
-        }, 1000);
-    }
 
     render() {
         if (!this.state.isConnected) {
@@ -70,12 +63,19 @@ class HostDashboard extends Component {
         } else {
             return (
                 <div className="hostDash">
-                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class']} hostid={this.state.host_id}/>
+                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']} hostid={this.state.host_id}/>
                     <Switch>
+                        <Route exact path="/Host/"
+                            component={() => (
+                                <HostWelcomePage
+                                    host_id={this.state.host_id}
+                                    first_name={this.state.first_name}
+                                    last_name={this.state.last_name}
+                            />)} />
                         <Route exact path="/Host/Your Class/" 
                             component={() => (
                                 <HostViewClass 
-                                    sendMessage={this._sendMessage}                                      connection={this.state.connection} 
+                                    sendMessage={this._sendMessage}        connection={this.state.connection} 
                                     host_id={this.state.host_id} 
                                     />)} />
                         
@@ -100,7 +100,15 @@ class HostDashboard extends Component {
                         
                         <Route path="/Host/Create" 
                             component={() => (
-                                <Create 
+                                <Create
+                                    connection={this.state.connection}  
+                                    sendMessage={this._sendMessage} 
+                                />)} />
+                        
+                        <Route path="/Host/About" 
+                            component={() => (
+                                <HostAbout
+                                    connection={this.state.connection}  
                                     sendMessage={this._sendMessage} 
                                 />)} />
 
@@ -154,22 +162,21 @@ class HostDashboard extends Component {
     }
 
     _whatTime = () => {
-        let time = (this.state.time).toLocaleTimeString('en-US')
-        console.log(time)
+        let time = (this.state.time).toLocaleTimeString('en-US');
         if (time[0] === 1 && time[1] !== ":") {
-            time.splice(5, 3)
-            console.log(time)
+            time.splice(5, 3);
             return time
         }
         time.splice(4, 3)
-        console.log(time)
         return time
     }
 
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'RETURNUSERID' && parsedData.id === this.state.host_id) {
             this.setState({
-                host_id: parsedData.user_id
+                host_id: parsedData.user_id,
+                first_name: parsedData.first_name,
+                last_name: parsedData.last_name
             })
         }
         if (parsedData.type === 'GUESTHEARTBEATTOHOST' && parsedData.id === this.state.host_id) {
