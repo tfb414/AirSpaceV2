@@ -189,6 +189,7 @@ function getSQResultsHost(sq_id, host_id) {
 function getSQList(host_id, sqtype) {
     return db.sq.findAll({
         attributes: ['sq_id', 'sq_name'],
+        order: [['sq_name', 'ASC']],
         where: {host_id, type: sqtype},
         raw: true,
     }).catch(Sequelize.ValidationError, function (err) {
