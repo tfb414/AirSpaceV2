@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SurveyQuestionInput from './SurveyQuestionInput.js';
+import RequiredFillOutMessage from './RequiredFillOutMessage';
 import { withRouter } from 'react-router';
 import guid from 'guid';
 
@@ -11,7 +12,8 @@ class HostEditSurvey extends Component {
             waitingOnData: true,
             title: "",
             question: [],
-            deleted_questions: []
+            deleted_questions: [],
+            filledOut: true
         }
     }
 
@@ -71,6 +73,7 @@ class HostEditSurvey extends Component {
                         <button className='addSq' onClick={this._addQuestion}> + </button>
                         <button type="button" className="btn btn-outline-secondary submitSurvey" onClick={this._submitSurvey}>Submit</button>
                     </div>
+                    <RequiredFillOutMessage filledOut={this.state.filledOut} />
                     <p>*** Warning: Clicking submit will clear all responses associated with this survey. ***</p>
                 </div>
             </div >
@@ -118,10 +121,27 @@ class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
-        this.props.sendMessage(this._createPayload());
-        setTimeout(() => { 
-            this.props.history.push('/Host/Your Surveys/')
-        }, 100)  
+        let questionList = this.state.question
+        let formIsFilled = true
+        questionList.forEach((data) => {
+            if (data.text === "") {
+                formIsFilled = false
+            }
+        })
+        if (this.state.title === "") {
+            formIsFilled = false
+        }
+        this.setState({
+            filledOut: formIsFilled
+        }, () => { 
+            if (this.state.filledOut === true) {
+            // console.log(this._createPayload())
+                this.props.sendMessage(this._createPayload());
+                setTimeout(() => { 
+                    this.props.history.push('/Host/Your Surveys/')
+                }, 100)    
+            }
+        })
     }
 
     _createPayload = () => {
