@@ -102,8 +102,8 @@ app.get('/guest/auth/google/callback',
         failureFlash: true
     }));
 
-app.get('/About', (req, res, next) => {
-    res.sendFile('/public/about.html', { "root": __dirname });
+app.get('/About/', (req, res) => {
+    res.sendFile('/public/about.html');
 })
 
 app.get('*', ensureAuthenticated, (req, res, next) => {
