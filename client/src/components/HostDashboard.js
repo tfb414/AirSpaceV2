@@ -63,7 +63,12 @@ class HostDashboard extends Component {
         } else {
             return (
                 <div className="hostDash">
-                    <HDNavBar name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']} hostid={this.state.host_id}/>
+                    <HDNavBar
+                        name={['Create', 'Your Surveys', 'Your Quizzes', 'Your Class', 'About']}
+                        hostid={this.state.host_id}
+                        first_name={this.state.first_name}
+                        last_name={this.state.last_name}
+                    />
                     <Switch>
                         <Route exact path="/Host/"
                             component={() => (
