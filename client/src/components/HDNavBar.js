@@ -19,7 +19,7 @@ const HDNavBar = (props) => {
                     <p>{props.hostid}</p>
                 </div>    
             </div>
-            <div className={props.className}>
+            <div className={props.className} >
                 {navBar}
             </div>
         </div>    
