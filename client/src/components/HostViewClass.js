@@ -46,7 +46,7 @@ class HostViewClass extends Component {
     render() {
         if (this.state.waitingOnData === true && this.state.activatedMessage !== "") {
             return (
-                <div className="SQComponent">
+                <div className="SQComponent center">
                     <h3>{this.state.activatedMessage}</h3>
                 </div>
             )
