@@ -19,7 +19,6 @@ class HostEditSurvey extends Component {
         let payload = { type: "REQUESTEDITSQ", sqtype: this.props.sqtype, sq_id: this.props.match.params.id };
         this.props.sendMessage(JSON.stringify(payload));
         this.props.connection.onmessage = event => {
-            console.log(parsedData);
             let parsedData = JSON.parse(event.data);
             this._receiveMessage(parsedData);
         }
@@ -50,7 +49,8 @@ class HostEditSurvey extends Component {
                 </div>
             )
         } else if (this.state.waitingOnData === false) {
-            let questionForm = this.state.question.map((data) => {                   // Maps through and renders the Question Inputs.
+            let questionForm = this.state.question.map((data) => {                   
+            // Maps through and renders the Question Inputs.
             return <SurveyQuestionInput num={data.question_number} value={data.text} onChange={this.handleChangeQuestion} remove={this._RemoveQuestion} />
 
         })
@@ -91,19 +91,25 @@ class HostEditSurvey extends Component {
     }
 
     _RemoveQuestion = (event) => {                              // Removes a Question Form
-        let index = event.target.getAttribute('target') - 1
-        let object = this.state.question
-        let new_deleted_questions = this.state.deleted_questions
+        let index = event.target.getAttribute('target') - 1;
+        console.log(event.target);
+        console.log(index);
+        let object = this.state.question;
+        console.log(object);
+        let new_deleted_questions = this.state.deleted_questions;
         let new_object = object.splice(index, 1);
-        new_deleted_questions.push(new_object.question_id)
+        console.log(new_object);
+        if(new_object[0].question_id !== null) {
+            new_deleted_questions.push(new_object[0].question_id)
+        }
         var formated_object = object.map((data) => {           // this maps through and lowers the question number by one for those after the one that is deleted
             let key = data.question_number
             if (key > index + 1) {
-                let new_key = key - 1
-                let changed_data = { question_number: new_key, text: data.text, question_id: data.question_id }
-                return changed_data
+                let new_key = key - 1;
+                let changed_data = { question_number: new_key, text: data.text, question_id: data.question_id };
+                return changed_data;
             }
-            return data
+            return data;
         })
         this.setState({
             question: formated_object,
@@ -112,8 +118,6 @@ class HostEditSurvey extends Component {
     }
 
     _submitSurvey = () => {
-
-        console.log(this._createPayload())
         this.props.sendMessage(this._createPayload());
         setTimeout(() => { 
             this.props.history.push('/Host/Your Surveys/')
@@ -122,26 +126,31 @@ class HostEditSurvey extends Component {
 
     _createPayload = () => {
         let question_object = this.state.question.map((data) => {
-            return data
+            return data;
         }, {})
+        question_object = question_object.filter((q) => {return q;});
+        console.log(question_object);
+        console.log(this.state.deleted_questions);
         let payload = {
             type: 'EDITSQ',
+            sq_id: this.props.match.params.id,
             sqtype: 'survey',
             title: this.state.title,
             payload: question_object,
             deleted_questions: this.state.deleted_questions
         }
         return JSON.stringify(payload);
-
-
     }
     _receiveMessage = (parsedData) => {
         if (parsedData.type === 'DISPLAYEDITSQ' && parsedData.sqtype === 'survey' &&  (parsedData.host_id === this.props.host_id)) {
             let results = parsedData;
             if (results.error === null) {
-                let new_form = results.payload.map((data) => {
-                    return { question_number: data.question_number, text: data.text, question_id: data.question_id }                     // adding the new object to this.state.question
+                let new_form = [];
+                results.payload.forEach((data) => {
+                    new_form[data.question_number - 1] = { question_number: data.question_number, text: data.text, question_id: data.question_id }   
+                    // adding the new object to this.state.question
                 })
+                console.log(new_form);
                 this.setState({
                     title: results.title,
                     waitingOnData: false,
