@@ -22,7 +22,6 @@ AirSpace is an audience response platform that allows audience members to provid
 * Express
 * WebSockets
 * JavaScript ES6
-* jQuery
 * HTML5/CSS3
 * Sass
 
