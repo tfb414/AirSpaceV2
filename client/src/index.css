@@ -1232,9 +1232,11 @@ h1.branding {
     .guestPrompt {
       font-size: 2rem; } }
 
-@media (min-width: 320px) {
-  .guestWelcome {
-    font-size: 2.3rem; } }
+.guestWelcome {
+  text-align: center; }
+  @media (min-width: 320px) {
+    .guestWelcome {
+      font-size: 2.3rem; } }
 
 button.guestButton {
   margin: 1rem;
