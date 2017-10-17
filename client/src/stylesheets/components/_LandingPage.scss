@@ -45,6 +45,21 @@ img.logo {
     }
 }
 
+.aboutLink {
+    font-size: 1.6rem;
+    font-family: Raleway, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: white;
+    align-self: flex-end;
+    padding-right: 4rem;
+}
+
+.aboutLink:hover {
+    color: rgb(189, 189, 189);
+    align-self: flex-end;
+    padding-right: 4rem;
+}
+
+
 .landingButton {
     width: 40%;
     border: none;

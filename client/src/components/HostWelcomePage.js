@@ -14,8 +14,8 @@ class WelcomePage extends Component {
               <div className='welcomeTeacherId'>
                   <p>Your Teacher ID:</p>
                   <p>{this.props.host_id}</p>
+                  <a href='#'onClick={this._onStartClick}>Click here to get started!</a>
               </div>
-              <a href='#'onClick={this._onStartClick}>Click here to get started!</a>
           </div>
       )
     }
