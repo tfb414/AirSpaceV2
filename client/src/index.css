@@ -1233,6 +1233,7 @@ h1.branding {
   justify-content: center; }
 
 .guestPrompt {
+  text-align: center;
   padding: 1.6rem; }
   @media (min-width: 320px) {
     .guestPrompt {

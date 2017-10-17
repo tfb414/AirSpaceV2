@@ -15,6 +15,7 @@
 }
 
 .guestPrompt {
+    text-align: center;
     padding: 1.6rem;
     @include respond-to(small) {
         font-size: 2rem;
