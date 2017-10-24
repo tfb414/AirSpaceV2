@@ -4,7 +4,7 @@ AirSpace is an audience response platform that allows audience members to provid
 
 ## Differences from Version 1
 
-* An encrypted log-in feature for host users to store their serial-numerical GUIDs in the database
+* Users login through Google via Passport.js
 * Improved accuracy of our current Active Guest Users display and functionality on the Host Dashboard
 * Implementing a multiple choice quiz type
 
